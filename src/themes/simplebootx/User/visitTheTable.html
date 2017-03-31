@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>山西省医院挂号平台</title>
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="shortcut icon" href="images/favicon.ico" >
+</head>
+<body>
+	<!-- 头部 -->
+	<div class="dbnav">
+		<div class="dbnav_context">
+			<p class="dbnav_context_left">
+				<img src="images/dbnav.png" alt=""><span>15111511431电话预约</span>
+			</p>
+			<p class="dbnav_context_right" id="isLogin">欢迎来到山西省预约挂号平台 请
+				<a href="login.html" class="db_login">登录</a>
+				<a href="register.html" class="db_register">注册</a>
+			</p>
+		</div>
+	</div>
+	<div class="top">
+		<div class="top_left"><a href=""><img src="images/logo.png" alt=""></a></div>
+		<div class="top_search">
+			<form action="" method="get" name="search">
+				<div class="option"><span>疾病</span></div>
+				<div class="sbox"><input type="text" placeholder="请输入搜索内容" autocomplete="off"></div>
+				<div class="sbtn">
+					<input type="submit" value="">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="nav">
+		<div class="nav_box">
+			<ul class="nav_ul">
+				<li><a href="index.html">首页</a></li>
+				<li><a href="diseaseRegistered.html">按疾病挂号</a></li>
+				<li><a href="doctorRegistered.html">按医生挂号</a></li>
+				<li class="nav_color"><a href="visitTheTable.html">医生出诊表</a></li>
+				<li><a href="#">最新公告</a></li>
+				<li class="personalCenter"><a href="personalCenter.html">个人中心</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- 头部结束 -->
+	<!-- 主内容区 -->
+	<div class="timeTable">
+		<table cellspacing="0" cellpadding="5">
+			<caption>门诊出诊时间安排</caption>
+			<thead>
+				<th>科室</th>
+				<th>姓名</th>
+				<th>周一</th>
+				<th>周二</th>
+				<th>周三</th>
+				<th>周四</th>
+				<th>周五</th>
+				<th>周六</th>
+				<th>周末</th>
+			</thead>
+			<tbody>
+				<tr>
+					<td rowspan="4">内科</td>
+					<td>武鑫</td>
+					<td>全天</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>下午</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>鲁超男</td>
+					<td>全天</td>
+					<td></td>
+					<td></td>
+					<td>全天</td>
+					<td></td>
+					<td>全天</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>吴志鹏</td>
+					<td></td>
+					<td>全天</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>下午</td>
+					<td></td>
+				</tr>
+				<tr>
+					
+					<td>李丹</td>
+					<td></td>
+					<td>全天</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>下午</td>
+					<td></td>
+				</tr>
+					<tr>
+					<td rowspan="4">神经内科</td>
+					<td>武鑫</td>
+					<td>全天</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>下午</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>鲁超男</td>
+					<td>全天</td>
+					<td></td>
+					<td></td>
+					<td>全天</td>
+					<td></td>
+					<td>全天</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>吴志鹏</td>
+					<td></td>
+					<td>全天</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>下午</td>
+					<td></td>
+				</tr>
+				<tr>
+					
+					<td>李丹</td>
+					<td></td>
+					<td>全天</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>下午</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="paging_timeTable">
+		<div id="address-paging" class="tcdPageCode"></div>
+	</div>
+	<!-- 底部 -->
+	<div class="index_footer">
+		<div class="templatemo_footer">Copyright © 2048 <a href="#">山西省医院</a> | Template from wuxin</div>
+	</div>
+</body>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.page.js"></script>
+<script>
+	$(function(){
+		$("#address-paging").createPage({
+	        pageCount:7,
+	        current:1,
+	        backFn:function(page){
+	        	// $('.main-content').load("{:U("Xing/addressCenter")}",{page:page});
+	        }
+	    });
+	});
+</script>
+</html>
