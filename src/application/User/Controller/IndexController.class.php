@@ -22,9 +22,9 @@ class IndexController extends HomebaseController {
 //             header("Location:./index.php?g=user&m=xing");
 // //            $this->error("查无此人！");
 //         } else {
-//             header("Location:./index.php?g=user&m=login");
+//             header("Location:./index.php?g=user&m=index");
 //         }
-		
+		print_r($_SESSION);
 		$this->assign($user);
 		$this->display(":index");
 
