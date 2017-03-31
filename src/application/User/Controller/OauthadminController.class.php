@@ -14,11 +14,9 @@ class OauthadminController extends AdminbaseController {
 	// 后台第三方用户列表
 	public function index(){
 		$oauth_user_model=M('OauthUser');
-		$count=$oauth_user_model->where(array("status"=>1))->count();
+		$count=$oauth_user_model->count();
 		$page = $this->page($count, 20);
 		$lists = $oauth_user_model
-		->where(array("status"=>1))
-		->order("create_time DESC")
 		->limit($page->firstRow . ',' . $page->listRows)
 		->select();
 		$this->assign("page", $page->show('Admin'));
