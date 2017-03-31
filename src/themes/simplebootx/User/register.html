@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>山西省医院挂号平台</title>
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="shortcut icon" href="images/favicon.ico" >
+</head>
+<body>
+	<!-- 头部 -->
+	<div class="dbnav">
+		<div class="dbnav_context">
+			<p class="dbnav_context_left">
+				<img src="images/dbnav.png" alt=""><span>15111511431电话预约</span>
+			</p>
+			<p class="dbnav_context_right" id="isLogin">欢迎来到山西省预约挂号平台 请
+				<a href="login.html" class="db_login">登录</a>
+				<a href="register.html" class="db_register">注册</a>
+			</p>
+		</div>
+	</div>
+	<div class="top">
+		<div class="top_left"><a href=""><img src="images/logo.png" alt=""></a></div>
+		<div class="top_search">
+			<form action="" method="get" name="search">
+				<div class="option"><span>疾病</span></div>
+				<div class="sbox"><input type="text" placeholder="请输入搜索内容" autocomplete="off"></div>
+				<div class="sbtn">
+					<input type="submit" value="">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="nav">
+		<div class="nav_box">
+			<ul class="nav_ul">
+				<li><a href="index.html">首页</a></li>
+				<li><a href="diseaseRegistered.html">按疾病挂号</a></li>
+				<li><a href="doctorRegistered.html">按医生挂号</a></li>
+				<li><a href="visitTheTable.html">医生出诊表</a></li>
+				<li><a href="#">最新公告</a></li>
+				<li class="personalCenter nav_color"><a href="personalCenter.html">个人中心</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- 头部结束 -->
+	<!-- 主内容区 -->
+	<div class="registerBox">
+		<form action="" class="registerForm">
+			<div class="registerHeader"><span>实名注册</span></div>
+			<div class="registerContent">
+				<div class="register_content">
+					<div class="formgroup usename">
+						<span class="name">真实姓名:</span>
+						<div class="formInputBox"><input type="text" id="usename" name="username"></div>
+						<div class="hintBox">
+							<span>
+								<div class="annotation"><font class="red">*</font>请输入您的真实姓名注册</div>
+							</span>
+							<span class="errhint">用户名不能为空</span>
+						</div>
+					</div>
+					<div class="formgroup">
+						<span class="name">密&emsp;&emsp;码:</span>
+						<div class="formInputBox"><input type="password" id="userPassword" name="userPassword" maxlength="16"></div>
+						<div class="hintBox">
+							<span>
+								<div class="annotation"><font class="red">*</font>请输入6-16位字符，超过16位的按前16位计算</div>
+							</span>
+							<span class="errhint">密码不能为空</span>
+						</div>
+					</div>
+					<div class="formgroup verifyPsd">
+						<span class="name">密码确认:</span>
+						<div class="formInputBox"><input type="text" id="verifyPsd" name="verifyPsd" maxlength="16"></div>
+						<div class="hintBox">
+							<span>
+								<div class="annotation"><font class="red">*</font>请重复输入上面的密码</div>
+							</span>
+							<span class="errhint">两次输入的密码不一致</span>
+						</div>
+					</div>
+					<div class="formgroup idNumber">
+						<span class="name">身份证号:</span>
+						<div class="formInputBox"><input type="text" id="idNumber" name="idNumber"></div>
+						<div class="hintBox">
+							<span>
+								<div class="annotation"><font class="red">*</font>请输入有效证件号码注册</div>
+							</span>
+							<span class="errhint">身份证不合法</span>
+						</div>
+					</div>
+					<div class="formgroup phoneNumber">
+						<span class="name">手机号码:</span>
+						<div class="formInputBox"><input type="text" id="phoneNumber" name="phoneNumber"></div>
+						<div class="hintBox">
+							<span>
+								<div class="annotation"><font class="red">*</font>请输入真实有效的手机号码注册</div>
+							</span>
+							<span class="errhint">请输入有效的手机号码</span>
+						</div>
+					</div>
+					<div class="formgroup email">
+						<span class="name">电子邮箱:</span>
+						<div class="formInputBox"><input type="text" id="email" name="email"></div>
+						<div class="hintBox">
+							<span>
+								<div class="annotation">请输入您常用的电子邮箱地址，用于找回密码</div>
+							</span>
+							<span class="errhint">请输入有效的Email</span>
+						</div>
+					</div>
+					<div class="formgroup">
+						<span class="name">联系地址:</span>
+						<div class="formInputBox"><input type="text" id="contactAddress" name="username"></div>
+						<div class="hintBox">
+							<span>
+								<div class="annotation">请输入您常用的联系地址</div>
+							</span>
+							<span class="errhint"></span>
+						</div>
+					</div>
+					<div class="formgroup verifyCode">
+						<span class="name">验证码:</span>
+						<div class="formInputBox">
+							<input type="text" id="verifyCode" name="verifyCode">
+							<img src="" alt="">
+						</div>
+						<div class="hintBox">
+							<span>
+								<div class="annotation"><font class="red">*</font>请输入验证码</div>
+							</span>
+							<span class="errhint">请输入验证码</span>
+						</div>
+					</div>
+					<div class="formgroup endDiv">
+						<font class="red">*</font>
+						<input type="checkbox" id="agreement">
+						<span>我已同意并阅读</span>
+						<a title="点击查看注册协议" class="red agreementHead">《山西省医院挂号平台用户注册协议》</a>
+					</div>
+					<div class="agreementContent">
+						<p class="red">温馨提示：为保证您预约挂号成功，请您认真阅读预约挂号服务须知：</p>
+						<p>
+							<b>1、 预约说明</b>
+							<span>预约挂号是医院为不同就诊人群提供的一项便民措施。您可以在"湖南省统一预约挂号服务平台"网站上直接注册，成为网站注册会员后，即可进行网上预约。目前医院可预约的专家号或普通号，以医院的服务电话查询或医院公示为准。</span>
+						</p>
+						<p>
+							<b>2、 实名制预约</b>
+							<span>采用"实名制"，患者须提供真实姓名、身份证号和手机号等信息。用户就诊当天取号时，出示的证件号必须与预约时提供的一致，否则医院不予办理挂号业务。</span>
+						</p>
+						<p>
+							<b>3、 预约时段</b>
+							<span>您可以选择自已就诊的时段，按时就诊时一般可以享有优先就诊的便利，具体规定由各医院制定。</span>
+						</p>
+						<p>
+							<b>4、 预约挂号费用</b>
+							<span>作为医院的一项便民措施，预约挂号暂时不收取预约费用，具体费用由医院自行制定。</span>
+						</p>
+						<p>
+							<b>5、 取号挂号</b>
+							<span>就诊当天，请用户凭有效证件在医院规定的取号时间内，前往医院预约挂号窗口或医院自助机直接办理，并缴纳医院规定的挂号费、诊疗费等费用，超过取号时间预约自动作废。</span>
+						</p>
+						<p>
+							<b>6、 停、替诊安排</b>
+							<span>若当日已出诊专家临时因开会、调岗或出差等特殊原因停诊，医院将负责安排同等级别专家出诊(本次服务不再收取任何费用)。医生停诊情况不可避免，给患者造成的不便敬请谅解。</span>
+						</p>
+						<p>
+							<b>7、 预约限制</b>
+							<span>原则上用户一天在同一医院的同一个科室只限预约1次，每次限约1个号，具体以医院规则为准。</span>
+						</p>
+						<p>
+							<b>8、 取消预约</b>
+							<span>登录网站，可查询预约情况，如不能按预约时间前来就诊，请务必按照各医院规定的取消时间为准，提前取消预约，否则将被列入"黑名单"，限制使用预约挂号服务。</span>
+							<span>预约用户已通过第三方支付方式支付挂号费的，如需取消预约，挂号费将返还到用户原支付账户，到账周期为用户取消预约后5-15个工作日，退费时需收取相应手续费，费用以第三方支付平台手续费收费为准，本预约挂号平台不收取任何费用。</span>
+						</p>
+					</div>
+					<div class="btnBox">
+						<span class="btn disableBtn"><input type="submit" name="" value="注册" disabled="disabled"></span>
+						<!-- <span class="btn disableBtn"><button disabled="disabled">注册</button></span> -->
+						<span class="resetBtn"><a href="" onclick="javascript:history.go(-1);return false;">返回</a></span>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- 底部 -->
+	<div class="index_footer">
+		<div class="templatemo_footer">Copyright © 2048 <a href="#">山西省医院</a> | Template from wuxin</div>
+	</div>
+</body>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.page.js"></script>
+<script src="js/xinValidate.js"></script>
+<script>
+	$(function(){
+		$(".agreementHead").on("click",function(){
+			var result = $(".agreementContent").css("display");
+			if(result == "none"){
+				 $(".agreementContent").css("display","block");
+			}else{
+				 $(".agreementContent").css("display","none");
+			}
+		});
+		$("#agreement").on("change",function(){
+			console.log($(this));
+			if($(this).is(":checked")){
+				$(".btn input").css("background","#FEC009");
+				$(".btn").removeClass("disableBtn");
+				$(".btn").addClass("noDisableBtn");
+				$(".btn input").attr("disabled",false);
+			}else{
+				console.log("未选中");
+				$(".btn input").css("background","#c2c2c2");
+				$(".btn").addClass("disableBtn");
+				$(".btn").removeClass("noDisableBtn");
+				$(".btn input").attr("disabled",true);
+			}
+		})
+	});
+</script>
+</html>

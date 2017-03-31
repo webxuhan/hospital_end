@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	测试:<input type="text" id="test">
+</body>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script>
+	$("#test").on("input propertychange",function(){
+		// debugger
+		 var values = $(this).val().trim();
+            var result = $(this).val(values);
+		console.log($(this).val());
+		var val = $(this).val();
+		console.log(val == null);
+		console.log(val == "");
+		console.log(val == " ");
+	})
+</script>
+</html>
