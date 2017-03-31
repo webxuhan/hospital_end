@@ -14,17 +14,17 @@ class IndexController extends HomebaseController {
 		
 		$user=$users_model->where(array("id"=>$id))->find();
 		
-//		if(empty($user)){
-//			$this->error("查无此人！");
-//		}
-        if(sp_is_user_login()){ //已经登录时直接跳到首页
+// //		if(empty($user)){
+// //			$this->error("查无此人！");
+// //		}
+//         if(sp_is_user_login()){ //已经登录时直接跳到首页
 
-            header("Location:./index.php?g=user&m=xing");
-//            $this->error("查无此人！");
-        } else {
-            header("Location:./index.php?g=user&m=login");
-        }
-		
+//             header("Location:./index.php?g=user&m=xing");
+// //            $this->error("查无此人！");
+//         } else {
+//             header("Location:./index.php?g=user&m=index");
+//         }
+		print_r($_SESSION);
 		$this->assign($user);
 		$this->display(":index");
 
