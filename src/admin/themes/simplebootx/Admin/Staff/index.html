@@ -1,0 +1,240 @@
+<admintpl file="header" />
+<link rel="stylesheet" href="__PUBLIC__/css/combo.select/combo.select.css">
+</head>
+
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Staff/index')}">{:L("STAFF_INFO")}</a></li>
+			<li><a href="{:U('staff/add')}">{:L("ADD")}</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('Staff/index')}">
+			<table>
+				<tr>
+					<td>
+		            {:L('ZN_NAME')}:
+		            </td>
+		            <td>
+		            <input type="text" name="zn_name" style="width: 100px;" value="{:I('request.zn_name/s','')}" placeholder="请输入{:L('ZN_NAME')}">
+		            </td>
+		            <td>
+		            {:L("EN_NAME")}:
+		            <input type="text" name="en_name" style="width: 100px;" value="{:I('request.en_name/s','')}" placeholder="请输入{:L('EN_NAME')}">
+					{:L("EMAIL")}:
+		            <input type="text" name="email" style="width: 100px;" value="{:I('request.email/s','')}" placeholder="请输入{:L('EMAIL')}">
+		            {:L("MOBILE")}:
+		            <input type="text" name="mobile" style="width: 100px;" value="{:I('request.mobile/s','')}" placeholder="请输入{:L('MOBILE')}">
+		            {:L("DEPARTMENT")}:
+		            <select style="width: 115px;" name="department_id">
+		            	<option disabled selected>{:L('TO_CHOOSE')}</option>
+		            	<foreach name="departments" item="vo" key="k">
+
+		            	<option value="{$k+1}">{$vo}</option>
+		            	</foreach>
+		            </select>
+		            </td>
+	            </tr>
+	            <tr>
+	            
+		            <td>
+		            {:L("TURNOVER_STATUS")}:
+		            </td>
+		            <td>
+		            <select style="width: 115px;margin-right:10px;" name="turnover_status">
+		            	<option disabled selected>{:L('TO_CHOOSE')}</option>
+		            	<option value=0>{:L("ON_JOB")}</option>
+		            	<option value=1>{:L('OUT_JOB')}</option>
+		            </select>
+		            </td>
+		            <td>
+		            {:L("SEAT_NO")}:
+		            <input type="text" name="seat_detail" value="{:I('request.seat_detail/s','')}">
+		            <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}" />
+		            <a class="btn btn-danger" href="{:U('Staff/index')}">{:L('EMPTY')}</a>
+		            </td>       
+	            </tr>
+            </table>
+
+        </form>
+    
+		<form class="js-ajax-form" action="{:U('Staff/index')}" method="post" id="form2">
+			<input type="hidden" name="style" value="moment">
+			<input type="hidden" name="newpass" id="newpass">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Staff/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+				<a class="btn btn-primary btn-small" OnClick='_import()'>{:L('DATA_IMPORT')}</a>
+				<a class="btn btn-primary btn-small" OnClick='_export()'>{:L('DATA_EXPORT')}</a>
+				<a class="btn btn-primary btn-small" form_action="{:U('Mailer/templet')}" href="JavaScript:;" onclick="send(this)">{:L('GROUP_MAIL')}</a>
+				<a class="btn btn-primary btn-small" form_action="{:U('Staff/resetpass')}" href="JavaScript:;" onclick="resetpass(this)">重置密码</a>
+
+			</div>
+			<table class="table table-hover table-bordered table-list" style="width:120%;">
+
+				<thead>
+					<tr>
+						<th ><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th>{:L('ZN_NAME')}</th>
+						<th>{:L("EN_NAME")}</th>
+						<th>{:L("ALIAS")}</th>
+						<th>{:L("JOB_NUMBER")}</th>
+						<th>{:L("MOBILE")}</th>
+						<th>{:L("EXTENSION_NO")}</th>
+						<th>{:L("EMAIL")}</th>
+						<th>{:L("RECEIVING_DEMAND")}</th>
+						<th>{:L("DEPARTMENT")}</th>
+						<th>{:L("SEAT_NO")}</th>
+						<th>{:L("TURNOVER_STATUS")}</th>
+						<th>{:L("ACTIONS")}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="staff" item="vo">
+					<tr>
+					<td>
+						<label class="checkbox inline">
+							<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.staff_id}" title="ID:{$vo.staff_id}">
+						</label>
+					</td>
+					
+
+					<td>{$vo.zn_name}</td>
+					<td>{$vo.en_name}</td>
+					<td>{$vo.alias}</td>
+					<td>{$vo.job_number}</td>
+					<td>{$vo.mobile}</td>
+					<td>{$vo.extension_no}</td>
+					<td>{$vo.email}</td>
+					<td>{$receiving_demand[$vo['receiving_demand']]}</td>
+					<td>{$departments[$vo['department_id']]}</'td>
+					<td>{$seat[$vo['seat_id']]}</td>
+					
+					<td>{$turnover_status[$vo[turnover_status]]}</td>
+					<td>
+						<a href='{:U("Staff/edit",array("staff_id"=>$vo["staff_id"]))}'>{:L('EDIT')}</a> |
+						<a class="js-ajax-delete" href="{:U('Staff/delete',array('staff_id'=>$vo['staff_id']))}">{:L('DELETE')}</a>
+					</td>
+					</tr>
+					</foreach>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th ><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th>{:L('ZN_NAME')}</th>
+						<th>{:L("EN_NAME")}</th>
+						<th>{:L("ALIAS")}</th>
+						<th>{:L("JOB_NUMBER")}</th>
+						<th>{:L("MOBILE")}</th>
+						<th>{:L("EXTENSION_NO")}</th>
+						<th>{:L("EMAIL")}</th>
+						<th>{:L("RECEIVING_DEMAND")}</th>
+						<th>{:L("DEPARTMENT")}</th>
+						<th>{:L("SEAT_NO")}</th>
+						<th>{:L("TURNOVER_STATUS")}</th>
+						<th>{:L("ACTIONS")}</th>
+
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$page}</div>
+	
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Staff/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+
+				<a class="btn btn-primary btn-small" OnClick='_import()'>{:L('DATA_IMPORT')}</a>
+				<a class="btn btn-primary btn-small" OnClick='_export()'>{:L('DATA_EXPORT')}</a>
+
+				<a class="btn btn-primary btn-small" form_action="{:U('Mailer/templet')}" href="JavaScript:;" onclick="send(this)">{:L('GROUP_MAIL')}</a>
+				<a class="btn btn-primary btn-small" form_action="{:U('Staff/resetpass')}" href="JavaScript:;" onclick="resetpass(this)">重置密码</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<!-- <script src="__PUBLIC__/js/importExport.js"></script> -->
+	<script> 
+	function send($this){
+		var chk_value =[];  
+		//get checkbox value  
+		$('input[class="js-check"]:checked').each(function(){    
+			chk_value.push($(this).val());    
+		});    
+		if(chk_value.length==0){
+			art.dialog({
+				id: 'warning',
+				icon: 'warning',
+				content: '请至少选择一个员工！',
+				ok: function () {
+					//reloadPage(window);
+				}
+			});   
+		}else{	 	
+			$("#form2").attr("action", $($this).attr("form_action"))[0].submit();			
+		}    
+	}
+
+	function  resetpass($this){
+		var chk_value =[];  
+		//get checkbox value  
+		$('input[class="js-check"]:checked').each(function(){    
+			chk_value.push($(this).val());    
+		});    
+		if(chk_value.length==0){
+			art.dialog({
+				id: 'warning',
+				icon: 'warning',
+				content: '请至少选择一个员工！',
+				ok: function () {
+					//reloadPage(window);
+				}
+			});   
+		}else{	 	
+			//$("#form2").attr("action", $($this).attr("form_action"))[0].submit();	
+			Wind.use('artDialog', 'iframeTools', function () {
+				art.dialog.prompt('请输入重置后的密码', function(data){
+						//topVal = art.dialog.top.document.getElementById('testInput');
+						$('#newpass').val(data);
+						$("#form2").attr("action", $($this).attr("form_action"))[0].submit();	
+				}, '');
+			});
+		}    
+	}
+	function _export(){
+		$.ajax({
+		   type: "POST",
+		   url: "{:U('import_export')}",
+		   data: "queue_type=1&action=export",
+		   success: function(msg){
+		     art.dialog({
+				id: 'warning',
+				icon: 'warning',
+				content: '导出成功正在列表，请稍后！',
+				ok: function () {
+					//reloadPage(window);
+				}
+			}); 
+		  }
+		});
+	}
+	function _import(){
+	    Wind.use('artDialog', 'iframeTools', function () {
+	        var ImportUrl = "{:U('import_index')}";
+	        art.dialog.open(ImportUrl, {
+	            title: '{:L("DATA_IMPORT")}',
+	            lock: true,
+	            height: 150,
+	            width: "40%",
+	            // 在open()方法中，init会等待iframe加载完毕后执行
+	            init: function () {
+	                var iframe = this.iframe.contentWindow;
+	                var top = art.dialog.top;// 引用顶层页面window对象
+
+	            },
+	            ok: function () {				
+	                return true;                
+	            },
+	            cancel: true
+	        });
+	    });
+	}
+	</script>
+</body>
+</html>

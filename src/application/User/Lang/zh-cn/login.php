@@ -1,0 +1,22 @@
+<?php
+return array (
+	//手机号登录
+  'LOGIN_VERIFY_CODE'=>'登录验证成功！',
+  'LOGIN_NAME_NOTEXIST'=>'用户名不存在或已被拉黑！',
+  //邮箱
+  'LOGIN_NAME_ILLEGAL'=>'用户名不合法',
+  'CONTAIN_ILLEGAL_WORD'=>'包含不允许注册的词语',
+  'LOGIN_NAME_EXIST'=>'用户名已经存在',
+  'EMAIL_FORMAT_ERROR'=>'Email格式有误',
+  'EMAIL_NOT_REGISTER'=>'Email不允许注册',
+  'EMAIL_YET_REGISTER'=>'该Email已经被注册',
+  'SYNCHRO_USER_ERROR'=>'同步用户失败--',
+  'LOGIN_ERROR'=>'登陆错误！',
+  'MOBILE_MAIL'=>'手机号/邮箱',
+  'VERIFY_CODE'=>'验证码',
+  'VERIFY_CODE_ERROR'=>'验证码错误！',
+  'MOBILE_EMAIL_MUST'=>'手机号/邮箱不能为空！',
+  'PASSWORD_MUST'=>'密码不能为空！',
+  'PLEASE_FILL'=>'请填写用户名或密码！',
+  'VERIFY_CODE_NULL'=>'验证码不能为空！',
+);

@@ -1,0 +1,287 @@
+<admintpl file="header" />
+<link rel="stylesheet" href="__PUBLIC__/css/combo.select/combo.select.css">
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('Staff/index')}">{:L("STAFF_INFO")}</a></li>
+			<li ><a href="{:U('Staff/add')}">{:L("ADD")}</a></li>
+			<li class="active"><a href="javascript:;">{:L("EDIT")}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Staff/edit_post')}">
+		<input type="hidden" name="disabled" value="{$staff.disabled}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">{:L('ZN_NAME')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="zn_name" value="{$staff.zn_name}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L("EN_NAME")}:</label>
+					<div class="controls form-group">
+						<input type="text" name="en_name" value="{$staff.en_name}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L("ALIAS")}:</label>
+					<div class="controls form-group">
+						<input type="text" name="alias" value="{$staff.alias}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L("JOB_NUMBER")}:</label>
+					<div class="controls form-group">
+						<input type="text" name="job_number" value="{$staff.job_number}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L("MOBILE")}:</label>
+					<div class="controls form-group">
+						<input type="text" name="mobile" value="{$staff.mobile}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L("EXTENSION_NO")}:</label>
+					<div class="controls form-group">
+						<input type="text" name="extension_no" value="{$staff.extension_no}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L("EMAIL")}:</label>
+					<div class="controls form-group">
+						<input type="text" name="email" value="{$staff.email}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+						
+				<div class="control-group">
+					<label class="control-label">{:L("RECEIVING_DEMAND")}:</label>
+					<div class="controls form-group">			
+						<label style="display:inline;"><input type="radio" name="receiving_demand" value="0">{:L("HAND_OUT")}</label>
+						<label style="display:inline;"><input type="radio" name="receiving_demand" value="1">{:L("SELF_ASK")}</label>
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L("DEPARTMENT")}:</label>
+					<div class="controls form-group">
+						<select style="width: 223px;" name="department_id">
+		            		<option disabled selected>{:L('TO_CHOOSE')}</option>
+			            	<foreach name="departments" item="vo" key="k">
+			            		<option value="{$k}" <if condition="$k eq $staff['department_id']">selected</if>>{$vo}</option>
+			            		
+		            		</foreach>
+		            	</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L("SEAT_NO")}:</label>
+					<div class="controls form-group">
+						<input type="hidden" name="seat_id" id="seat_id" value="{$staff.seat_id}">
+						<input type="text" readonly name="seat_detail" id="seat_detail" value="{$staff.seat_detail}">
+						<button type="button" class="btn btn-primary" id="seatDetail">
+                                {:L("CHOOSE")}
+                        </button>
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L("TURNOVER_STATUS")}:</label>
+					<div class="controls form-group">
+						<label style="display:inline;"><input type="radio" name="turnover_status" value="0">{:L("ON_JOB")}</label>
+						<label style="display:inline;"><input type="radio" name="turnover_status" value="1">{:L("OUT_JOB")}</label>
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="staff_id" value="{$staff.staff_id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	
+	<script>
+		$(document).ready(function() {
+			
+			//默认收件需求
+			var receive0 = $("input[name='receiving_demand']:eq(0)");
+			var receive1 = $("input[name='receiving_demand']:eq(1)");
+			if(receive0.val() == {$staff.receiving_demand}){
+				receive0.attr('checked', 'checked');
+			}
+			if(receive1.val() == {$staff.receiving_demand}){
+				receive1.attr('checked', 'checked');
+			}
+			//默认离职状态
+			var turnover0 = $("input[name='turnover_status']:eq(0)");
+			var turnover1 = $("input[name='turnover_status']:eq(1)");
+			if(turnover0.val() == {$staff.turnover_status}){
+				turnover0.attr('checked', 'checked');
+			}
+			if(turnover1.val() == {$staff.turnover_status}){
+				turnover1.attr('checked', 'checked');
+			}
+
+			$(".js-ajax-form").bootstrapValidator({
+                message: '{:L("IS_NOT_VALID")}',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    zn_name: {
+                        validators: {
+                            notEmpty: {
+                                message: '{:L("ZN_NAME_REQUIRED")}'
+                            },
+                            regexp: {
+                                regexp: /^[\u4e00-\u9fa5\s]{1,33}$/,
+                                message: '{:L("ZN_NAME_ERROR")}'
+                            }
+                        }
+                    },
+                    en_name:{
+                        validators: {
+                        	notEmpty: {
+                                message: '{:L("EN_NAME_REQUIRED")}'
+                            },
+                            regexp: {
+                                regexp: /^[a-zA-Z\s]{1,99}$/,
+                                message: '{:L("EN_NAME_ERROR")}'
+                            }
+                        }
+                    },
+                    alias:{
+                        validators: {
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9\u4e00-\u9fa5\s]{1,33}$/,
+                                message: '{:L("ALIAS_ERROR")}'
+                            }
+                        }
+                    },
+                    extension_no:{
+                        validators: {
+                            regexp: {
+                                regexp: /^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/,
+                                message: '{:L("EXTENSION_NO_ERROR")}'
+                            }
+                        }
+                    },
+                    mobile:{
+                        validators: {
+                            regexp: {
+                                regexp: /^1(3|4|5|7|8)\d{9}$/,
+                                message: '{:L("MOBILE_ERROR")}'
+                            }
+                        }
+                    },
+                    job_number:{
+                        validators: {
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9_\s]{1,30}$/,
+                                message: '{:L("JOB_NUMBER_ERROR")}'
+                            }
+                        }
+                    },
+                    email:{
+                        validators: {
+                        	notEmpty: {
+                                message: '{:L("EMAIL_REQUIRED")}'
+                            },
+                            emailAddress: {
+					            message: '{:L("EMAIL_ERROR")}'
+					        },
+                        }
+                    },
+                    seat_detail:{
+                        validators: {
+                        	/*notEmpty: {
+                                message: '{:L("SEAT_NO_REQUIRED")}'
+                            },*/
+                            regexp: {
+                                regexp:  /^[a-zA-Z0-9_\-\(\)\（\（\s]{1,255}$/,
+                                message: '{:L("SEAT_NO_ERROR")}'
+                            }
+                        }
+                    },
+                }
+            });
+
+			//座位号选择
+	        $("#seatDetail").click(function () {
+	            //console.log('seat Detail start');
+	            Wind.use('artDialog', 'iframeTools', function () {
+	                var seatUrl = "{:U('SeatDetail/index')}";
+	                art.dialog.open(seatUrl, {
+	                    title: '{:L("CHOOSE")}{:L("SEAT_NO")}',
+	                    lock: true,
+	                    height: 400,
+	                    width: "80%",
+	                    // 在open()方法中，init会等待iframe加载完毕后执行
+	                    init: function () {
+	                        var iframe = this.iframe.contentWindow;
+	                        var top = art.dialog.top;
+	                    },
+	                    ok: function () {
+
+	                        var iframe = this.iframe.contentWindow;
+	                        if (!iframe.document.body) {
+	                            alert('iframe还没加载完毕呢')
+	                            return false;
+	                        }
+
+	                        // 获取iframe嵌套内容
+	                       var seat_id = iframe.document.getElementById('send_seat_id').value;
+
+	                       $("#seat_id").val(seat_id);
+
+	                        //获取iframe内嵌信息的json
+	                        var seat_jsons = iframe.document.getElementById('seat_json').value;
+							var seat_jsons = eval('(' + seat_jsons + ')');
+					
+							var seat_detail = seat_jsons['seat_detail'];
+							$("#seat_detail").val(seat_detail);
+						
+	                        return true;
+	                        //}
+	                        
+	                    },
+	                    cancel: true
+	                });
+	            });
+
+	        });
+
+            var form = $(".js-ajax-form");
+            form.submit(function(ev){ev.preventDefault();});
+            $('.js-ajax-submit').on("click", function(ev){
+            	ev.preventDefault();
+                var bootstrapValidator = form.data('bootstrapValidator');
+
+                if (bootstrapValidator) {
+                    // 修复记忆的组件不验证
+                    bootstrapValidator.validate();
+
+                    if (!bootstrapValidator.isValid()) {
+
+                        return false;
+                    }else{
+                        //$('.js-ajax-submit').removeAttr('disabled');
+                        form.submit();
+                    }
+
+                }
+
+            });
+		});
+	</script>
+</body>
+</html>

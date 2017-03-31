@@ -1,0 +1,83 @@
+<admintpl file="header" />
+<link rel="stylesheet" href="__PUBLIC__/css/date_input.css" type="text/css">
+</head>
+
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('OperationLog/index')}">{:L('OPERATION_LOG')}</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('OperationLog/index')}">
+			<table>
+				<tr>
+					<td>
+		            {:L('OPERATOR')}:
+		            <input type="text" name="user_login" style="width: 100px;" value="{:I('request.user_login/s','')}" placeholder="请输入{:L('OPERATOR')}">
+		            </td>
+		            <td>
+		            {:L('OPERATION_TIME')}：
+					<input type="text" name="start_time" class="js-datetime" value="{:I('request.start_time/s','')}" style="width: 120px;" autocomplete="off">-
+					<input type="text" class="js-datetime" name="end_time" value="{:I('request.end_time/s','')}" style="width: 120px;" autocomplete="off">
+
+					{:L('OPERATION_CONTENT')}:
+		            <input type="text" name="operation_content" style="width: 100px;" value="{:I('request.operation_content/s','')}" placeholder="请输入{:L('OPERATION_CONTENT')}">
+		            
+		            <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}" />
+		            <a class="btn btn-danger" href="{:U('OperationLog/index')}">{:L('EMPTY')}</a>
+		            </td>
+	            </tr>
+            </table>
+        </form>
+    
+		<form class="js-ajax-form" action="{:U('OperationLog/index')}" method="post" id="form2">
+			<!-- <div class="table-actions">
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_IMPORT')}</button>
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_EXPORT')}</button>
+			</div> -->
+			<table class="table table-hover table-bordered table-list" style="width:120%;">
+
+				<thead>
+					<tr>
+						<th>{:L('OPERATOR')}</th>
+						<th>{:L('OPERATION_NODE')}</th>
+						<th>{:L('OPERATION_CONTENT')}</th>
+						<th>{:L('OPERATION_IP')}</th>
+						<th>{:L('OPERATION_TIME')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="log_list" item="vo">
+					<tr>
+					<td>{$vo.user_login}</td>
+					<td>{$vo.operation_node}</td>
+					<td>{$vo.operation_content|msubstr=0,16,'utf-8',false}
+					<if condition="mb_strlen($vo['operation_content'],'utf-8') gt 16">...</if>
+					</td>
+					<td>{$vo.operation_ip}</td>
+					<td>{$vo.operation_time|date="Y-m-d H:i:s",###}</td>
+					</tr>
+					</foreach>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>{:L('OPERATOR')}</th>
+						<th>{:L('OPERATION_NODE')}</th>
+						<th>{:L('OPERATION_CONTENT')}</th>
+						<th>{:L('OPERATION_IP')}</th>
+						<th>{:L('OPERATION_TIME')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$page}</div>
+	
+			<!-- <div class="table-actions">
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_IMPORT')}</button>
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_EXPORT')}</button>
+			</div> -->
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+
+</body>
+
+</html>

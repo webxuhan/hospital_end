@@ -1,0 +1,81 @@
+<admintpl file="header"/>
+</head>
+
+<body>
+<div class="wrap js-check-wrap">
+
+
+    <input type="hidden" value="" name="send_seat_id" id="send_seat_id">
+    <input type="hidden" value="" name="seat_json" id="seat_json">
+    <form class="well form-search" method="post" action="{:U('SeatDetail/index')}">
+        <table>
+            <tr>
+                <td>{:L("SEAT_NO")}:
+                    <input type="text" name="seat_detail" value="{:I('request.seat_detail/s','')}">
+                    <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}"/>
+                    <a class="btn btn-danger" href="{:U('SeatDetail/index')}">{:L('EMPTY')}</a>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+
+    <form class="js-ajax-form" action="{:U('SeatDetail/searchSeat')}" method="post" id="form2">
+        <table class="table table-hover table-bordered table-list" style="width:120%;">
+
+            <thead>
+            <tr>
+                <th>
+                    <label>
+                        <!--<input type="checkbox" class="js-check-all" data-direction="x"-->
+                                  <!--data-checklist="js-check-x">-->
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th width="350">{:L('SEAT_NO')}</th>
+                <th>{:L('CREATE_TIME')}</th>
+                <th>{:L('UPDATE_TIME')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="seat" item="vo" key="k">
+                <tr>
+                    <td>
+                        <label class="checkbox inline">
+                            <input type="hidden" id="json{$k}" value='{:json_encode($vo)}'>
+                            <input type="radio" name="seat_id"
+                                   onclick="if(this.checked==true){document.getElementById('send_seat_id').value=this.value;
+                                   document.getElementById('seat_json').value=document.getElementById('json{$k}').value;};"
+                                   value="{$vo.seat_id}" style="position:relative;bottom:6px;">
+                        </label>
+                    </td>
+
+                    <td>{$vo.seat_id}</td>
+                    <td>{$vo.seat_detail}</td>
+                    <td>{$vo.create_time}</td>
+                    <td>{$vo.update_time}</td>
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th><label>
+                    <!--<input type="checkbox" class="js-check-all" data-direction="x"-->
+                                  <!--data-checklist="js-check-x">-->
+                </label></th>
+                <th width="50">ID</th>
+                <th width="350">{:L('SEAT_NO')}</th>
+                <th>{:L('CREATE_TIME')}</th>
+                <th>{:L('UPDATE_TIME')}</th>
+
+            </tr>
+            </tfoot>
+        </table>
+        <div class="pagination">{$page}</div>
+
+
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<ul class="nav nav-tabs">
+		<li ><a href="{:U('Send/index')}">{:L('ADMIN_SEND_INDEX')}</a></li>
+		<li><a href="{:U('Send/add')}">{:L('ADMIN_SEND_ADD')}</a></li>
+		<li class="active"><a href="">{:L('ADMIN_SEND_EDIT')}</a></li>
+	</ul>
+	<form method="post" class="form-horizontal js-ajax-form" action="{:U('Send/edit_post')}">
+		<div class="control-group form-group">
+			{:L('NAME')}:
+			<input type="text" name="send_name"  style="width: 160px;" value="{$data.send_name}">
+			<span class="form-required">*</span><br />
+		</div>
+		<div class="control-group form-group">
+			{:L('START_TIME')}:
+			<input type="text" name="start_time"  class="js-datetime" style="width: 160px;" value="{$data.start_time}">
+			<span class="form-required">*</span><br />
+		</div>
+		<div class="control-group form-group">
+			{:L('END_TIME')}:
+			<input type="text" name="end_time"  class="js-datetime" style="width: 160px;" value="{$data.end_time}">
+			<input type="hidden" name="send_id"   value="{$send_id}">
+			<span class="form-required">*</span><br />
+		</div>
+		<div class="control-group form-group">
+			<table class="table  table-bordered table-list" style="width:600px;">
+				<thead>
+				<tr>
+					<th style="width:225px;text-align: center">路径</th>
+					<th style="width:225px;text-align: center">派送员</th>
+					<th style="width:60px;text-align: center">操作</th>
+				</tr>
+				</thead>
+				<tbody class="each_sel">
+					<tr class="own_tr" style="display:none;">
+						<td style="vertical-align: middle;text-align: center;">
+							<select  class="sel_way" style="height:40px;margin-bottom: 0;color:#000;">
+								<option value="-1">{:L('CHOSE')}</option>
+								<foreach name="plan_way" item="vo">
+									<option value="{$vo.way_name}">{$vo.way_name}</option>
+								</foreach>
+							</select>
+						</td>
+						<td  style="vertical-align: middle;text-align: center;">
+							<select name="sel_sender[]" style="height:40px;margin-bottom: 0;color:#000;">
+								<foreach name="plan_sender" item="vo">
+									<option>{$vo.sender}</option>
+								</foreach>
+							</select>
+						</td>
+						<td>
+							<a class="addbtn" style="width:50px;height:40px;border: none;background:#fff;"><img src="__PUBLIC__/images/add.png" style="width:30px;"></a>
+							<a class="removebtn" style="width:50px;height:40px;border: none;background:#fff;"><img src="__PUBLIC__/images/remove.png" style="width:30px;"></a>
+						</td>
+					</tr>
+					<if condition="$send_data neq ''">
+						<foreach name="send_data" item="sd">
+							<tr class="own_tr">
+								<td style="vertical-align: middle;text-align: center;">
+									<select name="sel_way[]" class="sel_way" style="height:40px;margin-bottom: 0;color:#000;">
+										<option value="-1">{:L('CHOSE')}</option>
+										<foreach name="plan_way" item="vo">
+											<if condition="$vo['way_name'] eq $sd['way_name']">
+												<option value="{$vo.way_name}" selected>{$vo.way_name}</option>
+												<elseif condition="in_array($vo['way_name'],$send_selected_arr)" />
+												<option value="{$vo.way_name}" disabled>{$vo.way_name}</option>
+												<else/>
+												<option value="{$vo.way_name}">{$vo.way_name}</option>
+											</if>
+										</foreach>
+									</select>
+								</td>
+								<td  style="vertical-align: middle;text-align: center;">
+									<select name="sel_sender[]" style="height:40px;margin-bottom: 0;color:#000;">
+										<foreach name="plan_sender" item="vo">
+											<if condition="$vo['sender'] eq $sd['sender']">
+												<option selected>{$vo.sender}</option>
+												<else />
+												<option>{$vo.sender}</option>
+											</if>
+										</foreach>
+									</select>
+								</td>
+								<td>
+									<a class="addbtn" style="width:50px;height:40px;border: none;background:#fff;"><img src="__PUBLIC__/images/add.png" style="width:30px;"></a>
+									<a class="removebtn" style="width:50px;height:40px;border: none;background:#fff;"><img src="__PUBLIC__/images/remove.png" style="width:30px;"></a>
+								</td>
+							</tr>
+						</foreach>
+					<else />
+						<tr class="own_tr" >
+							<td style="vertical-align: middle;text-align: center;">
+								<select name="sel_way[]" class="sel_way" style="height:40px;margin-bottom: 0;color:#000;">
+									<option value="-1">{:L('CHOSE')}</option>
+									<foreach name="plan_way" item="vo">
+										<option value="{$vo.way_name}">{$vo.way_name}</option>
+									</foreach>
+								</select>
+							</td>
+							<td  style="vertical-align: middle;text-align: center;">
+								<select name="sel_sender[]" style="height:40px;margin-bottom: 0;color:#000;">
+									<foreach name="plan_sender" item="vo">
+										<option>{$vo.sender}</option>
+									</foreach>
+								</select>
+							</td>
+							<td>
+								<a class="addbtn" style="width:50px;height:40px;border: none;background:#fff;"><img src="__PUBLIC__/images/add.png" style="width:30px;"></a>
+								<a class="removebtn" style="width:50px;height:40px;border: none;background:#fff;"><img src="__PUBLIC__/images/remove.png" style="width:30px;"></a>
+							</td>
+						</tr>
+					</if>
+
+				</tbody>
+			</table>
+		</div>
+		<div class="form-actions">
+			<input type="button"  class="btn btn-primary js-ajax-submit sel_way_send" value="{:L('SAVE')}">
+			<a class="btn" href="{:U('Send/index')}">{:L('BACK')}</a>
+			<span class="return_res"></span>
+		</div>
+	</form>
+</div>
+<script>
+	$(function(){
+		//add按钮单击时执行
+		$(".addbtn").click(function(){
+			//点击add，增加一行
+			var newTr = $(".own_tr:first").clone(true);
+			newTr.find("select:first").attr('name','sel_way[]');
+			$(".table-list").append(newTr);
+
+			$(".own_tr:last").show();
+			$(".sel_way").change();
+		});
+		//remove按钮单击时执行
+		$(".removebtn").click(function(){
+			//判断有几个select(有几行)
+			if ($(".own_tr").length == 1){
+				//只有一行不允许删除
+			}else{
+				//将减去的那行选中的路径，在其他下拉框恢复
+				var tmpValue = $(this).parents("tr").find("select:first").val();
+
+//					$(".sel_way").find("option[value=" + tmpValue + "]").attr("disabled", false);
+
+				$("select[name='sel_way[]']").each(function(index,item) {
+					$(this).find("option[value=" + tmpValue + "]").attr("disabled", false);
+				});
+
+				//存在多行,删除本行
+				$(this).parent().parent().remove();
+			}
+
+		});
+		//提交的时候点击按钮，先remove掉隐藏的select框的name
+		$(".sel_way_send").click(function(){
+			$(".own_tr:first").removeAttr('name');
+		});
+	});
+</script>
+<script>
+	$(document).ready(function(){
+		//验证
+		$(".js-ajax-form").bootstrapValidator({
+			message: '{:L("IS_NOT_VALID")}',
+			feedbackIcons: {
+				valid: 'glyphicon glyphicon-ok',
+				invalid: 'glyphicon glyphicon-remove',
+				validating: 'glyphicon glyphicon-refresh'
+			},
+			fields: {
+				send_name: {
+					message: '{:L("IS_NOT_VALID")}',
+					validators: {
+						notEmpty: {
+							message: '{:L("NAME_MUST")}'
+						},
+						stringLength: {
+							min: 1,
+							max: 30,
+							message: '{:L("IS_NOT_LENGTH")}'
+						},
+						regexp: {
+							regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\\\/\(\)\（\）]+$/,
+							message: '{:L("IS_VALID")}'
+						}
+					}
+				},
+			}
+		});
+
+
+		/*   $(".own-submit").bootstrapValidator().on('success.form.bv', function(e) {
+		 // 阻止默认事件提交
+		 e.preventDefault();
+		 });*/
+
+		var form = $(".js-ajax-form");
+		form.submit(function(ev){ev.preventDefault();});
+
+		$('.js-ajax-submit').on("click", function(e){e.preventDefault();
+			var bootstrapValidator = form.data('bootstrapValidator');
+
+			if (bootstrapValidator) {
+				// 修复记忆的组件不验证
+				bootstrapValidator.validate();
+
+				if (!bootstrapValidator.isValid()) {
+
+					return false;
+				}else{
+					//$('.own-submit').removeAttr('disabled');
+					form.submit();
+				}
+
+			}
+
+		});
+
+		/*
+		 form.bootstrapValidator().on('success.form.bv', function(e) {
+		 // 阻止默认事件提交
+		 e.preventDefault();
+		 });
+		 */
+
+
+	});
+</script>
+
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/selway.js"></script>
+</body>
+
+</html>

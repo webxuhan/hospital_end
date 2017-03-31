@@ -1,0 +1,57 @@
+ <!-- 快件下单 -->
+    <ul class="placeOrder-head">
+      <li>普通快递</li>
+      <li class="placeOrder-current">内部件</li>
+      <li>打包件</li>
+    </ul>
+    <div class="placeOrder-content">
+      <form action="">
+        <div class="mailType"><span>快件类型:</span>
+          <select name="mailType" id="">
+            <option value="">国际快递</option>
+            <option value="">国内快递</option>
+          </select>
+          <span></span>
+        </div>
+        <div class="clearfix">
+          <span class="recipients"><span>收件人:</span><input type="text"></span>
+          <span class="contactPhone"><span>联系电话:</span><input type="text"></span>
+        </div>
+        <div class="mailAddress"><span>收货地址:</span>
+          <select name="" id=""><option value="">1</option></select>
+          <select name="" id=""><option value="">2</option></select>
+          <select name="" id=""><option value="">3</option></select>
+          <div><textarea rows="3" cols="40">请填写您的详细地址！
+              </textarea></div>
+        </div>
+        <div class="parcelWeight"><span>预计重量:</span>
+          <input type="text"> g
+        </div>
+        <div class="expressCompany"><span>快递公司:</span>
+          <select name="" id="">
+            <option value="" selected="selected">顺丰</option>
+            <option value="">快递2</option>
+            <option value="">快递3</option>
+          </select>
+          <span class="hint">系统已经为您推荐最优快递</span>
+        </div>
+        <div class="expense"><span>费用:</span>
+          <input type="text" value="18"> 元
+        </div>
+        <div class="costCenter"><span>成本中心:</span>
+          <select name="" id=""><option value="">行政部</option></select>
+          <select name="" id="" class="secondSelect"><option value="">财务部</option></select>
+        </div>
+        <div class="parcelNumber"><span>包裹数量:</span>
+          <select name="" id="">
+            <option value="1" selected="selected">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+          <span class="hint">系统默认为1一票多件请选择数量</span>
+          <div><span>标签号码1</span><input type="text"></div>
+        </div>
+        <button class="submit">提交</button><button class="reset">取消</button>
+      </form>
+    </div>
+  </div>

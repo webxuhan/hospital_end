@@ -1,0 +1,45 @@
+<admintpl file="header"/>
+<style>.expander{margin-left: -20px;}</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Regions/index')}">{:L("REGION_INFO")}</a></li>
+			<li><a href="{:U('Regions/add')}">{:L("REGION_ADD")}</a></li> 
+			<li class="active"><a href="javascript:;">{:L("CHOOSE_PRE_REGION")}</a></li>
+		</ul>
+		<form class="js-ajax-form" action="{:U('Regions/add')}" method="post">
+		<input type="hidden" name="par_id" value="{$parentid}">
+			<div class="table_full">
+				<table class="table table-bordered" id="authrule-tree">
+					<tbody>
+						{$categorys}
+					</tbody>
+				</table>
+			</div>
+			<div class="form-actions">
+				<button class="btn" type="submit">{:L("OK")}</button>
+				<a class="btn" href="{:U('Regions/add?parentid='.$parentid);}">{:L("BACK")}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+	var ajaxForm_list = $('form.js-ajax-form');
+	if (ajaxForm_list.length) {
+
+	    Wind.use('ajaxForm', 'artDialog', function () {
+	        //树状按钮文案、状态修改
+			$('button.js-ajax-submit').text(text + '中...').attr('disabled', true).addClass('disabled');
+	    });
+	}
+	$(document).ready(function () {
+		Wind.css('treeTable');
+	    Wind.use('treeTable', function () {
+	        $("#authrule-tree").treeTable({
+	            indent: 20
+	        });
+	    });
+	});
+	</script>
+</body>
+</html>

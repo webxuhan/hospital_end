@@ -1,0 +1,115 @@
+<admintpl file="header" />
+</head>
+
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('SendLabel/index')}">{:L("SENDLABEL_INFO")}</a></li>
+			<li><a href="{:U('SendLabel/add')}">{:L("ADD")}</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('SendLabel/index')}">
+			<table>
+				<tr>
+					<td>
+		            {:L('BATCHS')}:
+		            <input type="text" name="batch" style="width: 100px;" value="{:I('request.batch/s','')}" placeholder="请输入{:L('BATCHS')}">
+		            </td>
+		            <td>
+		            {:L("OPERATOR")}:
+		            <input type="text" name="operator" style="width: 100px;" value="{:I('request.operator/s','')}" placeholder="请输入{:L('OPERATOR')}">
+		            {:L("OPERATION_TIME")}:
+		            <input type="text" name="start_time" class="js-datetime" value="{:I('request.start_time/s','')}" style="width: 120px;" autocomplete="off">-
+					<input type="text" class="js-datetime" name="end_time" value="{:I('request.end_time/s','')}" style="width: 120px;" autocomplete="off">
+					<input type="submit" class="btn btn-primary" value="{:L('SEARCH')}" />
+		            <a class="btn btn-danger" href="{:U('SendLabel/index')}">{:L('EMPTY')}</a>
+		            </td>
+	            </tr>
+            </table>
+
+        </form>
+    
+		<form class="js-ajax-form" action="{:U('SendLabel/index')}" method="post" id="form2">
+			<input type="hidden" name="style" value="moment">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('SendLabel/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_IMPORT')}</button>
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_EXPORT')}</button>
+			</div>
+			<table class="table table-hover table-bordered table-list" style="width:120%;">
+
+				<thead>
+					<tr>
+						<th ><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th>{:L('BATCHS')}</th>
+						<th>{:L('FLOOR')}</th>
+						<th>{:L('NUM')}</th>
+						<th>{:L('OPERATOR')}</th>
+						<th>{:L('OPERATION_TIME')}</th>
+						<th>{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="labels" item="vo">
+					<tr>
+					<td>
+						<label class="checkbox inline">
+							<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.label_id}" title="ID:{$vo.label_id}">
+						</label>
+					</td>
+					<td>{$vo.batch}</td>
+					<td>{$vo.floor|msubstr=0,20,'utf-8',false}
+					<if condition="mb_strlen($vo['floor'],'utf-8') gt 20">...</if>
+					</td>
+					<td>{$vo.num}</td>
+					<td>{$vo.user_login}</td>
+					<td>{$vo.operation_time|date="Y-m-d H:i:s",###}</td>
+					<td>
+						<a data-toggle="tooltip" title="{:L('DOWNLOAD')}{:L('THIS')}{:L('LABEL_BATCH')}" href='{:U("SendLabel/create_label",array("label_id"=>$vo["label_id"]))}'>{:L("DOWNLOAD")}</a> |  
+						<a data-toggle="tooltip" href="javascript:;" title="{:L('CANCEL_LABEL')}" onclick="_cancel({$vo['label_id']})">{:L('CANCELLATION')}</a>
+					</td>
+					</tr>
+					</foreach>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th ><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th>{:L('BATCHS')}</th>
+						<th>{:L('FLOOR')}</th>
+						<th>{:L('NUM')}</th>
+						<th>{:L('OPERATOR')}</th>
+						<th>{:L('OPERATION_TIME')}</th>
+						<th>{:L('ACTIONS')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$page}</div>
+	
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('SendLabel/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_IMPORT')}</button>
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_EXPORT')}</button>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function _cancel($param){
+			$.ajax({
+			   type: "POST",
+			   url: "{:U('cancel')}",
+			   data: "label_id="+$param,
+			   success: function(msg){
+			     art.dialog({
+					id: 'warning',
+					icon: 'warning',
+					content: '该批次未使用标签已成功作废！',
+					ok: function () {
+						//reloadPage(window);
+					}
+				}); 
+			  }
+			});
+		}
+	</script>
+</body>
+</html>

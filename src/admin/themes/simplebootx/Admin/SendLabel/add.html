@@ -1,0 +1,64 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('SendLabel/index')}">{:L("SENDLABEL_INFO")}</a></li>
+			<li class="active"><a href="{:U('SendLabel/add')}">{:L("ADD")}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('SendLabel/add_post')}" id="form1">
+		
+			<fieldset id="fieldset">
+				<div class="control-group">
+					<label class="control-label">{:L('FLOOR')}1:</label>
+					<div class="controls">
+						{:get_building_prefix()}<input type="text" name="building[]" style="width: 50px;" placeholder="{:L('BUILDING')}">-{:get_floor_prefix()}<input type="text" name="floor[]" style="width: 50px;" placeholder="{:L('FLOOR')}"><input type="text" class='nums' name="num[]" placeholder="{:L('NUMS_STANDARD')}{:L('NUM')}">
+						<a class="btn btn-primary btn-small"  href="JavaScript:;" onclick="addFloor()">{:L('ADD')}{:L('FLOOR')}</a>
+					</div>
+				</div>
+				
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L("OK")}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('CANCEL')}</a>
+				<span id="shows"></span>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+    	var i=1;
+		var building_frefix = "<?=get_building_prefix();?>";
+		var floor_frefix = "<?=get_floor_prefix();?>";
+		
+		function addFloor(){
+			i++;
+			var div1="<div class='control-group'>"+
+					"<label class='control-label'>"+"{:L('FLOOR')}"+i+":</label>"+
+					"<div class='controls'>"+building_frefix+"<input type='text' name='building[]' style='width: 50px;' placeholder='"+"{:L('BUILDING')}"+"'>-"+floor_frefix+"<input type='text' name='floor[]' style='width: 50px;' placeholder='"+"{:L('FLOOR')}"+"'>"+"<input type='text' class='nums' name='num[]' placeholder='"+"{:L('NUM')}"+"'>"+"<a class='btn btn-danger btn-primary btn-small'  href='JavaScript:;' onclick='deleteFloor(this)'>"+"{:L('CANCEL')}"+"{:L('FLOOR')}"+"</a>"+"</div>"+"</div>";
+			$('#fieldset').append(div1);
+		}
+		function deleteFloor(t){
+			t.parentNode.parentNode.remove();	
+		}
+
+        var form = $(".js-ajax-form");
+        form.submit(function(ev){ev.preventDefault();});
+
+        $('.js-ajax-submit').on("click", function(ev){
+        	ev.preventDefault();
+        	var isCorr=true; 
+            $('input').each(function(){ 
+			  	if($(this).attr("class").indexOf('nums')!=-1){
+			  		if(isNaN($(this).val()) || $(this).val()<=0 || $(this).val()>99999){
+			  			$('#shows').text("{:L('NUM_ERROR')}");
+				  		isCorr= false;			
+				  	}
+			  	}
+			});
+          if (isCorr==true ) form.submit();
+        });  
+
+	</script>
+</body>
+</html>

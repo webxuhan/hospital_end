@@ -1,0 +1,75 @@
+<admintpl file="header" />
+</head>
+
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="{:U('ExportTemplate/index')}">{:L('EXPORT_TEMPLATE_DOWNLOAD')}</a></li>
+        </ul>
+        <table class="table table-hover table-bordered table-list" style="width:120%;">
+            <thead>
+                <tr>
+                    <th>{:L('TEMPLATE_NAME')}</th>
+                    <th>{:L("ACTIONS")}</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>{:L('STAFF_INFO')}</td>
+                    <td>
+                        <a href="./public/excel/exporttemplate/Staff.xls">{:L("DOWNLOAD")}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{:L('DEPARTMENTS_INDEX')}</td>
+                    <td>
+                       <a href="./public/excel/exporttemplate/Departments.xls">{:L("DOWNLOAD")}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{:L('COSTCENTERS_INDEX')}</td>
+                    <td>
+                       <a href="./public/excel/exporttemplate/Costcenters.xls">{:L("DOWNLOAD")}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{:L('ADMIN_SEAT_INDEX')}</td>
+                    <td>
+                        <a href="./public/excel/exporttemplate/Seat.xls">{:L("DOWNLOAD")}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>MailRoom</td>
+                    <td>
+                        <a href="./public/excel/exporttemplate/Mailroom.xls">{:L("DOWNLOAD")}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{:L('EXPRESS_COMPANY')}</td>
+                    <td>
+                       <a href="./public/excel/exporttemplate/ExpressCompany.xls">{:L("DOWNLOAD")}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{:L('ADMIN_SEND_INDEX')}</td>
+                    <td>
+                        <a href="./public/excel/exporttemplate/Send.xls">{:L("DOWNLOAD")}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{:L('ADDRESS_INFO')}</td>
+                    <td>
+                        <a href="./public/excel/exporttemplate/PackageAddress.xls">{:L("DOWNLOAD")}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{:L('ADMIN_WAY_INDEX')}</td>
+                    <td>
+                        <a href="./public/excel/exporttemplate/Way.xls">{:L("DOWNLOAD")}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  
+</body>
+</html>

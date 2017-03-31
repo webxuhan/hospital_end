@@ -1,0 +1,177 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('departments/index')}">{:L('DEPARTMENTS_INDEX')}</a></li>
+			<li class="active"><a href="{:U('departments/add')}">{:L('DEPARTMENTS_ADD')}</a></li>
+		</ul>
+			<form method="post" class="form-horizontal js-ajax-form" action="{:U('departments/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">{:L('DEPARTMENT_NAME')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="department_name" id="department_name" class="form-control" >
+						<span class="form-required">*</span>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label">{:L('DEPARTMENT_CONTACTS')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="contacts" id="contacts" class="form-control">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('DEPARTMENT_MOBILE')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="mobile" id="mobile">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('DEPARTMENT_TEL')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="tel" id="tel">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('DEPARTMENT_COMPANY')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="company" id="company">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('DEPARTMENT_ACCOUNT')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="account" id="account">
+					</div>
+				</div>
+
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+
+    <script src="__PUBLIC__/js/common.js"></script>
+	<script>
+        $(document).ready(function(){
+            $(".js-ajax-form").bootstrapValidator({
+                message: '{:L("IS_NOT_VALID")}',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    department_name: {
+                        message: '{:L("IS_NOT_VALID")}',
+                        validators: {
+                            notEmpty: {
+                                message: '{:L("NAME_MUST")}'
+                            },
+                            stringLength: {
+                                max: 50,
+                                message: '{:L("NAME_TOLONG")}'
+                            },
+                        regexp: {
+                                regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\\\/\-\s]+$/,
+                                message: '{:L("FORMAT_ERROR")}'
+                            }
+                        }
+                    },
+                    contacts:{
+                        message: '{:L("IS_NOT_VALID")}',
+                        validators: {
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\s]+$/,
+                                message: '{:L("IS_VALID")}'
+                            },
+
+                        }
+                    },
+                    mobile:{
+                        message: '{:L("IS_NOT_VALID")}',
+                        validators: {
+                            regexp: {
+                                regexp: /^1(3|4|5|7|8)\d{9}$/,
+                                message: '{:L("IS_NOT_MOBILE")}'
+                            }
+                        }
+                    },
+                    tel:{
+                        message: '{:L("IS_NOT_VALID")}',
+                        validators: {
+                            regexp: {
+                                regexp: /^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/,
+                                message: '{:L("IS_NOT_TEL")}'
+                            }
+                        }
+                    },
+                    company:{
+                        message: '{:L("IS_NOT_VALID")}',
+                        validators: {
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9_\(\)\（\）\u4e00-\u9fa5\s]+$/,
+                                message: '{:L("IS_VALID")}'
+                            }
+                        }
+                    },
+                    account:{
+                        message: '{:L("IS_NOT_VALID")}',
+                        validators: {
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\s]+$/,
+                                message: '{:L("IS_VALID")}'
+                            }
+                        }
+                    },
+
+
+                }
+            });
+
+
+         /*   $(".js-ajax-form").bootstrapValidator().on('success.form.bv', function(e) {
+                // 阻止默认事件提交
+                e.preventDefault();
+            });*/
+
+            var form = $(".js-ajax-form");
+            form.submit(function(ev){ev.preventDefault();});
+
+                        $('.js-ajax-submit').on("click", function(ev){
+                            ev.preventDefault();
+                            var bootstrapValidator = form.data('bootstrapValidator');
+
+                            if (bootstrapValidator) {
+                                // 修复记忆的组件不验证
+                                bootstrapValidator.validate();
+
+                                if (!bootstrapValidator.isValid()) {
+
+                                    return false;
+                                }else{
+                                    //$('.js-ajax-submit').removeAttr('disabled');
+                                    form.submit();
+                                }
+
+                            }
+
+                        });
+
+            /*
+            form.bootstrapValidator().on('success.form.bv', function(e) {
+                // 阻止默认事件提交
+                e.preventDefault();
+            });
+             */
+
+
+        });
+	</script>
+
+</body>
+</html>

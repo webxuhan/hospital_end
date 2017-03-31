@@ -1,0 +1,62 @@
+<admintpl file="header" />
+</head>
+<body>
+
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<if condition="$option_name eq 'member_email_active_moment'">
+			<li class="active"><a href="#" data-toggle="tab">编辑邮件</a></li>
+			<else/>
+				<li><a href="{:U('Mailer/active');}">{:L('ADMIN_MAILER_ACTIVE')}</a></li>
+				<li class="active"><a href="#" data-toggle="tab">{:L('EDIT_MAIL')}</a></li>
+			</if>
+		</ul>
+		<div class="common-form">
+			<form method="post" class="form-horizontal js-ajax-form" action="{:U('Admin/mailer/templet_post')}">
+			<input type="hidden" name="option_name" value="{$option_name}">
+			<if condition="!empty($ids)">
+				<foreach name="ids" item="vo">
+					<input type="hidden" name="ids[]" value="{$vo}">
+				</foreach>
+			</if>
+
+				<table cellpadding="2" cellspacing="2" width="100%">
+					<tbody>
+						<tr>
+							<td width="10%">{:L('EMAIL_SUBJECT')}</td>
+							<td><input type="text" name="options[title]" value="{$options.title}"/></td>
+						</tr>
+						<tr>
+							<td>{:L('EMAIL_TEMPLATE')}</td>
+							<td>
+								<script type="text/plain" id="content" name="options[template]">{$options.template}</script>
+								<span style="color: #ffb752;">{:L('EMAIL_TEMPLATE_HELP_TEXT',array('link'=>'http://#link#','username'=>'#username#'))}</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">
+						<if condition="$option_name eq 'member_email_active_moment'">
+							发送
+						<else/>
+							{:L('SAVE')}
+						</if>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.WEB_ROOT;
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript">
+		var editorcontent = new baidu.editor.ui.Editor();
+		editorcontent.render('content');
+	</script>
+</body>
+</html>

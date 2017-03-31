@@ -1,0 +1,156 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Sending/index')}">{:L("SENDING_TITLE")}</a></li>
+        <li><a href="{:U('Sending/create')}">{:L("SENDING_CREATE")}</a></li>
+        <li class="active"><a href="{:U('Sending/createPackage')}">{:L("SENDING_CREATE_PACKAGE")}</a></li>
+    </ul>
+    <form method="post" id="sendForm" class="form-horizontal js-ajax-form" action="{:U('Sending/packageItemSave')}">
+        <input type="hidden" name="ids" id="ids" value="{$itemsId}">
+        <input type="hidden" name="service_type" id="service_type" value="{$packageAddress['is_abroad']}">
+        <input type="hidden" name="regions_id" id="regions_id" value="{$packageAddress['county_id']}">
+
+        <fieldset>
+            <div class="control-group">
+
+                <div class="controls">
+                    您一共打包快件数：{$itemsCount}
+                </div>
+
+            </div>
+            <div class="control-group">
+
+                <label class="control-label">{:L('EXPRESS_NUMBER')}:</label>
+                <div class="controls">
+                    <input type="text" name="express_number">
+                    <span>*</span>
+                </div>
+
+            </div>
+            <div class="control-group">
+
+                <label class="control-label">{:L("WEIGHT")}:</label>
+                <div class="controls">
+                    <input type="text" style="width: 90px;" onblur='weightTextBlur(this)' data-idx="1"
+                           id="weight" name="weight" value="{$weight}">{:L("WEIGHT_UNIT")}
+                </div>
+
+            </div>
+            <div class="control-group">
+
+                <label class="control-label">{:L("EXPRESS_COMPANY")}:</label>
+                <div class="controls">
+
+                    <select style="width: 150px;" name="express_company_id" id="express_company_id">
+                        <option disabled selected>{:L('EXPRESS_COMPANY')}</option>
+                        <foreach name="expressList" item="vo">
+                            <option value="{$vo.express_id}">{$vo.express_name}</option>
+                        </foreach>
+                    </select>
+
+                    <span class="form-required">*</span>
+                </div>
+
+            </div>
+            <div class="control-group">
+
+                <label class="control-label">{:L("EXPENSES")}:</label>
+                <div class="controls">
+                    <input type="text" style="width: 90px;" readonly="readonly" id="expenses"
+                           name="expenses">
+                    {:L("EXPENSES_UNIT")}
+                </div>
+
+            </div>
+            <div class="control-group">
+
+                <label class="control-label">{:L('PACKAGE_ADDRESS')}:</label>
+                <div class="controls">
+                    <select name="package_address_id" id="package_address_id">
+                        <option value="">
+                            {:L('TO_CHOOSE')}{:L('PACKAGE_ADDRESS')}
+                        </option>
+                        <foreach name="address_list" item="vo">
+                            <option value="{$vo.address_id}">
+                                {$vo.address_name}
+                            </option>
+                        </foreach>
+                    </select>
+                    <script>
+                        $("#package_address_id").val("{$address_id}");
+                    </script>
+                </div>
+
+            </div>
+
+
+        </fieldset>
+        <div class="form-actions">
+            <button type="button" class="btn btn-primary js-ajax-submit" id="subbuttom">{:L('ADD')}</button>
+            <a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/util/freightCalculationAjax.js"></script>
+<script type="text/javascript">
+
+    //监控界面快捷键，
+    document.onkeyup = function (e) {
+        if (e.shiftKey && e.keyCode == 49) {
+            alert(e.keyCode);
+        }
+    }
+
+
+    function weightTextBlur(obj) {
+        var weight = obj.value;
+        var idx = obj.getAttribute("data-idx");
+        if (weight) {
+            if (isNaN(weight)) {
+                obj.value = "";
+                return false;
+            }
+            var regions_id = $("#regions_id").val();
+            if (!regions_id) {
+                alert("please select region");
+                return false;
+            }
+            var service_type = $("#service_type").val();
+            //获取价格 区域ID，国际或国内 地址，回调方法
+            getBestExressPrice(regions_id, service_type, weight, "{:U('SystemUtil/bestExpressPrice')}", funtest, funerror);
+//            $("#expenses"+idx).val(price);
+        }
+
+    }
+    var funtest = function (id, price) {
+//        alert("快递公司ID:" + id + "----" + "价格：" + price);
+        $("#express_company_id").val(id);
+        $("#expenses").val(price);
+
+    }
+
+    var funerror = function (msg) {
+        alert(msg);
+    }
+
+    //界面初始化方法
+    $(function () {
+
+        //表单提交
+        $('#subbuttom').on("click", function (ev) {
+//            return false;
+            $('.js-ajax-form').submit();
+        });
+
+        $('#weight').blur();
+
+    });
+
+
+</script>
+
+</body>
+</html>

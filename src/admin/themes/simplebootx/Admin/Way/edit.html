@@ -1,0 +1,279 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<ul class="nav nav-tabs">
+		<li ><a href="{:U('Way/index')}">{:L('ADMIN_WAY_INDEX')}</a></li>
+		<li><a href="{:U('Way/add')}">{:L('ADMIN_WAY_ADD')}</a></li>
+		<li class="active"><a href="">{:L('ADMIN_WAY_EDIT')}</a></li>
+	</ul>
+	<form method="post" class="own-submit-form" action="{:U('Way/edit_post')}">
+		<div class="control-group form-group">
+			{:L('NAME')}:
+			<input type="text" name="way_name" class="way_name" value="{$way_name}">
+			<input type="hidden" class="subhidden_data" name="seat_id" value="{$seat_id}">
+			<input type="hidden" name="way_id" value="{$way_id}" />
+			<span class="form-required">*</span>
+		</div>
+	</form>
+	<!--搜索-->
+	<form class="well form-search search_form" method="post" action="{:U('Way/edit')}">
+		{:L('SEAT')}:
+		<input type="text" name="seat_detail" style="width: 200px;" value="{:I('request.seat_detail/s','')}" placeholder="{:L('SEAT')}">
+		<input type="button" class="btn btn-primary" id="search_seat" value="搜索" />
+		<input type="button" class="btn btn-primary" id="search_clean" value="清空" />
+	</form>
+	<div style="width:300px;height:400px;overflow:auto;float:left;border:1px solid gray;">
+		<table class="table table-hover table-bordered table-list">
+			<thead class="ccc">
+			<tr>
+				<th width="30" align="center"><label class="leftPath"><input type="checkbox" class="checkleft"></label></th>
+				<th width="250">{:L('SEAT')}</th>
+			</tr>
+			</thead>
+			<tbody class="aaa">
+				<foreach name="seat" item="vo">
+					<tr>
+						<td><input type="checkbox"  name="leftids[]" value="{$vo.seat_id}"></td>
+						<td>{$vo.seat_detail}</td>
+					</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<p class="msg_note">{:L('PLEASE_SEARCH')}</p>
+	</div>
+	<!--按钮-->
+	<div style="width:80px;height:400px;overflow:auto;;float:left;">
+		<input type="button" value="{:L('ADD_SEAT')}" class="addBtn btn btn-primary" style="width:80px;margin-top:150px;">
+		<input type="button" value="{:L('REMOVE_SEAT')}" class="removeBtn btn btn-primary" style="width:80px;margin-top:10px;">
+	</div>
+	<div style="width:300px;height:400px;overflow:auto;border:1px solid gray;">
+		<table class="table table-hover table-bordered table-list usePathTable">
+			<thead class="ccc">
+			<tr>
+				<th width="30" align="center"><label class="rightPath"><input type="checkbox" class="checkright"></label></th>
+				<th width="250">{:L('ADMIN_WAY_INDEX')}</th>
+			</tr>
+			</thead>
+			<tbody  class="bbb">
+				<foreach name="way" item="vo">
+					<if condition="$vo['seat_detail'] neq ''">
+						<tr>
+							<td><input type="checkbox"  name="rightids[]" value="{$vo.seat_id}"></td>
+							<td>{$vo.seat_detail}</td>
+						</tr>
+					</if>
+				</foreach>
+			</tbody>
+		</table>
+	</div>
+	<br/>
+
+	<div class="form-actions">
+		<button type="submit" class="btn btn-primary own-submit subhidden">{:L('SAVE')}</button>
+		<a class="btn" href="{:U('Way/index')}">{:L('BACK')}</a>
+		<span class="return_res"></span>
+	</div>
+</div>
+<script>
+	$(document).ready(function(){
+		$(".own-submit-form").bootstrapValidator({
+			message: '{:L("IS_NOT_VALID")}',
+			feedbackIcons: {
+				valid: 'glyphicon glyphicon-ok',
+				invalid: 'glyphicon glyphicon-remove',
+				validating: 'glyphicon glyphicon-refresh'
+			},
+			fields: {
+				way_name: {
+					message: '{:L("IS_NOT_VALID")}',
+					validators: {
+						notEmpty: {
+							message: '{:L("NAME_MUST")}'
+						},
+						stringLength: {
+							min: 1,
+							max: 30,
+							message: '{:L("IS_NOT_LENGTH")}'
+						},
+						regexp: {
+							regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\-\(\)\（\）\\\/]+$/,
+							message: '{:L("IS_VALID")}'
+						}
+					}
+				},
+			}
+		});
+
+
+		/*   $(".js-ajax-form").bootstrapValidator().on('success.form.bv', function(e) {
+		 // 阻止默认事件提交
+		 e.preventDefault();
+		 });*/
+
+		var form = $(".own-submit-form");
+		form.submit(function(ev){ev.preventDefault();});
+
+		$('.own-submit').on("click", function(e){e.preventDefault();
+			var bootstrapValidator = form.data('bootstrapValidator');
+
+			if (bootstrapValidator) {
+				// 修复记忆的组件不验证
+				bootstrapValidator.validate();
+
+				if (!bootstrapValidator.isValid()) {
+
+					return false;
+				}else{
+					//$('.js-ajax-submit').removeAttr('disabled');
+					form.submit();
+				}
+
+			}
+
+		});
+
+		/*
+		 form.bootstrapValidator().on('success.form.bv', function(e) {
+		 // 阻止默认事件提交
+		 e.preventDefault();
+		 });
+		 */
+
+
+	});
+</script>
+<!--search_seat-->
+<script>
+	$(function(){
+		//按钮单击时执行
+		$("#search_seat").click(function(){
+			$(".aaa :checkbox").prop("checked", false);
+			$(".bbb :checkbox").prop("checked", false);
+			$(".ccc :checkbox").prop("checked", false);
+			// var form_data = onsubmit
+			var building = $("input[name=building]").val();
+			var floor = $("input[name=floor]").val();
+			var area = $("input[name=area]").val();
+			var seat = $("input[name=seat]").val();
+			var seat_ids = '';
+			$(".bbb :checkbox").each(function(){
+				seat_ids +=  $(this).val()+',';
+			});
+			//Ajax调用处理
+			var html = $.ajax({
+				type: "POST",
+				url:"{:U('Way/add')}",
+				dataType:"json",
+				data: {
+					"building":building,
+					"floor":floor,
+					"area":area,
+					"seat":seat,
+					"seat_id":seat_ids
+				},
+				success: function(msg){
+					delete msg['state'];
+					delete msg['referer'];
+					var str = "";
+					for( var i in msg) {
+						str += "<tr><td><input type='checkbox'  name='ids[]' value='"+msg[i]['seat_id']+"'></td><td>"+msg[i]['seat_detail']+"</td></tr>";
+					}
+					$(".aaa").empty().append(str);
+				}
+			}).responseText;
+			$('.msg_note').remove();
+		});
+
+		//添加按钮
+		$(".addBtn").on("click",function(){
+			$(".aaa input:checked").each(function(index,item){
+				var currentTr = $(this).parent().parent();
+				$(".usePathTable tbody").append(currentTr);
+			});
+			// 全选添加后全选框样式
+			if(($(".aaa").html().length == 8) && ($(".bbb").html() != "")){
+				$(".leftPath input[type='checkbox']").prop("checked",false);
+				$(".rightPath input[type='checkbox']").prop("checked",true);
+			}
+		});
+		//移除按钮
+		$(".removeBtn").on("click",function(){
+			$(".usePathTable tbody input:checked").each(function(){
+				var currentTr = $(this).parent().parent();
+				$(".aaa").append(currentTr);
+				$(".aaa :checkbox").prop("checked", false);
+			});
+			$(".rightPath input[type='checkbox']").prop("checked",false);
+			$('.msg_note').remove();
+		});
+		//
+		$(".checkleft").click(function(){
+			if(this.checked){
+				$(".aaa :checkbox").prop("checked", true);
+			}else{
+				$(".aaa :checkbox").prop("checked", false);
+			}
+		});
+		$(".checkright").click(function(){
+			if(this.checked){
+				$(".bbb :checkbox").prop("checked", true);
+			}else{
+				$(".bbb :checkbox").prop("checked", false);
+			}
+		});
+		//添加按钮点击时先向表单隐藏控件传值
+		$(".subhidden").click(function(){
+			//判断是否添加座位号
+			var num = $(".bbb").children();
+
+			if (num.len != ''){
+				var seat_id = '';
+				$(".bbb :checkbox").each(function(){
+					seat_id +=  $(this).val()+',';
+				});
+				$(".subhidden_data").attr("value",seat_id);
+			}else{
+				//提示信息
+				$(".return_res").text("{:L('MSG_SEAT')}");
+			}
+		});
+		//提交按钮
+		$(".own-submit").click(function(){
+			if($(".help-block").is(':visible')){
+				$(".return_res").text("{:L('PLEASE_IN')}");
+			}else{
+				var seat_id = $("input[name=seat_id]").val();
+				var way_name = $("input[name=way_name]").val();
+				var way_id = $("input[name=way_id]").val();
+				//Ajax调用处理
+				$.ajax({
+					type: "POST",
+					url:"{:U('Way/edit_post')}",
+					dataType:"json",
+					data: {
+						"seat_id":seat_id,
+						"way_name":way_name,
+						"way_id":way_id
+					},
+					success: function(data){
+//								data.status;
+//								data.info;
+//								data.url;
+//								data.referer;
+						$(".return_res").text(data.info);
+						if(data.info == "{:L('SAVE_SUCCESS')}"){
+							location.href = data.url;
+						}
+					}
+				}).responseText;
+			}
+
+		});
+	});
+</script>
+<script src="__PUBLIC__/js/common.js"></script>
+
+</body>
+
+</html>

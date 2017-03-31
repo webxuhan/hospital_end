@@ -1,0 +1,182 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('Mailroom/index')}">{:L('ADMIN_MAILROOM_INDEX')}</a></li>
+			<li class="active"><a href="{:U('Mailroom/add')}">{:L('ADMIN_MAILROOM_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Mailroom/add_post')}">
+			<fieldset>
+				<div class="control-group ">
+					<label class="control-label">{:L('NAME')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="mailroom_name">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group ">
+					<label class="control-label">{:L('CONTACTS')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="contacts">
+					</div>
+				</div>
+				<div class="control-group ">
+					<label class="control-label">{:L('MOBILE')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="mobile">
+					</div>
+				</div>
+				<div class="control-group ">
+					<label class="control-label">{:L('TEL')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="tel">
+					</div>
+				</div>
+				<div class="control-group ">
+					<label class="control-label">{:L('CITY')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="city">
+					</div>
+				</div>
+				<div class="control-group ">
+					<label class="control-label">{:L('CUSTOMER')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="customer">
+					</div>
+				</div>
+				<div class="control-group ">
+					<label class="control-label">{:L('ADDRESS')}:</label>
+					<div class="controls form-group">
+						<input type="text" name="address">
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="{:U('Mailroom/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+
+   	<script>
+		$(document).ready(function(){
+			$(".js-ajax-form").bootstrapValidator({
+				message: '{:L("IS_NOT_VALID")}',
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+					mailroom_name: {
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							notEmpty: {
+								message: '{:L("NAME_MUST")}'
+							},
+							stringLength: {
+								min: 1,
+								max: 30,
+								message: '{:L("IS_NOT_LENGTH")}'
+							},
+							regexp: {
+								regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\-\(\)\（\）\/\\]+$/,
+								message: '{:L("IS_VALID")}'
+							}
+						}
+					},
+					contacts:{
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							regexp: {
+								regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\-\/\\\(\)\（\）]+$/,
+								message: '{:L("IS_VALID")}'
+							}
+						}
+					},
+					mobile:{
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							regexp: {
+								regexp: /^1(3|4|5|7|8)\d{9}$/,
+								message: '{:L("IS_NOT_MOBILE")}'
+							}
+						}
+					},
+					tel:{
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							regexp: {
+								regexp: /^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/,
+								message: '{:L("IS_NOT_PHONE")}'
+							}
+						}
+					},
+					city:{
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							stringLength: {
+								min: 1,
+								max: 30,
+								message: '{:L("IS_NOT_LENGTH")}'
+							},
+							regexp: {
+								regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\-\/\\]+$/,
+								message: '{:L("IS_VALID")}'
+							}
+						}
+					},
+					customer:{
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							regexp: {
+								regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\-\/\\\(\)\（\）]+$/,
+								message: '{:L("IS_VALID")}'
+							}
+						}
+					},
+					address:{
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							stringLength: {
+								max: 255,
+								message: '{:L("IS_NOT_LENGTH")}'
+							},
+							regexp: {
+								regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\-\(\)\（\）\/\\]+$/,
+								message: '{:L("IS_VALID")}'
+							}
+						}
+					},
+
+
+				}
+			});
+
+			var form = $(".js-ajax-form");
+			form.submit(function(ev){ev.preventDefault();});
+
+			$('.js-ajax-submit').on("click", function(e){e.preventDefault();
+				var bootstrapValidator = form.data('bootstrapValidator');
+
+				if (bootstrapValidator) {
+					// 修复记忆的组件不验证
+					bootstrapValidator.validate();
+
+					if (!bootstrapValidator.isValid()) {
+
+						return false;
+					}else{
+						//$('.js-ajax-submit').removeAttr('disabled');
+						form.submit();
+					}
+
+				}
+
+			});
+		});
+	</script>
+</body>
+</html>

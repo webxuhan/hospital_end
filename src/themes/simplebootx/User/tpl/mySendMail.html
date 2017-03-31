@@ -1,0 +1,225 @@
+<!-- 我的发件 -->
+        <script src="__PUBLIC__/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/js/jquery.page.js" ></script>
+        <div class="mySendMail">
+          <form method="post" action="{:U('xing/mySendMail')}">
+          <div class="sendMaildiv-1"> 
+            <span class="MailTime">
+                <span>{:L('HAIR_TIME')}:</span>
+                <input type="text" name="start_time" class="js-datetime" value="{:I('request.start_time/s','')}"  autocomplete="off"> -
+                <input type="text" class="js-datetime" name="end_time" value="{:I('request.end_time/s','')}"  autocomplete="off">
+            </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="mailState"><span>{:L('HAIR_CONDITION')}:</span>
+              <select name="status" id="">
+              <option selected value="">{:L('PLEASE_SELECT')}</option>
+                <option value="0">{:L('WAITTING_RECEIVER')}</option>
+                <option value="1">{:L('RECEIVED_PIECE')}</option>
+                <option value="2">{:L('HAIR_SUCCESS')}</option>
+                <option value="-1">{:L('CANCEL_HAIR')}</option>
+                <option value="-2">{:L('RETURN')}</option>
+               
+              </select></span>
+          </div>
+          <div>
+            <span class="mailType"><span>{:L('EXPRESS_TYPE')}:</span>
+              <select name="express_type" id="">
+              <option selected value="">{:L('PLEASE_SELECT')}</option>
+                <option value="1">{:L('COMMON_PARTS')}</option>
+                <option value="2">{:L('PACKING_PIECE')}</option>
+                <option value="3">{:L('INTERNAL_PARTS')}</option>
+              </select>
+            </span>
+            <span class="mailAttribute"><span>{:L('SERVICE_TYPE')}:</span>
+              <select name="service_type" id="">
+              <option selected value="">{:L('PLEASE_SELECT')}</option>
+                <option value="0">{:L('DOMESTIC_PARTS')}</option>
+                <option value="1">{:L('INTERNATIONAL_PARTS')}</option>
+              </select>
+            </span>
+          </div>
+          <div class="experss_number">
+            <span>{:L('COURIER_NUMBER')}:</span>
+            <input type="text" name="express_number">
+            
+          </div>
+           
+            <button type="button" class="clickfind">{:L('CLICK_QUERY')}</button>
+          </form>
+          <table class="queryResult">
+            <thead>
+              <tr>
+                <th>{:L('COURIER_NUMBER')}</th>
+                <th>{:L('ADDRESSEE')}</th>
+                <th>{:L('PROCESSING_TIME')}</th>
+                <th>{:L('STATE')}</th>
+                <th>{:L('OPERATION')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <if condition = "isset($list)">
+                <foreach name="list" item="ls">
+                  <tr>
+                    <td>{$ls.express_number}</td>
+                    <td>{$ls.receive_name}</td>
+                    <td>{$ls.update_time|date="Y-m-d H:i:s",###}</td>
+                    <php>
+                      $status = array('0'=>L('WAITTING_RECEIVER'),'1'=>L('RECEIVED_PIECE'),'2'=>L('HAIR_SUCCESS'),'-1'=>L('CANCEL_HAIR'),'-2'=>L('RETURN'));
+                      $num = $ls['status'];
+                      $lstatus = $status[$num];
+                    </php>
+                    <td>{$lstatus}</td>
+                    <td><a class="sendDetail" onclick="sendDetail({$ls.id})" id="{$ls.id}">{:L('LOOK_DETAIL')}</a></td>
+                  </tr>
+                </foreach>
+            </if>
+            </tbody>
+          </table>
+           <div class="paging-content">
+            <div id="address-paging" class="tcdPageCode"></div>
+            <div id="address-paging-select" class="tcdPageCode"></div>
+           </div>   
+        </div>
+<script type="text/javascript">
+
+  if({$total_num} > 1){
+      $(".paging-content").css("display","block");
+  }else{
+    $(".paging-content").css("display","none");
+  }
+  //加载页面分页管理 where
+  $("#address-paging").createPage({
+        pageCount:{$total_num},
+        current:{$current_page},
+        backFn:function(page){
+          $('.main-content').load("{:U("Xing/mySendMail")}",{page:page});
+        }
+    });
+  $(".clickfind").on('click',function(){
+    $.ajax({
+      url:"{:U('SendEmail/sendSearch')}",
+      method:"post",
+      dataType:"json",
+      data:$("form").serialize(),
+      success:function(data){
+        //data=Json.parse(data);
+        var stotal_num = data[0];
+        var scurrent_page = data[1];
+        var data = data[2];
+        //console.log(data);
+        $(".queryResult tbody").html("");
+        $("#address-paging").css("display","none");
+        if(stotal_num > 1){
+          $("#address-paging-select").css("display","block");
+        }else{
+           $("#address-paging-select").css("display","none");
+        }
+        
+        
+        
+        // 查询之后分页
+        
+        $("#address-paging-select").createPage({
+        pageCount:stotal_num,
+        current:scurrent_page,
+        backFn:function(page){
+          $.ajax({
+            url:"{:U('SendEmail/sendSearch')}",
+            method:"post",
+            dataType:"json",
+            data:{page:page,formData:$("form").serialize()},
+            success:function(data){
+              var stotal_num = data[0];
+              var scurrent_page = data[1];
+              var data = data[2];
+              $(".queryResult tbody").html("");
+              
+               var sTr = "";
+               for (item in data) {
+                  var data1 = data[item];
+                  sTr += "<tr>";
+                    for(i in data1){
+                      var time = DateFormat(data1.update_time);
+                      switch(data1.status){
+                        case "0":ss = '{:L('WAITTING_RECEIVER')}';break;
+                        case "1":ss = '{:L('RECEIVED_PIECE')}';break;
+                        case "2":ss = '{:L('HAIR_SUCCESS')}';break;
+                        case "-1":ss = '{:L('CANCEL_HAIR')}';break;
+                        case "-2":ss = '{:L('RETURN')}';break;        
+                      }
+                    }
+                     sTr += '<td>'+data1.express_number+'</td><td>'+data1.receive_name+'</td><td>'+time+'</td><td>'+ss+'</td><td><a class="sendDetail" onclick="sendDetail('+data1.id+')">'+'{:L("LOOK_DETAIL")}'+'</a></td>';
+               sTr += "</tr>";
+                };
+            $(".queryResult tbody").append(sTr);
+                
+            }
+          });
+          }
+        });
+        var sTr = "";
+         for (item in data) {
+            var data1 = data[item];
+            sTr += "<tr>";
+              for(i in data1){
+                var time = DateFormat(data1.update_time);
+                switch(data1.status){
+                        case "0":ss = '{:L('WAITTING_RECEIVER')}';break;
+                        case "1":ss = '{:L('RECEIVED_PIECE')}';break;
+                        case "2":ss = '{:L('HAIR_SUCCESS')}';break;
+                        case "-1":ss = '{:L('CANCEL_HAIR')}';break;
+                        case "-2":ss = '{:L('RETURN')}';break;  
+                      }
+              }
+               sTr += '<td>'+data1.express_number+'</td><td>'+data1.receive_name+'</td><td>'+time+'</td><td>'+ss+'</td><td><a class="sendDetail" onclick="sendDetail('+data1.id+')">'+'{:L("LOOK_DETAIL")}'+'</a></td>';
+               sTr += "</tr>";
+          };
+           $(".queryResult tbody").append(sTr);
+      }
+      
+      
+    });
+  });
+  function DateFormat(data){
+    var data = Number(data+"000");
+    var newData = new Date(data);
+    var y = newData.getFullYear();
+    var m = newData.getMonth()+1;
+    var m = m < 10 ? ('0' + m) : m;  
+    var d = newData.getDate(); 
+    var d = d < 10 ? ('0' + d) : d;  
+    var h = newData.getHours();  
+    var minute = newData.getMinutes();  
+    minute = minute < 10 ? ('0' + minute) : minute;
+    var s = newData.getSeconds();  
+    return y + '-' + m + '-' + d+' '+h+':'+minute+':'+s;  
+  }
+   
+  function sendDetail(id){
+    //查看详情
+  
+          Wind.use('artDialog', 'iframeTools', function () {
+            var url = "{:U('Xing/sendDetail')}"+"&id="+id;
+            art.dialog.open(url, {
+                title: '{:L('DETAILED_INFORMATION')}',
+                lock: true,
+                height: "52%",
+                width: "80%",
+                // 在open()方法中，init会等待iframe加载完毕后执行
+                init: function () {
+                    var iframe = this.iframe.contentWindow;
+                    var top = art.dialog.top;// 引用顶层页面window对象
+                },
+                ok: function () {
+                    var iframe = this.iframe.contentWindow;
+                    if (!iframe.document.body) {
+                        art.dialog.tips('Loading......', 1.5);
+                        return false;
+                    }
+                },
+                cancel: true
+            });
+        });  
+  }; 
+
+  
+</script>

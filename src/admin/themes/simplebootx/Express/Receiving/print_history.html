@@ -1,0 +1,244 @@
+<admintpl file="header"/>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Receiving/printlabel')}">{:L('LABEL_PRINT')}</a></li>
+        <li class="active"><a href="{:U('Receiving/print_history')}">{:L("PRINT_QUERY")}</a></li>
+    </ul>
+    <form  method="post" action="{:U('Receiving/print_history')}">
+        <table>
+            <tr>
+                <td>
+                    {:L('EXPRESS_ATTR')}：
+                    <select name="express_attr">
+                            <option selected value="">{:L('TO_CHOOSE')}</option>
+                            <option value="0">{:L('EXPRESS_FILE')}</option>
+                            <option value="1">{:L('EXPRESS_PACKAGE')}</option>
+                    </select>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                   <!-- {:L("JOB_NO")}：
+                    <input type="text" name="job_no" style="width: 150px;" value="{:I('request.job_no/s','')}"
+                           placeholder="请输入{:L('JOB_NO')}">-->
+                    {:L('EXPRESS_TYPE')}：
+                    <select style="width: 100px;" name="express_type">
+                        <option selected value="">{:L('TO_CHOOSE')}</option>
+                        <option value="inside">{:L('EXPRESS_DOMESTIC')}</option>
+                        <option value="outside">{:L('EXPRESS_INTER')}</option>
+                    </select>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+
+                    {:L("RECORDING_TIME")}：
+                    <input type="text" name="start_time" class="js-datetime" value="{:I('request.start_time/s','')}" style="width: 120px;" autocomplete="off">-
+                    <input type="text" class="js-datetime" name="end_time" value="{:I('request.end_time/s','')}" style="width: 120px;" autocomplete="off"> &nbsp; &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <!--{:L("EXPRESS_MAN")}：
+                    <input type="text" name="building" style="width: 100px;"
+                           value="{:I('request.building/s','')}" placeholder="请输入{:L('EXPRESS_MAN')}">-->
+                {:L('EXPRESS_MAN')}：
+                    <input type="text" readonly name="staff_name" id="staff_name" >
+                    <a class="btn btn-primary" id="checkStaff">
+                        请选择{:L('EXPRESS_MAN')}
+                    </a>
+                    <input type="hidden" name="staff_id" id="staff_id">
+                    <input type="hidden" name="staff_department_id" id="staff_department_id">
+                    <input type="hidden" name="seat_id" id="seat_id">
+                    {:L("OPERATOR")}：
+                       <select style="width: 100px;" name="operator_id">
+                           <option selected value="">{:L('TO_CHOOSE')}</option>
+                           <foreach name="operators" item="esl" key="k">
+                               <option value="{$esl.id}"
+                               <if condition="I('request.operators/s') eq $k">selected</if>
+                               >{$esl.user_login}</option>
+                           </foreach>
+                       </select>
+                    {:L("PRINT_STATUS")}：
+                    <select style="width: 100px;" name="print_status">
+                        <option selected value="">{:L('TO_CHOOSE')}</option>
+                        <option value=0>{:L('TO_PRINT')}</option>
+                        <option value=1>{:L('PRINTED')}</option>
+                    </select>
+                    {:L("CONTACT_MOBILE")}：
+                    <input type="text" name="mobile" style="width: 100px;" value="{:I('request.building/s','')}">
+                    <input type="text" name="tel" style="width: 60px;" value="{:I('request.building/s','')}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {:L("EXPRESS_NUMBER")}：
+                    <input type="text" name="airway_bill_no" style="width: 150px;" value="{:I('request.airway_bill_no/s','')}"
+                           placeholder="请输入{:L('EXPRESS_NUMBER')}">
+
+                    <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}"/>
+                    <a class="btn btn-danger" href="{:U('Receiving/print_history')}">{:L('EMPTY')}</a>
+                </td>
+            <tr>
+
+        </table>
+    </form>
+
+    <form method="post" id="receive_form">
+        <input type="hidden" name="style" value="moment">
+        <div class="table-actions">
+            <a class="btn btn-primary btn-small" id="print_delivery" href="javascript:;" data-url="{:U('Delivery/print_post')}">{:L('PRINT')}</a>
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_EXPORT')}</button>-->
+           <!-- <a class="btn btn-primary btn-small" form_action="{:U('Receiving/print_tab')}" href="JavaScript:;"
+            onclick="send(this)">{:L('PRINT_LABEL')}</a>-->
+        </div>
+        <table class="table table-hover table-bordered table-list" style="width:120%;">
+            <thead>
+            <tr>
+                <th><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                  data-checklist="js-check-x"></label></th>
+                <th>{:L('EXPRESS_NUMBER')}</th>
+                <th>{:L("JOB_NO")}</th>
+                <th>{:L("EXPRESS_ATTR")}</th>
+                <th>{:L("EXPRESS_COMPANY")}</th>
+                <th>{:L("PACKAGE_NUMBER")}</th>
+                <th>{:L("INSIDE_AND_OUTSIDE")}</th>
+                <th>{:L("PRINT_COUNT")}</th>
+                <th>{:L("RECORDING_TIME")}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>
+                        <label class="checkbox inline">
+                            <input type="checkbox" name="receive_ids[]" checked value="{$vo.receive_id}" class="receive-ids">
+                        </label>
+                    </td>
+
+                    <td>{$vo.airway_bill_no}</td>
+                    <td>{$vo.job_no}</td>
+                    <if condition="$vo['express_attr'] eq 0">
+                        <td>{:L("EXPRESS_FILE")}</td>
+                    <elseif condition="$vo['express_attr'] eq 1"/>
+                        <td>{:L("EXPRESS_PACKAGE")}</td>
+                    <else/>
+                    </if>
+                    <td>{$vo.express_company}</td>
+                    <td>{$vo.package_num}</td>
+                    <if condition="$vo['inside_and_outside'] eq 'outside'">
+                        <td>{:L("OUTER_PARTS")}</td>
+                    <elseif condition="$vo['inside_and_outside'] eq 'inside'"/>
+                        <td>{:L("INSIDE_PARTS")}</td>
+                    <else/>
+                    </if>
+                    <td>{$vo.print_count}</td>
+                    <if condition="$vo[create_time]">
+                        <td>{$vo.create_time|format_day_time}</td>
+                    <else/>
+                        <td>---</td>
+                    </if>
+
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                  data-checklist="js-check-x"></label></th>
+                <th>{:L('EXPRESS_NUMBER')}</th>
+                <th>{:L("JOB_NO")}</th>
+                <th>{:L("EXPRESS_ATTR")}</th>
+                <th>{:L("EXPRESS_COMPANY")}</th>
+                <th>{:L("PACKAGE_NUMBER")}</th>
+                <th>{:L("INSIDE_AND_OUTSIDE")}</th>
+                <th>{:L("PRINT_COUNT")}</th>
+                <th>{:L("RECORDING_TIME")}</th>
+
+            </tr>
+            </tfoot>
+        </table>
+        <div class="pagination">{$page}</div>
+
+        <div class="table-actions">
+        </div>
+    </form>
+</div>
+</body>
+<div id="print_page" style="display: none;"></div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+
+    $(function() {
+        // 设置员工信息
+        function setStaff(obj) {
+            obj = eval( '(' + obj + ')' );
+
+            $("#staff_name").val(obj.zn_name);
+            $("#staff_id").val(obj.staff_id);
+            $("#staff_mobile").val(obj.mobile);
+            $("#staff_tel").val(obj.extension_no);
+            $("#staff_department_id").val(obj.department_id);
+            $("#staff_department").val(obj.department_name);
+            $("#seat_number").val(obj.seat_detail);
+            $("#seat_id").val(obj.seat_id);
+        }
+
+        // 选择员工
+        $("#checkStaff").on("click", function () {
+
+            console.log(this);
+
+            Wind.use('artDialog', 'iframeTools', function () {
+                var url = "{:U('SystemUtil/index')}";
+                art.dialog.open(url, {
+                    title: '{:L("EXPRESS_MAN")}',
+                    lock: true,
+                    height: 400,
+                    width: "80%",
+                    // 在open()方法中，init会等待iframe加载完毕后执行
+                    init: function () {
+                        var iframe = this.iframe.contentWindow;
+                        var top = art.dialog.top;// 引用顶层页面window对象
+                    },
+                    ok: function () {
+                        var iframe = this.iframe.contentWindow;
+                        if (!iframe.document.body) {
+                            art.dialog.tips('Loading......', 1.5);
+                            return false;
+                        }
+
+                        // 获取iframe嵌套内容
+                        var staff_json = iframe.document.getElementById('staff_json').value;
+                        setStaff(staff_json);
+                    },
+                    cancel: true
+                });
+            });
+
+        });// end checkStaff
+    });
+    $("#print_delivery").on("click", function() {
+        var url = $("#print_delivery").attr("data-url");
+        $.ajax({
+                   url: url,
+                   data: $("#receive_form").serialize(),
+                   method: "post",
+                   dataType: "json",
+                   success: function(data) {
+                       console.log(data);
+                       if(data.status) {
+                           var page = $("#print_page");
+                           page.html(data.info);
+                           page.show();
+                           page.jqprint();
+                           page.hide();
+
+                       } else {
+                           showMsg(data.info)
+                       }
+                   }
+               });
+    });
+    function showMsg(msg) {
+        Wind.use("artDialog", "iframeTools", function() {
+            art.dialog.tips(msg, 3);
+        });
+    }
+</script>
+</html>

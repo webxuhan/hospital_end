@@ -1,0 +1,118 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('user/index')}">{:L('ADMIN_USER_INDEX')}</a></li>
+			<li class="active"><a href="{:U('user/add')}">{:L('ADMIN_USER_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('User/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">{:L('USERNAME')}</label>
+					<div class="controls form-group">
+						<input type="text" name="user_login">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('PASSWORD')}</label>
+					<div class="controls form-group">
+						<input type="password" name="user_pass">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('EMAIL')}</label>
+					<div class="controls form-group">
+						<input type="text" name="user_email">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('ROLE')}</label>
+					<div class="controls">
+						<foreach name="roles" item="vo">
+						<label class="checkbox inline"><input value="{$vo.id}" style="position:relative;bottom:3px;" type="radio" name="role_id[]" <if condition="sp_get_current_admin_id() neq 1 && $vo['id'] eq 1">disabled="true"</if>>{$vo.name}</label>
+						</foreach>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>
+<script>
+		$(document).ready(function(){
+			$(".js-ajax-form").bootstrapValidator({
+				message: '{:L("IS_NOT_VALID")}',
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+					user_login: {
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							notEmpty: {
+								message: '{:L("NAME_MUST")}'
+							},
+							regexp: {
+								regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\-\(\)\（\）]+$/,
+								message: '{:L("IS_VALID")}'
+							}
+						}
+					},
+					user_pass: {
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							notEmpty: {
+								message: '{:L("PASSWORD_MUST")}'
+							},
+							stringLength: {
+								min: 6,
+								max: 20,
+								message: '{:L("NAME_LENGTH")}'
+							},
+							regexp: {
+								regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\-\(\)\（\）]+$/,
+								message: '{:L("IS_VALID")}'
+							}
+						}
+					},
+					user_email:{
+                        validators: {
+                            emailAddress: {
+					            message: '{:L("EMAIL_ERROR")}'
+					        },
+                        }
+                    }
+				}
+			});
+
+			var form = $(".js-ajax-form");
+			form.submit(function(ev){ev.preventDefault();});
+
+			$('.js-ajax-submit').on("click", function(e){e.preventDefault();
+				var bootstrapValidator = form.data('bootstrapValidator');
+
+				if (bootstrapValidator) {
+					// 修复记忆的组件不验证
+					bootstrapValidator.validate();
+
+					if (!bootstrapValidator.isValid()) {
+
+						return false;
+					}else{
+						//$('.js-ajax-submit').removeAttr('disabled');
+						form.submit();
+					}
+
+				}
+
+			});
+		});
+	</script>

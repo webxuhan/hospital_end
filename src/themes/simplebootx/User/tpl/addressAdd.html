@@ -1,0 +1,137 @@
+<div class="addressAdd" id="addressAdd">
+	<if condition="isset($delivery['delivery_id'])">
+		<h2>{:L("EDIT_ADDRESS")}</h2>
+	<else />
+		<h2>{:L("WRITE_ADDRESS")}</h2>
+	</if>
+	<form  class="js-ajax-form">
+		<if condition="isset($delivery['delivery_id'])">
+			<input id="input-delivery_id" type="hidden" name="delivery_id" value="{$delivery.delivery_id}">
+		</if>
+		<div class="form-group">
+			<label for="input-delivery_name">{:L('RECIPIENT_NAME')}：</label>
+			<input id="input-delivery_name" type="text" name="delivery_name" value="{$delivery.delivery_name}">
+		</div>
+		<div class="form-group">
+			<label for="input-delivery_mobile">{:L('RECIPIENT_MOBILE')}：</label>
+			<input type="text" id ="input-delivery_mobile" name="delivery_mobile" value="{$delivery.delivery_mobile}">
+		</div>
+		<div class="form-group">
+			<label for="select_delivery_address">
+			{:L('RECIPIENT_ADDRESS')}：</label>
+			<select mailroom_regions data-regions="{$delivery.delivery_address}" id="select_delivery_address" name="delivery_address" class="address1"><select>
+		</div>
+		<div class="form-group">	
+			<label for="input-delivery_street">{:L('RECIPIENT_STREET')}：</label>
+			<input type="text" id="input-delivery_street" name="delivery_street" value="{$delivery.delivery_street}">
+		</div>
+		<div class="form-group">
+			<label for="input-delivery_postcode">{:L('RECIPIENT_POSTCODE')}：</label>
+			<input id="input-delivery_postcode" type="text" name="delivery_postcode" value="{$delivery.delivery_postcode}">
+		</div>
+		<button class="btnSave">{:L('SAVE')}</button>
+		<button class="btnback">{:L('BACK')}</button>
+	</form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/region_data.js"></script>
+<script src="__PUBLIC__/js/regions_plugin.js"></script>
+
+<script src="__PUBLIC__/simpleboot/bootstrap/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/simpleboot/bootstrap/css/bootstrapValidator.css" rel="stylesheet" type="text/css"></script>
+<script src="__PUBLIC__/simpleboot/bootstrap/js/bootstrapValidator.js"></script>
+<script src="__PUBLIC__/simpleboot/bootstrap/js/language/zh_CN.js"></script>
+<script>
+$(function() {
+	document.getElementById('anchorTop').scrollIntoView();//默认到顶部
+	// 表单验证
+	$(".js-ajax-form").bootstrapValidator({
+        message: '{:L("IS_NOT_VALID")}',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            delivery_name: {
+                validators: {
+                  notEmpty: {
+                      message: '{:L("RECIPIENT_NAME_NOT")}'
+                  },
+                  regexp: {
+                      regexp: /^[\u4e00-\u9fa5]{1,33}|[a-zA-Z]{1,99}$/,
+                      message: '{:L("WRITE_FORMAT_ERROR")}'
+                  }
+                }
+            },
+            delivery_mobile: {
+                validators: {
+                  notEmpty: {
+                      message: '{:L("RECIPIENT_MOBILE_NOT")}'
+                  },
+                  regexp: {
+                      regexp: /^1(3|4|5|7|8)\d{9}$/,
+                      message: '{:L("WRITE_FORMAT_ERROR")}'
+                  }
+                }
+            },
+            
+            delivery_postcode:{
+                validators: {
+                  	regexp: {
+                  		regexp: /^[0-9]{6}$/,
+                  		message: '{:L("WRITE_FORMAT_ERROR")}'
+                  	}
+                }
+            },
+        }
+    });// end bootstrapValidator
+
+	$('.btnSave').on('click',function(){
+
+		var bootstrapValidator = $('.js-ajax-form').data('bootstrapValidator');
+        if (bootstrapValidator) {
+            // 修复记忆的组件不验证
+            bootstrapValidator.validate();
+
+            if (!bootstrapValidator.isValid()) {
+
+                return false;
+
+            }else{
+
+				$.ajax({
+					url:'{:U("Address/deliverAdd")}',
+					method:'post',
+					dataType:'json',
+					data:$('form').serialize(),
+					success:function(data){
+
+							if(data.status == 1){
+								noty({
+									text: data.info,
+			                        type:"success",
+			                        layout:"center"
+								});
+								$(".main-content").load("{:U('Xing/addressCenter')}");
+							}else{
+								noty({
+									text: data.info,
+			                        type:"error",
+			                        layout:"center"
+								});
+							}
+					}
+				});
+				return false;
+			}
+		}
+
+	});
+
+	$('.btnback').on('click',function(){
+		$(".main-content").load("{:U('Xing/addressCenter')}");
+		return false;
+	});
+})
+</script>

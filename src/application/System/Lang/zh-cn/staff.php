@@ -1,0 +1,45 @@
+<?php
+return array(
+		"ZN_NAME" => '中文名',
+		"EN_NAME" => '英文名',
+		"ALIAS" => '别名',
+		"EMAIL" => '邮箱',
+		"JOB_NUMBER" => '工号',
+		"MOBILE" => '手机号',
+		"DEPARTMENT" => '部门',
+		"EXTENSION_NO" => '电话',
+		"RECEIVING_DEMAND" => '收件需求',
+		"TURNOVER_STATUS" =>'离职状态',
+		"STAFF_INFO" =>'员工信息',
+		"STAFF_ADD" =>'添加员工',
+		"STAFF_EDIT" =>'编辑员工',
+		"STAFF_DELETE" =>'删除员工',
+		"SEAT_NO" => '座位号',
+		"TO_CHOOSE"=>'请选择',
+		"HAND_OUT"=>'派送',
+		"SELF_ASK"=>'自取',
+		"ON_JOB"=>'在职',
+		"OUT_JOB"=>'离职',
+		"SEX" => '性别',
+		"GROUP_MAIL"=>'群发邮件',
+		'ZN_NAME_REQUIRED' => "中文名不能为空！",
+		'EN_NAME_REQUIRED' => "英文名不能为空！",
+		
+		'EMAIL_REQUIRED' => "邮箱不能为空！",
+		'SEAT_NO_REQUIRED' => "座位号不能为空！",
+		
+
+		'EMAIL_ERROR' => "邮箱格式不正确！",
+		'JOB_NUMBER_ERROR' => "工号格式不正确！",
+		'ZN_NAME_ERROR' => "中文名格式不正确！",
+		'EN_NAME_ERROR' => "英文名格式不正确！",
+		'ALIAS_ERROR' => "别名格式不正确！",
+		'MOBILE_ERROR' => "手机号格式不正确！",
+		'EXTENSION_NO_ERROR' => "固话格式不正确！",
+		'SEAT_NO_ERROR' => "座位号格式不正确！",
+
+		"JOB_NUMBER_EXIST" => "该工号已存在",
+		"MOBILE_EXIST" => "该手机号已存在",
+		"EMAIL_EXIST" => "该邮箱已存在",
+
+);

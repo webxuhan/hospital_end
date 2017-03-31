@@ -1,0 +1,140 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Departments/index')}">{:L('DEPARTMENTS_INDEX')}</a></li>
+			<li><a href="{:U('Departments/add')}">{:L('DEPARTMENTS_ADD')}</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('Departments/index')}">
+            {:L('DEPARTMENT_NAME')}:
+            <input type="text" name="department_name" style="width: 100px;" value="{:I('request.department_name/s','')}" placeholder="{:L('PLEASE_INPUT')}{:L('DEPARTMENT_NAME')}">
+            {:L('DEPARTMENT_CONTACTS')}:
+            <input type="text" name="department_contacts" style="width: 100px;" value="{:I('request.department_contacts/s','')}" placeholder="{:L('PLEASE_INPUT')}{:L('DEPARTMENT_CONTACTS')}">
+			{:L('DEPARTMENT_MOBILE')}:
+            <input type="text" name="department_mobile" style="width: 100px;" value="{:I('request.department_mobile/s','')}" placeholder="{:L('PLEASE_INPUT')}{:L('DEPARTMENT_MOBILE')}">
+			{:L('DEPARTMENT_TEL')}:
+            <input type="text" name="department_tel" style="width: 100px;" value="{:I('request.department_tel/s','')}" placeholder="{:L('PLEASE_INPUT')}{:L('DEPARTMENT_TEL')}">
+            <br/>
+			{:L('DEPARTMENT_COMPANY')}:
+			<input type="text" name="company" style="width: 100px;" value="{:I('request.company/s','')}" placeholder="{:L('PLEASE_INPUT')}{:L('DEPARTMENT_COMPANY')}">
+
+			{:L('DEPARTMENT_ACCOUNT')}:
+			<input type="text" name="account" style="width: 100px;" value="{:I('request.account/s','')}" placeholder="{:L('PLEASE_INPUT')}{:L('DEPARTMENT_ACCOUNT')}">
+			
+			<input type="submit" class="btn btn-primary" value="{:L('PLEASE_SEARCH')}" />
+            <a class="btn btn-danger" href="{:U('Departments/index')}">{:L('PLEASE_CLEAR')}</a>
+        </form>
+       
+		<form class="js-ajax-form" action="{:U('Dempartments/index')}" method="post">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Departments/delete')}" data-subcheck="true" data-msg="{:L('PLEASE_CONFIRM')}">{:L('DELETE')}</button>
+				<a class="btn btn-primary btn-small" OnClick='_import()'>{:L('DATA_IMPORT')}</a>
+				<a class="btn btn-primary btn-small" OnClick='_export()'>{:L('DATA_EXPORT')}</a>
+			</div>
+			<table class="table table-hover table-bordered table-list" >
+				<thead>
+					<tr>
+						<th width="5%"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="18%">{:L('DEPARTMENT_NAME')}</th>
+						<th width="15%">{:L('DEPARTMENT_CONTACTS')}</th>
+						<th width="10%">{:L('DEPARTMENT_MOBILE')}</th>
+						<th width="10%">{:L('DEPARTMENT_TEL')}</th>
+						<th width="15%">{:L('DEPARTMENT_COMPANY')}</th>
+						<th width="15%">{:L('DEPARTMENT_ACCOUNT')}</th>
+						<th width="12%">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="departments" item="vo">
+					<tr>
+					<td>
+						<label class="checkbox inline">
+							<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.department_id}" title="ID:{$vo.department_id}">
+						</label>
+					</td>
+
+					<td>{$vo.department_name|msubstr=0,16,'utf-8',false}
+					<if condition="mb_strlen($vo['department_name'],'utf-8') gt 16">...</if>
+					</td>
+					<td>{$vo.contacts|msubstr=0,16,'utf-8',false}
+					<if condition="mb_strlen($vo['contacts'],'utf-8') gt 16">...</if>
+					</td>
+					<td>{$vo.mobile}</td>
+					<td>{$vo.tel}</td>
+					<td>{$vo.company|msubstr=0,16,'utf-8',false}
+					<if condition="mb_strlen($vo['company'],'utf-8') gt 16">...</if>
+					</td>
+					<td>{$vo.account}</td>
+					<td>
+						<a href='{:U("Departments/edit",array("department_id"=>$vo["department_id"]))}'>{:L('EDIT')}</a> |
+						<a class="js-ajax-delete" href="{:U('Departments/delete',array('department_id'=>$vo['department_id']))}">{:L('DELETE')}</a>
+					</td>
+					</tr>
+					</foreach>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th width="5%"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="18%">{:L('DEPARTMENT_NAME')}</th>
+						<th width="10%">{:L('DEPARTMENT_CONTACTS')}</th>
+						<th width="10%">{:L('DEPARTMENT_MOBILE')}</th>
+						<th width="15%">{:L('DEPARTMENT_TEL')}</th>
+						<th width="15%">{:L('DEPARTMENT_COMPANY')}</th>
+						<th width="15%">{:L('DEPARTMENT_ACCOUNT')}</th>
+						<th width="12%">{:L('ACTIONS')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$page}</div>
+	
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Departments/delete')}" data-subcheck="true" data-msg="您确定删除吗？">{:L('DELETE')}</button>
+				<a class="btn btn-primary btn-small" OnClick='_import()'>{:L('DATA_IMPORT')}</a>
+				<a class="btn btn-primary btn-small" OnClick='_export()'>{:L('DATA_EXPORT')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function _export(){
+			$.ajax({
+			   type: "POST",
+			   url: "{:U('import_export')}",
+			   data: "queue_type=1&action=export",
+			   success: function(msg){
+			     art.dialog({
+					id: 'warning',
+					icon: 'warning',
+					content: '导出成功正在列表，请稍后！',
+					ok: function () {
+						//reloadPage(window);
+					}
+				}); 
+			  }
+			});
+		}
+		function _import(){
+		    Wind.use('artDialog', 'iframeTools', function () {
+		        var ImportUrl = "{:U('import_index')}";
+		        art.dialog.open(ImportUrl, {
+		            title: '{:L("DATA_IMPORT")}',
+		            lock: true,
+		            height: 150,
+		            width: "40%",
+		            // 在open()方法中，init会等待iframe加载完毕后执行
+		            init: function () {
+		                var iframe = this.iframe.contentWindow;
+		                var top = art.dialog.top;// 引用顶层页面window对象
+
+		            },
+		            ok: function () {				
+		                return true;                
+		            },
+		            cancel: true
+		        });
+		    });
+		}
+	</script>
+</body>
+</html>

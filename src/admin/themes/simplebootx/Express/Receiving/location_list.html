@@ -1,0 +1,178 @@
+<admintpl file="header"/>
+<link rel="stylesheet" href="__PUBLIC__/css/combo.select/combo.select.css">
+</head>
+
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Receiving/create')}">{:L('RECEIVING_TASK')}</a></li>
+        <li class="active"><a href="{:U('Receiving/location_list')}">{:L("RECEIVING_LIST")}</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('Receiving/location_list')}">
+        <table>
+            <tr>
+                <td>
+                    {:L("AIRWAY_BILL_NO")}：
+                    <input type="text" name="airway_bill_no" style="width: 150px;" value="{:I('request.airway_bill_no/s','')}"
+                           placeholder="请输入{:L('AIRWAY_BILL_NO')}">
+                    {:L("JOB_NO")}：
+                    <input type="text" name="job_no" style="width: 150px;" value="{:I('request.job_no/s','')}"
+                           placeholder="请输入{:L('JOB_NO')}">
+                    {:L('INSIDE_AND_OUTSIDE')}：
+                    <select style="width: 100px;" name="express_type" id="side">
+                        <option selected value="">{:L('TO_CHOOSE')}</option>
+                        <option value="inside" <if condition="$inside_and_outside eq inside">selected="selected"</if>>{:L('INSIDE_PARTS')}</option>
+                        <option value="outside" <if condition="$inside_and_outside eq outside">selected="selected"</if>>{:L('OUTER_PARTS')}</option>
+                    </select>
+
+                    <label class="radio-label">{:L('EXPRESS_COMPANY')}</label>
+                    <select name="express_company_id" style="width: 200px;">
+                        <option selected value="">{:L('TO_CHOOSE')}</option>
+                        <volist name="company" id="ecl">
+                            <option value="{$ecl.express_id}"<if condition="$express_company_id eq $ecl['express_id']">selected="selected"</if>>{$ecl.express_name}</option>
+                        </volist>
+                    </select>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {:L("STATUS")}：
+                    <select style="width: 100px;" name="status">
+                        <option selected value="">{:L('TO_CHOOSE')}</option>
+                        <option value=0 <if condition="$status eq 0">selected="selected"</if>>{:L('STATUS_0')}</option>
+                        <option value=1 <if condition="$status eq 1">selected="selected"</if>>{:L('STATUS_1')}</option>
+                    </select>
+
+                    {:L("OPERATOR")}：
+                    <input type="text" name="building" style="width: 100px;"
+                           value="{:I('request.building/s','')}" placeholder="请输入{:L('OPERATOR')}">
+                    {:L("RECEIVE_TIME")}：
+                    <input type="text" name="start_time" class="js-datetime" value="{:I('request.start_time/s','')}" style="width: 120px;" autocomplete="off">-
+                    <input type="text" class="js-datetime" name="end_time" value="{:I('request.end_time/s','')}" style="width: 120px;" autocomplete="off"> &nbsp; &nbsp;
+                    <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}"/>
+                    <a class="btn btn-danger" href="{:U('Receiving/location_list')}">{:L('EMPTY')}</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <form class="js-ajax-form" action="{:U('Receiving/delete')}" method="post" id="form2">
+        <input type="hidden" name="style" value="moment">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Receiving/delete')}"
+                    data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}
+            </button>
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_IMPORT')}</button>-->
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_EXPORT')}</button>-->
+            <!--<a class="btn btn-primary btn-small" form_action="{:U('Mailer/templet')}" href="JavaScript:;"-->
+            <!--onclick="send(this)">{:L('GROUP_MAIL')}</a>-->
+        </div>
+        <table class="table table-hover table-bordered table-list" style="width:120%;">
+
+            <thead>
+            <tr>
+                <th><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                  data-checklist="js-check-x"></label></th>
+                <th>{:L('EXPRESS_TYPE')}</th>
+                <th>{:L("AIRWAY_BILL_NO")}</th>
+                <th>{:L("JOB_NO")}</th>
+                <th>{:L("EXPRESS_COMPANY")}</th>
+                <th>{:L("OPERATOR")}</th>
+                <th>{:L("RECEIVE_TIME")}</th>
+                <th>{:L("STATUS")}</th>
+                <th>{:L("ACTIONS")}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>
+                        <label class="checkbox inline">
+                            <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x"
+                                   name="ids[]" value="{$vo.receive_id}" title="ID:{$vo.receive_id}">
+                        </label>
+                    </td>
+
+                    <if condition="$vo[express_type]">
+                        <td>{:L("EXPRESS_INTER")}</td>
+                        <else/>
+                        <td>{:L("EXPRESS_DOMESTIC")}</td>
+                    </if>
+                    <td>{$vo.airway_bill_no}</td>
+                    <td>{$vo.job_no}</td>
+                    <td>{$vo.express_company}</td>
+                    <td>{$vo.user}</td>
+                    <if condition="$vo[status]">
+                        <td>{$vo.sing_time|format_day_time}</td>
+                        <else/>
+                        <td>---</td>
+                    </if>
+                    <td>{:L("STATUS_$vo[status]")}</td>
+
+                    <td>
+                        <a class="js-ajax-delete" href="{:U('Receiving/delete',array('receive_id'=>$vo['receive_id']))}">{:L('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                  data-checklist="js-check-x"></label></th>
+                <th>{:L('EXPRESS_TYPE')}</th>
+                <th>{:L("AIRWAY_BILL_NO")}</th>
+                <th>{:L("JOB_NO")}</th>
+                <th>{:L("EXPRESS_COMPANY")}</th>
+                <th>{:L("OPERATOR")}</th>
+                <th>{:L("RECEIVE_TIME")}</th>
+                <th>{:L("STATUS")}</th>
+                <th>{:L("ACTIONS")}</th>
+
+            </tr>
+            </tfoot>
+        </table>
+        <div class="pagination">{$page}</div>
+
+        <div class="table-actions">
+            <button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Receiving/delete')}"
+                    data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}
+            </button>
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_IMPORT')}</button>-->
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_EXPORT')}</button>-->
+            <!--<a class="btn btn-primary btn-small" form_action="{:U('Mailer/templet')}" href="JavaScript:;"-->
+            <!--onclick="send(this)">{:L('GROUP_MAIL')}</a>-->
+        </div>
+    </form>
+</div>
+</body>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/combo.select/jquery.combo.select.js"></script>
+<script>
+    $("select[name=express_company_id]").comboSelect();
+    function send($this) {
+        var chk_value = [];
+        //get checkbox value
+        $('input[class="js-check"]:checked').each(function () {
+            chk_value.push($(this).val());
+        });
+        if (chk_value.length == 0) {
+            art.dialog({
+                           id: 'warning',
+                           icon: 'warning',
+                           content: '请至少选择一家快递公司！',
+                           cancelVal: '关闭',
+                           cancel: function () {
+                               reloadPage(window);
+                           },
+                           ok: function () {
+                               reloadPage(window);
+                           }
+                       });
+        } else {
+            $("#form2").attr("action", $($this).attr("form_action"))[0].submit();
+        }
+
+    }
+</script>
+</html>

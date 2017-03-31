@@ -1,0 +1,67 @@
+<script type="text/javascript" src="__PUBLIC__/js/barcode/JsBarcode.all.min.js"></script>
+<volist name="list" id="items">
+<div style="page-break-after:always; width: 100%">
+    <table style="width: 100%; text-align: center;">
+        <thead style="border: 1px solid #000000;">
+        <tr style="text-align: left">
+            <th>Date</th>
+            <th colspan="7">：{:date('Y/m/d')}</th>
+            <th style="text-align: right;">DESPATCH JOB ID</th>
+        </tr>
+        <tr style="text-align: left">
+            <th>Type Of Depatch</th>
+            <th colspan="7">：{$plan_info.send_name}</th>
+            <th rowspan="3" style="text-align: right;"><img id="bar_code_{$items[0]['way_id']}"/></th>
+            <script>
+                JsBarcode("#bar_code_{$items[0]['way_id']}", "{$items[0]['delivery_no']}",{
+                    displayValue: true,
+                    width: 1,
+                    height: 30
+                });
+            </script>
+        </tr>
+        <tr style="text-align: left;">
+            <th>Selected Route</th>
+            <th colspan="7">：{$items[0]['way_name']}</th>
+        </tr>
+        <tr style="text-align: left;border-bottom: 1px solid #000000;">
+            <th>Runner</th>
+            <th colspan="7">：{$items[0]['user_name']}</th>
+        </tr>
+        <tr>
+            <th style="height: 40px;">{:L('EXPRESS_ATTR')}</th>
+            <th>{:L('JOB_NO')}</th>
+            <th>{:L('AIRWAY_BILL_NO')}</th>
+            <th>{:L('STAFF_NAME')}</th>
+            <th>{:L('SEAT_NUMBER')}</th>
+            <th>{:L('SEND_COMPANY')}</th>
+            <th>{:L('IS_TO_PAY_PART')}</th>
+            <th>{:L('REMARK')}</th>
+            <th>{:L('JOB_NO')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="items" id="vo">
+            <tr style="border: 1px dashed #000000;">
+                <td style="padding-left: 10mm;">{$express_attr[$vo['express_attr']]}</td>
+                <td>{$vo.job_no}</td>
+                <td>{$vo.airway_bill_no}</td>
+                <td>{$vo.staff_name}</td>
+                <td>{$vo.seat_number}</td>
+                <td>{$vo.send_company}</td>
+                <td>{$to_pay_part[$vo['to_pay_part']]}</td>
+                <td>{$vo.remark}</td>
+                <td><img id="bar_code_{$vo['job_no']}"></td>
+                <script>
+                    JsBarcode("#bar_code_{$vo['job_no']}", "{$vo['job_no']}",{
+                        displayValue: false,
+                        width: 1,
+                        height: 30
+                    });
+                </script>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+</volist>

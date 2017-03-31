@@ -1,0 +1,172 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Way/index')}">{:L('ADMIN_WAY_INDEX')}</a></li>
+			<li><a href="{:U('Way/add')}">{:L('ADMIN_WAY_ADD')}</a></li>
+		</ul>
+    <form class="well form-search" method="post" action="{:U('Way/index')}">
+	    {:L('NAME')}:
+	    <input type="text" name="way_name" style="width: 120px;" value="{:I('request.way_name/s','')}" placeholder="{:L('NAME')}">
+	    {:L('SEAT')}:
+	    <input type="text" name="seat_detail" style="width: 200px;margin-left: 15px;" value="{:I('request.seat_detail/s','')}" placeholder="{:L('SEAT')}">
+        <input type="submit" class="btn btn-primary" value="搜索" />
+        <a class="btn btn-danger" href="{:U('way/index')}">清空</a>
+    </form>
+
+
+
+		<form method="post" class="js-ajax-form" action="{:U('Way/index')}">
+			<div class="table-actions">
+	        <button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Way/delete')}" data-subcheck="true" data-msg="您确定删除吗？">{:L('DELETE')}</button>
+	        <a class="btn btn-primary btn-small" OnClick='_import()'>{:L('DATA_IMPORT')}</a>
+			<a class="btn btn-primary btn-small" OnClick='_export()'>{:L('DATA_EXPORT')}</a>
+	    </div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="300">{:L('NAME')}</th>
+						<th width="300">{:L('WAY')}</th>
+						<th width="100">{:L('STATUS')}</th>
+						<th>{:L('UPDATE_TIME')}</th>
+						<th width="250">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="data" item="vo">
+					<tr>
+						<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.way_id}"></td>
+						<td>{$vo.way_name}</td>
+						<th><a href="{:U('Way/check',array('id'=>$vo['way_id']))}">{:L('CHECK')}</a></th>
+						<th>{$vo.status}</th>
+						<td>{$vo.update_time}</td>
+						<td>
+							<a href="{:U('Way/enable',array('id'=>$vo['way_id']))}" class="js-enable" status="{$vo.enabled}">{$vo.action}</a>|
+							<a href="{:U('Way/edit',array('id'=>$vo['way_id']))}">{:L('EDIT')}</a>
+							<if condition="$vo['del_status'] eq 0">
+								|<a href="{:U('Way/delete',array('id'=>$vo['way_id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
+
+							</if>
+
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="200">{:L('NAME')}</th>
+						<th width="200">{:L('WAY')}</th>
+						<th width="100">{:L('STATUS')}</th>
+						<th width="200">{:L('UPDATE_TIME')}</th>
+						<th width="100">{:L('ACTIONS')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$page}</div>
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('way/delete')}" data-subcheck="true" data-msg="您确定删除吗？">{:L('DELETE')}</button>
+				<a class="btn btn-primary btn-small" OnClick='_import()'>{:L('DATA_IMPORT')}</a>
+				<a class="btn btn-primary btn-small" OnClick='_export()'>{:L('DATA_EXPORT')}</a>
+			</div>
+		</form>
+
+
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script src="__PUBLIC__/js/enable.js"></script>
+	<script>
+		function _export(){
+			$.ajax({
+			   type: "POST",
+			   url: "{:U('import_export')}",
+			   data: "queue_type=1&action=export",
+			   success: function(msg){
+			     art.dialog({
+					id: 'warning',
+					icon: 'warning',
+					content: '导出成功正在列表，请稍后！',
+					ok: function () {
+						//reloadPage(window);
+					}
+				}); 
+			  }
+			});
+		}
+		function _import(){
+		    Wind.use('artDialog', 'iframeTools', function () {
+		        var ImportUrl = "{:U('import_index')}";
+		        art.dialog.open(ImportUrl, {
+		            title: '{:L("DATA_IMPORT")}',
+		            lock: true,
+		            height: 150,
+		            width: "40%",
+		            // 在open()方法中，init会等待iframe加载完毕后执行
+		            init: function () {
+		                var iframe = this.iframe.contentWindow;
+		                var top = art.dialog.top;// 引用顶层页面window对象
+
+		            },
+		            ok: function () {				
+		                return true;                
+		            },
+		            cancel: true
+		        });
+		    });
+		}
+	</script>
+	<script>
+		if ($('a.js-ajax-delete-way').length) {
+			Wind.use('artDialog', function () {
+				$('.js-ajax-delete-way').on('click', function (e) {
+					e.preventDefault();
+					var $_this = this,
+							$this = $($_this),
+							href = $this.data('href'),
+							msg = $this.data('msg');
+					href = href ? href : $this.attr('href');
+					art.dialog({
+						title: false,
+						icon: 'question',
+						content: msg ? msg : '确定要删除吗(本路径已经被计划选用)',
+						follow: $_this,
+						close: function () {
+							$_this.focus();; //关闭时让触发弹窗的元素获取焦点
+							return true;
+						},
+						okVal: "确定",
+						ok: function () {
+
+							$.getJSON(href).done(function (data) {
+								if (data.state === 'success') {
+									if (data.referer) {
+										location.href = data.referer;
+									} else {
+										reloadPage(window);
+									}
+								} else if (data.state === 'fail') {
+									//art.dialog.alert(data.info);
+									//alert(data.info);//暂时处理方案
+									art.dialog({
+										content: data.info,
+										icon: 'warning',
+										ok: function () {
+											this.title(data.info);
+											return true;
+										}
+									});
+								}
+							});
+						},
+						cancelVal: '关闭',
+						cancel: true
+					});
+				});
+
+			});
+		}
+	</script>
+</body>
+</html>

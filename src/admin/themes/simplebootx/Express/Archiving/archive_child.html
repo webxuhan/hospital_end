@@ -1,0 +1,15 @@
+<volist name="list" id="vo">
+    <tr>
+        <td>
+            <input type="checkbox" name="receive_ids[]" checked value="{$vo.receive_id}" class="receive-ids">
+        </td>
+        <td>{$vo.way_name}</td>
+        <td>{$vo.job_no}</td>
+        <td>{$vo.airway_bill_no}</td>
+        <td>{$vo.staff_name}</td>
+        <td>{$vo.seat_number}</td>
+        <td>{$vo.send_company}</td>
+        <td>{$to_pay_part[$vo['to_pay_part']]}</td>
+        <td>{$vo.remark}</td>
+    </tr>
+</volist>

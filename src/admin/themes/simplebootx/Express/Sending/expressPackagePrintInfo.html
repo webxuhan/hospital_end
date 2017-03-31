@@ -1,0 +1,64 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:U('Sending/expressPrintInfo')}">{:L("EXPRESS_PRINT_INFO")}</a></li>
+    </ul>
+    <form method="post" id="sendForm" class="form-horizontal js-ajax-form">
+        <input type="hidden" name="express_id" id="express_id" value="{$package['id']}">
+        <input type="hidden" name="express_company_id" id="express_company_id" value="{$package['express_company_id']}">
+
+        <fieldset>
+
+            <div class="control-group" >
+                <table>
+                    <tr>
+                        <td width="100px"></td>
+                        <td>
+                            {:L('EXPRESS_NUMBER')}:
+                        </td>
+                        <td>
+                            <input type="text" name="express_number" id="express_number" value="{$package['express_number']}">
+                        </td>
+                        <td width="20px">
+
+                        </td>
+                        <td>
+                            {:L('PACKAGE_ADDRESS')}:{$address['address_name']}
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <hr>
+
+
+            <iframe name="printIframe" id="printIframe" width="100%" height="350px" frameborder="1"
+                    src="{:U('Admin/ExpressTemplate/printtpl',array('express_company_id'=>$package['express_company_id'],'express_id'=>$package['id'],'type'=>2))}">
+
+            </iframe>
+
+
+        </fieldset>
+        <div class="form-actions">
+            <button type="button" class="btn btn-primary" id="subbuttom" onclick="printExpress()">{:L('PRINT_BTN')}</button>
+            <a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jqprint/jquery.jqprint-0.3.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jqprint/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript">
+
+    function printExpress() {
+        var printPage = $("#printIframe").contents().find("#printDiv");
+        printPage.jqprint();
+    }
+
+</script>
+
+</body>
+</html>

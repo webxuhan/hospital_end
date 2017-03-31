@@ -1,0 +1,101 @@
+<div class="form-group">
+  <div class="btn-group" style="margin-bottom: 20px;">
+    <foreach name="region" item="vo" key="k" >
+
+        <select name="region{:$k+1}" id="region_{$k}_0" onchange="setregion({$k})" class="form-control" <if condition="$k eq 0">style="display:inline; width:auto;"<else/>style="display:none;"</if>  >
+          <option name="selected" selected='selected' value="-1">{$vo}</option>
+        </select>
+
+    </foreach>
+  </div>
+ </div>
+ 
+ 
+ <script src="__PUBLIC__/js/region_data.js">
+   //引入地区文件，里面存有变量region_data
+ </script> 
+ <script src="__PUBLIC__/js/jquery.js"></script>
+ <script type="text/javascript">
+    //console.log(region_data);
+    
+
+    //页面加载时，便有第一级
+    var option_str = '';
+    for(var key in region_data[0]){
+      var classa = region_data[0][key].split(":");
+        if(classa[2]){
+        //如果有区域，则value保存本身的id和它子区域的索引
+          option_str+='<option class="region_0" value="'+classa[1]+','+classa[2]+'">'+classa[0]+'</option>';
+        }else{
+          option_str+='<option class="region_0" value="'+classa[1]+'">'+classa[0]+'</option>';
+        }
+    } 
+    $('#region_0_0').append(option_str);
+  
+    //onchange函数
+    function setregion(num) {
+ 
+        var option_string = '';
+        var next = num + 1;
+        var region_detail = $('#region_' + num + '_0').val();
+        var classb = region_data[next];//得到下级区域信息
+
+        for (var i = next; i <= 4; i++){
+          //删除之后所有的select里的option。4指的是共四层，可根据需要修改，传变量
+                $(".region_" + i).remove();
+                $('#region_' + i + '_0').css("display","none");
+            }
+
+        if(region_detail.indexOf(',')!=-1){
+          //有子区域
+
+          region_detail = region_detail.split(",");
+          
+            for(var key in classb){
+              if(key == region_detail[1]){
+              //当索引等于上级的子索引
+                 for(var key1 in classb[key]){
+                      var classc = classb[key][key1].split(":");
+
+                      if(classc[2]){
+                      //有子区域
+                        option_string+='<option class="region_'+next+' " value="'+classc[1]+','+classc[2]+'">'+classc[0]+'</option>';
+                      }else{
+                      //无子区域
+                        option_string+='<option class="region_'+next+' " value="'+classc[1]+'">'+classc[0]+'</option>';
+                      }
+                  } 
+               }
+            }
+
+            //删除下一个select中标记name为next的内容。
+          $(".region_" + next).remove();
+
+            //向下一个select中添加书写好的内容。
+          $('#region_' + next + '_0').append(option_string);
+          $('#region_' + next + '_0').css("display","inline");
+        }
+    }
+
+    //设置默认,页面加载时恢复默认选项。
+    //if({$value}){
+      /*for(var key1 in region_data){
+        for(var key2 in region_data[key1]){
+          if(key1 == 0){
+             var classd = region_data[key1][key2];
+
+          }else{
+              for(var key3 in region_data[key1][key2]){
+                var  classd = region_data[key1][key2][key3];
+              }
+          }
+        }
+        for (var j = 0; j < depth; j++){
+            
+            setregion(j);
+        }
+      }*/
+    //}else{
+       $("option[value='-1']").attr('selected', 'selected');
+    //}
+ </script>

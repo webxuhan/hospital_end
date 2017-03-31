@@ -1,0 +1,37 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Send/index')}">{:L('ADMIN_SEND_INDEX')}</a></li>
+        <li><a href="{:U('Send/add')}">{:L('ADMIN_SEND_ADD')}</a></li>
+        <li class="active"><a href="">{:L('ADMIN_SEND_CHECK')}</a></li>
+    </ul>
+    <div style="overflow:auto;">
+        <table class="table table-hover table-bordered table-list" style="width:400px;">
+            <thead>
+            <tr>
+                <th width="250">{:L('SEARCH_WAY')}</th>
+                <th width="250">{:L('SEARCH_SENDER')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="send_data" item="vo">
+                <tr>
+                    <td>{$vo.way_name}</td>
+                    <td>{$vo.sender}</td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </div>
+    <form method="post" class="js-ajax-form" action="{:U('Way/add_post')}">
+        <div class="form-actions">
+            <a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+
+</html>

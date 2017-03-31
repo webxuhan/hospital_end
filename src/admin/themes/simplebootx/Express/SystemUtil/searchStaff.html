@@ -1,0 +1,155 @@
+<admintpl file="header"/>
+</head>
+
+<body>
+<div class="wrap js-check-wrap">
+
+
+    <input type="hidden" value="" name="staff_id" id="staff_id">
+    <input type="hidden" value="" name="staff_json" id="staff_json">
+    <form class="well form-search" method="post" action="{:U('SystemUtil/searchStaff')}">
+        <table>
+            <tr>
+                <td>
+                    {:L('NAME')}:
+                    <input type="text" name="name" style="width: 100px;" value="{:I('request.name/s','')}"
+                           placeholder="请输入{:L('NAME')}">
+                    {:L("EMAIL")}:
+                    <input type="text" name="email" style="width: 100px;" value="{:I('request.email/s','')}"
+                           placeholder="请输入{:L('EMAIL')}">
+                    {:L("MOBILE")}:
+                    <input type="text" name="mobile" style="width: 100px;" value="{:I('request.mobile/s','')}"
+                           placeholder="请输入{:L('MOBILE')}">
+                    {:L("EXTENSION_NO")}:
+                    <input type="text" name="extension_no" style="width: 100px;"
+                           value="{:I('request.extension_no/s','')}" placeholder="请输入{:L('EXTENSION_NO')}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {:L("DEPARTMENT")}：
+                    <select style="width: 100px;" name="department_id">
+                        <option disabled selected>{:L('TO_CHOOSE')}</option>
+                        <foreach name="departments" item="vo" key="k">
+                            <option value="{$k}">{$vo}</option>
+                        </foreach>
+                    </select>
+
+                    {:L("SEAT_NO")}：
+                    <!--{:get_building_prefix()}<input type="text" name="building" style="width: 50px;"-->
+                                                   <!--value="{:I('request.building/s','')}" placeholder="{:L('BUILDING')}">-->
+                    <!-- - -->
+                    <!--{:get_floor_prefix()}<input type="text" name="floor_no" style="width: 50px;"-->
+                                                <!--value="{:I('request.floor_no/s','')}" placeholder="{:L('FLOOR_NO')}">-->
+                    <!-- - -->
+                    <!--{:get_area_prefix()}<input type="text" name="area_no" style="width: 50px;"-->
+                                               <!--value="{:I('request.area_no/s','')}" placeholder="{:L('AREA_NO')}">-->
+                    <!-- - -->
+                    <!--{:get_seat_prefix()}<input type="text" name="seat_no" style="width: 50px;"-->
+                                               <!--value="{:I('request.seat_no/s','')}" placeholder="{:L('SEAT_NO')}">-->
+
+                    <input type="text" name="seat_detail" style="width: 100px;"
+                           value="{:I('request.seat_detail/s','')}" placeholder="请输入{:L('SEAT_NO')}">
+
+
+                    <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}"/>
+                    <a class="btn btn-danger" href="{:U('SystemUtil/index')}">{:L('EMPTY')}</a>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+
+    <form class="js-ajax-form" action="{:U('SystemUtil/searchStaff')}" method="post" id="form2">
+        <table class="table table-hover table-bordered table-list" style="width:120%;">
+
+            <thead>
+            <tr>
+                <th>
+                    <label>
+                        <!--<input type="checkbox" class="js-check-all" data-direction="x"-->
+                                  <!--data-checklist="js-check-x">-->
+                    </label>
+                </th>
+                <th>{:L('ZN_NAME')}</th>
+                <th>{:L("EN_NAME")}</th>
+                <!--<th>{:L("ALIAS")}</th>-->
+                <th>{:L("JOB_NUMBER")}</th>
+                <th>{:L("MOBILE")}</th>
+                <th>{:L("EXTENSION_NO")}</th>
+                <th>{:L("EMAIL")}</th>
+                <!--<th>{:L("RECEIVING_DEMAND")}</th>-->
+                <th>{:L("DEPARTMENT")}</th>
+                <th>{:L("SEAT_NO")}</th>
+                <!--<th>{:L("TURNOVER_STATUS")}</th>-->
+                <!--<th>{:L("ACTIONS")}</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="staff" item="vo" key="k">
+                <tr>
+                    <td>
+                        <label class="checkbox inline">
+                            <input type="hidden" id="json{$k}" value='{:json_encode($vo)}'>
+                            <input type="radio" name="staff_id"
+                                   onclick="if(this.checked==true){document.getElementById('staff_id').value=this.value;
+                                   document.getElementById('staff_json').value=document.getElementById('json{$k}').value;};"
+                                   value="{$vo.staff_id}">
+                            <!--<input type="" class="js-check" data-yid="js-check-y" data-xid="js-check-x"-->
+                            <!--name="ids[]" value="{$vo.staff_id}" title="ID:{$vo.staff_id}">-->
+                        </label>
+                    </td>
+
+
+                    <td>{$vo.zn_name}</td>
+                    <td>{$vo.en_name}</td>
+                    <!--<td>{$vo.alias}</td>-->
+                    <td>{$vo.job_number}</td>
+                    <td>{$vo.mobile}</td>
+                    <td>{$vo.extension_no}</td>
+                    <td>{$vo.email}</td>
+                    <!--<td>{$receiving_demand[$vo['receiving_demand']]}</td>-->
+                    <td>{$departments[$vo['department_id']]}</td>
+                    <td>{$vo.seat_detail}</td>
+
+                    <!--<td>{$turnover_status[$vo[turnover_status]]}</td>-->
+                    <!--<td>-->
+                    <!--<a href='{:U("Staff/edit",array("staff_id"=>$vo["staff_id"]))}'>{:L('EDIT')}</a> |-->
+                    <!--<a class="js-ajax-delete" href="{:U('Staff/delete',array('staff_id'=>$vo['staff_id']))}">{:L('DELETE')}</a>-->
+                    <!--</td>-->
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th><label>
+                    <!--<input type="checkbox" class="js-check-all" data-direction="x"-->
+                                  <!--data-checklist="js-check-x">-->
+                </label></th>
+                <th>{:L('ZN_NAME')}</th>
+                <th>{:L("EN_NAME")}</th>
+                <!--<th>{:L("ALIAS")}</th>-->
+                <th>{:L("JOB_NUMBER")}</th>
+                <th>{:L("MOBILE")}</th>
+                <th>{:L("EXTENSION_NO")}</th>
+                <th>{:L("EMAIL")}</th>
+                <!--<th>{:L("RECEIVING_DEMAND")}</th>-->
+                <th>{:L("DEPARTMENT")}</th>
+                <th>{:L("SEAT_NO")}</th>
+                <!--<th>{:L("TURNOVER_STATUS")}</th>-->
+                <!--<th>{:L("ACTIONS")}</th>-->
+
+            </tr>
+            </tfoot>
+        </table>
+        <div class="pagination">{$page}</div>
+
+
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+
+</script>
+</body>
+</html>

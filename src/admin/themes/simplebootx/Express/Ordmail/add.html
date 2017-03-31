@@ -1,0 +1,268 @@
+<admintpl file="header" />
+
+<style>
+	.radio-label {
+		display: inline-block;
+	}
+	.received-div {
+		display: inline-block;
+		margin: 2px 10px 2px 2px;
+	}
+	#checkStaff{
+		margin-top: -10px;
+		margin-left: 20px;
+	}
+	form textarea,input[type=text] {
+		margin-bottom: 0px;
+	}
+	.table td{
+		padding: 2px 2px 2px 8px;
+	}
+	select{
+		margin-top: 10px;
+	}
+	#checkStaff{
+		margin-top: 1px;
+	}
+</style>
+</head>
+<body>
+<div class="wrap">
+	<ul class="nav nav-tabs">
+		<li><a href="{:U('Ordmail/index')}">{:L('ADMIN_ORDMAIL_INDEX')}</a></li>
+		<li class="active"><a href="{:U('Ordmail/add')}">{:L('ADMIN_ORDMAIL_ADD')}</a></li>
+	</ul>
+	<form id="search_receiving" style="margin-top: -20px;" method="post" class="form-horizontal" action="{:U('Ordmail/add_post')}">
+		<fieldset>
+			<div class="control-group">
+				<div class="received-div" style="margin-top: 20px;margin-bottom: 20px;">
+					<label class="radio-label">{:L('JOB_NO')} :</label>
+					<input id="job_no" type="text" value="{$job_no}">
+				</div>
+				<a class="btn btn-primary" id="search_received" href="javascript:;" data-url="{:U('Ordmail/search_received')}">{:L('SEARCH')}</a>
+			</div>
+		</fieldset>
+	</form>
+
+	<form style="margin-top: -34px;" method="post" id="location_form" action="{:U('Ordmail/add_post')}">
+		<table class="table table-hover table-bordered">
+			<tr><td colspan="6">{:L('ORDMAIL_MSG')}</td></tr>
+			<tr>
+				<td>{:L('ORDMAIL_TYPE')}</td>
+				<td style="width:330px;">
+					<select name="ord_mail_type">
+						<option>{:L('BANKCARD_NOTE')}</option>
+						<option>{:L('MAGAZINE')}</option>
+						<option>{:L('EXHIBITION_CARD')}</option>
+						<option>{:L('NAME_CARD')}</option>
+						<option>{:L('POSTAL_NOTICE')}</option>
+					</select>
+				</td>
+
+				<td style="width:75px;font-size: 13px;">{:L('ORDMAIL_COUNT')}</td>
+				<td style="width:330px;">
+					<input type="text" name="ord_mail_count">
+				</td>
+				<td>{:L('OPERATOR')}</td>
+				<td>
+					<select name="operator">
+						<foreach name="data" item="vo">
+							<option>{$vo.operation}</option>
+						</foreach>
+					</select>
+				</td>
+			</tr>
+		</table>
+
+		<table class="table table-hover table-bordered">
+			<tr><td colspan="6">{:L('RECIPIENT_INFORMATION')}</td></tr>
+			<tr>
+				<td>{:L('STAFF_NAME')}</td>
+				<td colspan="3">
+					<input type="text" readonly name="staff_name" id="staff_name">
+					<a class="btn btn-primary" id="checkStaff">
+						{:L('CHECK_USER')}
+					</a>
+					<input type="hidden" name="staff_id" id="staff_id">
+					<input type="hidden" name="staff_department_id" id="staff_department_id">
+					<input type="hidden" name="seat_detail" id="seat_id">
+				</td>
+				<td>{:L('STAFF_DEPARTMENT')}</td>
+				<td><input type="text" readonly name="staff_department" id="staff_department"></td>
+			</tr>
+			<tr>
+				<td>{:L('STAFF_MOBILE')}</td>
+				<td><input type="text" name="staff_mobile" id="staff_mobile"></td>
+				<td>{:L('STAFF_TEL')}</td>
+				<td><input type="text" name="staff_tel" id="staff_tel"></td>
+				<td>{:L('SEAT_NO')}</td>
+				<td><input type="text" name="seat_number" id="seat_number"></td>
+			</tr>
+		</table>
+		<a class="btn btn-primary" id="location_staff">{:L('SAVE')}</a>
+		&nbsp;&nbsp;&nbsp;
+		<a class="btn btn-primary" id="location_staff_next">{:L('SAVE_NEXT')}</a>
+	</form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+
+<script src="__PUBLIC__/js/region_data.js"></script>
+<script src="__PUBLIC__/js/regions_plugin.js"></script>
+</body>
+
+<script>
+	$(function() {
+		$("form").submit(function(ev){ev.preventDefault();});
+
+		function clearReceived() {
+			var tmp = '';
+			$("#receiving_list").html(tmp);
+			$("#express_attr").val(tmp);
+			$("#express_name").val(tmp);
+			$("#inside_and_outside").val(tmp);
+		}
+		function clearForm() {
+			$("#location_form").find("input,select").val("");
+			$("#search_receiving").find("input,select").val("");
+		}
+
+		function searchReceivedFun() {
+			var url = $("#search_received").attr("data-url");
+			$.ajax({
+				url: url,
+				dataType: 'json',
+				method: 'post',
+				data: {
+					airway_bill_no: $("#express_number").val(),
+					job_no: $("#job_no").val()
+				},
+				success: function (data) {
+					if(data.status) {
+						data.url && (window.location.href = data.url);
+						if(data.info.page) {
+							$("#receiving_list").html(data.info.page);
+							var tmpData = data.info.data;
+							if(tmpData) {
+								console.log(tmpData);
+								$("#express_attr").val(tmpData.express_attr);
+								$("#express_name").val(tmpData.express_name);
+								$("#inside_and_outside").val(tmpData.inside_and_outside);
+								$("#staff_id").val(tmpData.staff_id);
+								$("#staff_department_id").val(tmpData.staff_department_id);
+								$("#seat_id").val(tmpData.seat_id);
+								$("#staff_department").val(tmpData.staff_department);
+								$("#staff_mobile").val(tmpData.staff_mobile);
+								$("#staff_tel").val(tmpData.staff_tel);
+								$("#staff_name").val(tmpData.staff_name);
+								$("#seat_number").val(tmpData.seat_number);
+								$("#remark").val(tmpData.remark);
+								$("#send_name").val(tmpData.send_name);
+								$("#send_mobile").val(tmpData.send_mobile);
+								$("#send_tel").val(tmpData.send_tel);
+								$("#send_detail_addr").val(tmpData.send_detail_addr);
+								$("#send_region_id").attr("data-regions", tmpData.send_region_id);
+								$("#send_company").val(tmpData.send_company);
+							}// end if
+
+						} else {
+							clearReceived();
+							data.info && data.info.msg && Wind.use("artDialog", "iframeTools", function() {
+								art.dialog.tips(data.info.msg, 1.5);
+							});
+						}
+
+					} else {
+						Wind.use("artDialog", "iframeTools", function() {
+							art.dialog.tips(data.info, 1.5);
+						});
+					}
+				}// end success function
+			});
+		}
+		$("#job_no").on("keydown",function(e){
+			if(e.keyCode == 13) {
+				var form = $("#search_receiving");
+				form.find("input[name=next_step]").remove();
+				searchReceivedFun();
+			}
+		});
+
+		if($("#job_no").val()) searchReceivedFun();
+
+		// add event
+		$("#search_received").on("click",searchReceivedFun);
+
+		function locationStaffFun() {
+			var form = $("#location_form");
+			$.ajax({
+				url: form.attr("action"),
+				data: form.serialize(),
+				dataType: "json",
+				method: form.attr("method"),
+				success: function(data) {
+					if(data.status) {
+						data.url && (window.location.href = data.url);
+						clearForm();
+						clearReceived();
+					} else {
+						Wind.use("artDialog", "iframeTools", function() {
+							art.dialog.tips(data.info, 1.5);
+						});
+					}
+				}
+			});// end ajax
+		}// end locationStaffFun
+
+		$("#location_staff").on("click", function() {
+			var form = $("#receivingForm");
+			form.append('<input name="next_step" value="next_step" type="hidden">');
+			locationStaffFun();
+		});
+
+		// 设置员工信息
+		function setStaff(obj) {
+			obj = eval( '(' + obj + ')' );
+
+			$("#staff_name").val(obj.zn_name);
+			$("#staff_id").val(obj.staff_id);
+			$("#staff_mobile").val(obj.mobile);
+			$("#staff_tel").val(obj.extension_no);
+			$("#staff_department_id").val(obj.department_id);
+			$("#staff_department").val(obj.department_name);
+			$("#seat_number").val(obj.seat_detail);
+			$("#seat_id").val(obj.seat_id);
+		}
+
+		// 选择员工
+		$("#checkStaff").on("click", function () {
+			Wind.use('artDialog', 'iframeTools', function () {
+				var url = "{:U('SystemUtil/index')}";
+				art.dialog.open(url, {
+					title: '{:L("CHECK_USER")}',
+					lock: true,
+					height: 400,
+					width: "80%",
+					// 在open()方法中，init会等待iframe加载完毕后执行
+					init: function () {
+						var iframe = this.iframe.contentWindow;
+						var top = art.dialog.top;// 引用顶层页面window对象
+					},
+					ok: function () {
+						var iframe = this.iframe.contentWindow;
+						if (!iframe.document.body) {
+							art.dialog.tips('Loading......', 1.5);
+							return false;
+						}
+
+						// 获取iframe嵌套内容
+						var staff_json = iframe.document.getElementById('staff_json').value;
+						setStaff(staff_json);
+					},
+					cancel: true
+				});
+			});
+
+		});// end checkStaff
+	});
+</script>
+</html>

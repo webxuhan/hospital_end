@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="__PUBLIC__/css/region_tree_plugin.css" type="text/css">
+</head>
+<body>
+
+<form action="{:U('Regions/tree_post')}" method="post">
+    <volist name="region_tree" id="vo">
+        <a href="javascript:;" class="region_tree" name="region_tree[]" region_tree_data="{$vo}">选择地区</a><br>
+    </volist>
+    <a href="javascript:;" id="add_region">添加地区</a>
+    <input type="submit" value="submit">
+</form>
+
+</body>
+
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/js/region_data_tree.js"></script>
+<script src="__PUBLIC__/js/region_tree_plugin.js"></script>
+<script>
+    $(function() {
+        $("#add_region").on("click", function() {
+            $(this).before('<a href="javascript:;" class="region_tree" name="region_tree[]" region_tree_data="">选择地区</a><br>');
+        });
+    });
+</script>
+</html>

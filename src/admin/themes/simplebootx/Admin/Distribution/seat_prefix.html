@@ -1,0 +1,78 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Distribution/index')}">{:L('ADMIN_DISTRIBUTION_INDEX')}</a></li>
+        <li><a href="{:U('Distribution/add')}">{:L('ADMIN_DISTRIBUTION_ADD')}</a></li>
+        <li class="active"><a href="{:U('Distribution/seat_prefix')}">{:L('SEAT_NUMBER_PREFIX')}</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Distribution/seat_prefix_post')}">
+        <fieldset>
+            <div class="control-group">
+                <label style="margin-left:100px">
+                    {:L('BUILDING_NO_PREFIX')}:
+                    <input type="text" name="building_prefix" value="{$building_prefix}" style="width:40px;margin-left:30px;margin-right:30px" >
+                    {:L('FLOOR_NO_PREFIX')}:
+                    <input type="text" name="floor_prefix" value="{$floor_prefix}" style="width:40px;margin-left:30px;margin-right:30px">
+                    {:L('AREA_NO_PREFIX')}:
+                    <input type="text" name="area_prefix" value="{$area_prefix}" style="width:40px;margin-left:30px;margin-right:30px">
+                    {:L('SEAT_NO_PREFIX')}:
+                    <input type="text" name="seat_prefix" value="{$seat_prefix}" style="width:40px;margin-left:30px;margin-right:30px">
+
+                </label>
+            </div>
+
+            <div class="control-group">
+                <div style="margin-left:100px">
+                    {:L('BUILDING_CONFIGURATION')}:
+                    &nbsp;&nbsp;
+                    <input id="building_1" type="radio" name="building_configuration" value="numeric" <if condition="$building_configuration eq 'numeric'">checked="checked"</if>>
+                    <label for="building_1" style="display: inline-block;">{:L('ALL_NUMBERS')}</label>
+                    &nbsp;&nbsp;
+                    <input id="building_2" type="radio" name="building_configuration" value="letter" <if condition="$building_configuration eq 'letter'">checked="checked"</if>>
+                    <label for="building_2" style="display: inline-block;">{:L('THE_LETTER_BEGINS')}</label>
+                </div>
+                <div style="margin-left:100px">
+                    {:L('FLOOR_CONFIGURATION')}:
+                    &nbsp;&nbsp;
+                    <input id="floor_1" type="radio" name="floor_configuration" value="numeric" <if condition="$floor_configuration eq 'numeric'">checked="checked"</if>>
+                    <label for="floor_1" style="display: inline-block;">{:L('ALL_NUMBERS')}</label>
+                    &nbsp;&nbsp;
+                    <input id="floor_2" type="radio" name="floor_configuration" value="letter" <if condition="$floor_configuration eq 'letter'">checked="checked"</if>>
+                    <label for="floor_2" style="display: inline-block;">{:L('THE_NUMBER_BEGINS')}</label>
+                </div>
+                <div style="margin-left:100px">
+                    {:L('AREA_CONFIGURATION')}:
+                    &nbsp;&nbsp;
+                    <input id="area_1" type="radio" name="area_configuration" value="numeric" <if condition="$area_configuration eq 'numeric'">checked="checked"</if>>
+                    <label for="area_1" style="display: inline-block;">{:L('ALL_NUMBERS')}</label>
+                    &nbsp;&nbsp;
+                    <input id="area_2" type="radio" name="area_configuration" value="letter" <if condition="$area_configuration eq 'letter'">checked="checked"</if>>
+                    <label for="area_2" style="display: inline-block;">{:L('ALL_LETTERS')}</label>
+                </div>
+                <div style="margin-left:100px">
+                    {:L('SEAT_CONFIGURATION')}:
+                    &nbsp;&nbsp;
+                    <input id="seat_1" type="radio" name="seat_configuration" value="numeric" <if condition="$seat_configuration eq 'numeric'">checked="checked"</if>>
+                    <label for="seat_1" style="display: inline-block;">{:L('ALL_NUMBERS')}</label>
+                    &nbsp;&nbsp;
+                    <input id="seat_2" type="radio" name="seat_configuration" value="letter" <if condition="$seat_configuration eq 'letter'">checked="checked"</if>>
+                    <label for="seat_2" style="display: inline-block;">{:L('ALL_LETTERS')}</label>
+                </div>
+            </div>
+            <div class="control-group">
+                <div style="margin-left: 100px;background-color: lightgoldenrodyellow;">
+                    座位号前缀：即楼栋、楼层、区域以及座位号的前缀，如D3-F1-A2-48，这里出现的D、F、A，都是前缀，48是在没有填写前缀的情况下的显示方式，如果前缀写了S，则是 S48。
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+            <a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

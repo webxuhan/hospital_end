@@ -1,0 +1,11 @@
+<volist name="list" id="vo">
+    <tr>
+        <td>{$vo.airway_bill_no}<input type="hidden" name="receive_id[]" value="{$vo.receive_id}"></td>
+        <td>{$vo.job_no}</td>
+        <td>{$express_attr[$vo['express_attr']]}</td>
+        <td>{$vo.express_name}</td>
+        <td>{$vo.package_num}</td>
+        <td>{$inside_and_outside[$vo['inside_and_outside']]}</td>
+        <td>{$vo.create_time|format_day_time}</td>
+    </tr>
+</volist>

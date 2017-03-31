@@ -1,0 +1,99 @@
+<admintpl file="header" />
+<link rel="stylesheet" href="__PUBLIC__/css/date_input.css" type="text/css">
+</head>
+
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('ApiLog/index')}">{:L('APIOPERATION_LOG')}</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('ApiLog/index')}">
+			<table>
+				<tr>
+					<td>
+		            {:L('API_NAME')}:
+		            <input type="text" name="api_name" style="width: 100px;" value="{:I('request.api_name/s','')}" placeholder="请输入{:L('API_NAME')}">
+		            </td>
+					<td>
+		            {:L('APIOPERATOR')}:
+		            <input type="text" name="user_login" style="width: 100px;" value="{:I('request.user_login/s','')}" placeholder="请输入{:L('APIOPERATOR')}">
+		            </td>
+		            <td>
+		            {:L('APIOPERATION_TIME')}:
+		            <input type="text" name="start_time" class="js-datetime" value="{:I('request.start_time/s','')}" style="width: 120px;" autocomplete="off">-
+					<input type="text" class="js-datetime" name="end_time" value="{:I('request.end_time/s','')}" style="width: 120px;" autocomplete="off">
+					{:L('APIOPERATION_CONTENT')}:
+		            <input type="text" name="operation_content" style="width: 100px;" value="{:I('request.operation_content/s','')}" placeholder="请输入{:L('APIOPERATION_CONTENT')}">
+		            
+		            <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}" />
+		            <a class="btn btn-danger" href="{:U('ApiLog/index')}">{:L('EMPTY')}</a>
+		            </td>
+	            </tr>
+            </table>
+        </form>
+    
+		<form class="js-ajax-form" action="{:U('ApiLog/index')}" method="post" id="form2">
+			<div class="table-actions">
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_IMPORT')}</button>
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_EXPORT')}</button>
+			</div>
+			<table class="table table-hover table-bordered table-list" style="width:120%;">
+
+				<thead>
+					<tr>
+						<th>{:L('APIOPERATOR')}</th>
+						<th>{:L('APIOPERATION_IP')}</th>
+						<th>{:L('APIOPERATION_CONTENT')}</th>
+						<th>{:L('APIOPERATION_TIME')}</th>
+						<th>{:L('API_NAME')}</th>
+						<th>{:L('APIOPERATION_STATUS')}</th>
+						<th>{:L('ORDER_ID')}</th>
+						<th>{:L('APIOPERATION_NODE')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="log_list" item="vo">
+					<tr>
+					<td>{$vo.user_login}</td>
+					<td>{$vo.apioperation_ip}</td>
+					<td>{$vo.apilog_content}</td>
+					<td>{$vo.apioperation_time|date="Y-m-d H:i:s",###}</td>
+					<td>{$vo.api_name}</td>
+					<td>
+						<if condition="$vo.apioperation_status eq 0">
+							{:L('APIOPERATION_TRUE')}
+						<else />
+							{:L('APIOPERATION_FALSE')}
+						</if>
+					</td>
+					<td>{$vo.order_id}</td>
+					<td>{$vo.apioperation_node}</td>
+					</tr>
+					</foreach>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>{:L('APIOPERATOR')}</th>
+						<th>{:L('APIOPERATION_IP')}</th>
+						<th>{:L('APIOPERATION_CONTENT')}</th>
+						<th>{:L('APIOPERATION_TIME')}</th>
+						<th>{:L('API_NAME')}</th>
+						<th>{:L('APIOPERATION_STATUS')}</th>
+						<th>{:L('ORDER_ID')}</th>
+						<th>{:L('APIOPERATION_NODE')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$page}</div>
+	
+			<div class="table-actions">
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_IMPORT')}</button>
+				<button class="btn btn-primary btn-small " type="button" ">{:L('DATA_EXPORT')}</button>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+
+</body>
+
+</html>

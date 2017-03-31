@@ -1,0 +1,190 @@
+<admintpl file="header"/>
+</head>
+
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:U('Sending/index')}">{:L("SENDING_TITLE")}</a></li>
+        <li><a href="{:U('Sending/create')}">{:L("SENDING_CREATE")}</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('Sending/index')}">
+        <table>
+            <tr>
+                <td>
+
+
+                    {:L("EXPRESS_NUMBER")}：
+                    <input type="text" name="express_number" style="width: 150px;" value="{:I('request.express_number/s','')}"
+                           placeholder="请输入{:L('EXPRESS_NUMBER')}">
+                    {:L("SERIAL_NUMBER")}：
+                    <input type="text" name="serial_number" style="width: 150px;" value="{:I('request.serial_number/s','')}"
+                           placeholder="请输入{:L('SERIAL_NUMBER')}">
+                    {:L('EXPRESS_TYPE')}：
+                    <select style="width: 100px;" name="express_type">
+                        <option selected value="">{:L('TO_CHOOSE')}</option>
+                        <foreach name="expressTypeList" item="etl" key="k">
+                            <option value="{$k}"
+                            <if condition="I('request.express_type/s') eq $k">selected</if>
+                            >{$etl}</option>
+                        </foreach>
+                    </select>
+
+                    {:L("EXPRESS_COMPANY")}：
+                    <select style="width: 100px;" name="express_company_id">
+                        <option selected value="">{:L('TO_CHOOSE')}</option>
+                        <foreach name="expressCompanyList" item="ecl">
+                            <option value="{$ecl['express_id']}"
+                            <if condition="I('request.express_company_id/s') eq $ecl['express_id']">selected</if>
+                            >{$ecl['express_name']}</option>
+                        </foreach>
+                    </select>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {:L("STATUS")}：
+                    <select style="width: 100px;" name="status">
+                        <option selected value="">{:L('TO_CHOOSE')}</option>
+                        <foreach name="expressStatusList" item="esl" key="k">
+                            <option value="{$k}"
+                            <if condition="I('request.status/s') eq $k">selected</if>
+                            >{$esl}</option>
+                        </foreach>
+                    </select>
+
+                    {:L("OPERATOR")}：
+                    <input type="text" name="building" style="width: 100px;"
+                                                   value="{:I('request.building/s','')}" placeholder="请输入{:L('OPERATOR')}">
+                    {:L("SEND_TIME")}：
+                    <input type="text" name="start_time" class="js-datetime" value="{:I('request.start_time/s','')}" style="width: 120px;" autocomplete="off">-
+                    <input type="text" class="js-datetime" name="end_time" value="{:I('request.end_time/s','')}" style="width: 120px;" autocomplete="off"> &nbsp; &nbsp;
+
+                    <!--<input type="text" name="email" style="width: 150px;" value="{:I('request.email/s','')}"-->
+                           <!--placeholder="请输入{:L('SEND_TIME_START')}">- -->
+                    <!--<input type="text" name="email" style="width: 150px;" value="{:I('request.email/s','')}"-->
+                           <!--placeholder="请输入{:L('SEND_TIME_END')}">-->
+
+                    <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}"/>
+                    <a class="btn btn-danger" href="{:U('Sending/index')}">{:L('EMPTY')}</a>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+
+    <form class="js-ajax-form" action="{:U('Sending/index')}" method="post" id="form2">
+        <input type="hidden" name="style" value="moment">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Sending/delete')}"
+                    data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}
+            </button>
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_IMPORT')}</button>-->
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_EXPORT')}</button>-->
+            <!--<a class="btn btn-primary btn-small" form_action="{:U('Mailer/templet')}" href="JavaScript:;"-->
+               <!--onclick="send(this)">{:L('GROUP_MAIL')}</a>-->
+        </div>
+        <table class="table table-hover table-bordered table-list" style="width:120%;">
+
+            <thead>
+            <tr>
+                <th><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                  data-checklist="js-check-x"></label></th>
+                <th>{:L('EXPRESS_TYPE')}</th>
+                <th>{:L("EXPRESS_NUMBER")}</th>
+                <th>{:L("SERIAL_NUMBER")}</th>
+                <th>{:L("EXPRESS_COMPANY")}</th>
+                <th>{:L("OPERATOR")}</th>
+                <th>{:L("SEND_TIME")}</th>
+                <th>{:L("STATUS")}</th>
+                <th>{:L("ACTIONS")}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>
+                        <label class="checkbox inline">
+                            <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x"
+                                   name="ids[]" value="{$vo.id}" title="ID:{$vo.id}">
+                        </label>
+                    </td>
+
+
+                    <td>{:L("EXPRESS_TYPE_$vo[express_type]")}</td>
+                    <td>{$vo.express_number}</td>
+                    <td>
+                        <!--{$vo.serial_number}-{$vo.app_number}-->
+                        <foreach name="vo['items']" item="item">
+                            {$item.serial_number} - {$item.app_number}<br>
+                        </foreach>
+                    </td>
+                    <td>{$vo.express_name}</td>
+                    <td>{$vo.user_nicename}</td>
+                    <td>{$vo.create_time|format_day_time}</td>
+                    <td>{:L("APPLICATION_STATUS_$vo[status]")}</td>
+
+                    <td>
+                        <!--<a href='{:U("Staff/edit",array("staff_id"=>$vo["staff_id"]))}'>{:L('EDIT')}</a> |-->
+                        <a class="js-ajax-delete" href="{:U('Sending/delete',array('id'=>$vo['id']))}">{:L('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                  data-checklist="js-check-x"></label></th>
+                <th>{:L('EXPRESS_TYPE')}</th>
+                <th>{:L("EXPRESS_NUMBER")}</th>
+                <th>{:L("SERIAL_NUMBER")}</th>
+                <th>{:L("EXPRESS_COMPANY")}</th>
+                <th>{:L("OPERATOR")}</th>
+                <th>{:L("SEND_TIME")}</th>
+                <th>{:L("STATUS")}</th>
+                <th>{:L("ACTIONS")}</th>
+
+            </tr>
+            </tfoot>
+        </table>
+        <div class="pagination">{$page}</div>
+
+        <div class="table-actions">
+            <button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Sending/delete')}"
+                    data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}
+            </button>
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_IMPORT')}</button>-->
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_EXPORT')}</button>-->
+            <!--<a class="btn btn-primary btn-small" form_action="{:U('Mailer/templet')}" href="JavaScript:;"-->
+               <!--onclick="send(this)">{:L('GROUP_MAIL')}</a>-->
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+//    function send($this) {
+//        var chk_value = [];
+//        //get checkbox value
+//        $('input[class="js-check"]:checked').each(function () {
+//            chk_value.push($(this).val());
+//        });
+//        if (chk_value.length == 0) {
+//            art.dialog({
+//                id: 'warning',
+//                icon: 'warning',
+//                content: '请至少选择一个员工！',
+//                cancelVal: '关闭',
+//                cancel: function () {
+//                    reloadPage(window);
+//                },
+//                ok: function () {
+//                    reloadPage(window);
+//                }
+//            });
+//        } else {
+//            $("#form2").attr("action", $($this).attr("form_action"))[0].submit();
+//        }
+//    }
+</script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<admintpl file="header"/>
+<link rel="stylesheet" href="__PUBLIC__/css/combo.select/combo.select.css">
+</head>
+
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Delivery/printing')}">{:L('PRINT_DELIVERY_FORM')}</a></li>
+        <li class="active"><a href="{:U('Delivery/print_list')}">{:L('PRINT_DELIVERY_QUERY')}</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('Delivery/print_list')}">
+        <table>
+            <tr>
+                <td>
+                    {:L("PRINT_TIME")}：
+                    <input type="text" name="start_time" class="js-datetime" value="{:I('request.start_time/s','')}" style="width: 120px;" autocomplete="off">-
+                    <input type="text" class="js-datetime" name="end_time" value="{:I('request.end_time/s','')}" style="width: 120px;" autocomplete="off"> &nbsp; &nbsp;
+                    {:L("WAY")}:
+                    <select name="way_id" style="width: 200px;">
+                        <volist name="way_list" id="ecl">
+                            <option value="{$ecl.way_id}" <if condition="$way_id eq $ecl['way_id']">selected="selected"</if>>{$ecl.way_name}</option>
+                        </volist>
+                    </select>&nbsp; &nbsp;&nbsp; &nbsp;
+                    {:L('DELIVERY_COURIER')}:
+                    <select style="width: 100px;" name="user_id">
+                        <option selected value="">{:L('TO_CHOOSE')}</option>
+                        <volist name="user" id="ecl">
+                            <option value="{$ecl.id}" <if condition="$user_id eq $ecl['id']">selected="selected"</if>>{$ecl.user_login}</option>
+                        </volist>
+                    </select>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="no" style="width: 300px;"
+                           value="{$no}" placeholder="请输入{:L('AIRWAY_BILL_NO_OR_JOB_NO')}">
+                    <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}"/>
+                    <a class="btn btn-danger" href="{:U('Delivery/print_list')}">{:L('EMPTY')}</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <form method="post" id="receive_form">
+        <input type="hidden" name="style" value="moment">
+        <div class="table-actions">
+            <a class="btn btn-primary btn-small" id="print_delivery" href="javascript:;" data-url="{:U('Delivery/print_list_post')}">{:L('PRINT')}</a>
+        </div>
+        <table class="table table-hover table-bordered table-list" style="width:120%;">
+
+            <thead>
+            <tr>
+                <th><label><input type="checkbox" checked id="selectAllReceive"></label></th>
+                <th>{:L('EXPRESS_ATTR')}</th>
+                <th>{:L('JOB_NO')}</th>
+                <th>{:L('AIRWAY_BILL_NO')}</th>
+                <th>{:L('STAFF_NAME')}</th>
+                <th>{:L('SEND_COMPANY')}</th>
+                <th>{:L('IS_TO_PAY_PART')}</th>
+                <th>{:L('REMARK')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>
+                        <label class="checkbox inline">
+                            <input type="checkbox" name="receive_ids[]" checked value="{$vo.receive_id}" class="receive-ids">
+                        </label>
+                    </td>
+
+                    <if condition="$vo['express_attr'] eq 0">
+                        <td>{:L("EXPRESS_FILE")}</td>
+                        <elseif condition="$vo['express_attr'] eq 1"/>
+                        <td>{:L("EXPRESS_PACKAGE")}</td>
+                        <else/>
+                    </if>
+                    <td>{$vo.job_no}</td>
+                    <td>{$vo.airway_bill_no}</td>
+                    <td>{$vo.staff_name}</td>
+                    <td>{$vo.express_company}</td>
+                    <if condition="$vo['to_pay_part'] eq 0">
+                        <td>{:L("YES")}</td>
+                        <elseif condition="$vo['express_attr'] eq 1"/>
+                        <td>{:L("NO")}</td>
+                        <else/>
+                    </if>
+                    <td>{$vo.remark}</td>
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                  data-checklist="js-check-x"></label></th>
+                <th>{:L('EXPRESS_ATTR')}</th>
+                <th>{:L('JOB_NO')}</th>
+                <th>{:L('AIRWAY_BILL_NO')}</th>
+                <th>{:L('STAFF_NAME')}</th>
+                <th>{:L('SEND_COMPANY')}</th>
+                <th>{:L('IS_TO_PAY_PART')}</th>
+                <th>{:L('REMARK')}</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="pagination">{$page}</div>
+
+    </form>
+</div>
+</body>
+<div id="print_page" style="display: none;"></div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/combo.select/jquery.combo.select.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jqprint/jquery.jqprint-0.3.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jqprint/jquery-migrate-1.2.1.min.js"></script>
+<script>
+    $(function() {
+
+        $("select[name=user_id],select[name=way_id]").comboSelect();
+//        $("").comboSelect();
+
+        $("#print_delivery").on("click", function() {
+            var url = $("#print_delivery").attr("data-url");
+            $.ajax({
+                       url: url,
+                       data: $("#receive_form").serialize(),
+                       method: "post",
+                       dataType: "json",
+                       success: function(data) {
+                           console.log(data);
+                           if(data.status) {
+                               var page = $("#print_page");
+                               page.html(data.info);
+                               page.show();
+                               page.jqprint();
+                               page.hide();
+
+                           } else {
+                               showMsg(data.info)
+                           }
+                       }
+                   });
+        });
+        function showMsg(msg) {
+            Wind.use("artDialog", "iframeTools", function() {
+                art.dialog.tips(msg, 3);
+            });
+        }
+
+        // 全选事件
+        $(document).on("click", "#selectAllReceive", function() {
+            $(".receive-ids").attr("checked", $(this).attr("checked") ? true : false );
+        });
+
+        // 单个选中事件
+        $(document).on("click", ".receive-ids", function() {
+            $("#selectAllReceive").attr("checked",$(".receive-ids:checked").length == $(".receive-ids").length ? true : false);
+        });
+    });
+</script>
+</html>

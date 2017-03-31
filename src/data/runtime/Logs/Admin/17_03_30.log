@@ -1,0 +1,645 @@
+[ 2017-03-30T22:15:03+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=setting&a=site_post
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.001000s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ admin_begin ] --START--
+INFO: Run Common\Behavior\AdminDefaultLangBehavior [ RunTime:0.002000s ]
+INFO: [ admin_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `hos_users` [ RunTime:0.0150s ]
+SQL: SELECT * FROM `hos_users` WHERE `id` = '1' LIMIT 1   [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `hos_options` [ RunTime:0.0150s ]
+SQL: SELECT * FROM `hos_options` WHERE ( option_name='site_options' ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: UPDATE `hos_options` SET `option_id`='6',`option_name`='site_options',`option_value`='{\"site_name\":\"Hospital\\u540e\\u53f0\\u6302\\u53f7\\u7ba1\\u7406\",\"site_tpl\":\"simplebootx\",\"site_adminstyle\":\"flat\",\"label_print\":\"0\",\"delivery_print\":\"0\",\"search_option\":\"0\",\"site_icp\":\"\",\"site_admin_email\":\"1027329762@qq.com\",\"site_copyright\":\"\",\"site_seo_title\":\"ThinkCMF\\u5185\\u5bb9\\u7ba1\\u7406\\u6846\\u67b6\",\"site_seo_keywords\":\"ThinkCMF,php,\\u5185\\u5bb9\\u7ba1\\u7406\\u6846\\u67b6,cmf,cms,\\u7b80\\u7ea6\\u98ce, simplewind,framework\",\"site_seo_description\":\"ThinkCMF\\u662f\\u7b80\\u7ea6\\u98ce\\u7f51\\u7edc\\u79d1\\u6280\\u53d1\\u5e03\\u7684\\u4e00\\u6b3e\\u7528\\u4e8e\\u5feb\\u901f\\u5f00\\u53d1\\u7684\\u5185\\u5bb9\\u7ba1\\u7406\\u6846\\u67b6\",\"urlmode\":\"0\",\"html_suffix\":\"\",\"comment_time_interval\":\"60\"}' WHERE ( option_name='site_options' ) [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `hos_options` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `hos_options` WHERE ( option_name='cmf_settings' ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `hos_options` (`option_name`,`option_value`) VALUES ('cmf_settings','{\"banned_usernames\":\"\"}') [ RunTime:0.0000s ]
+SQL: SELECT * FROM `hos_options` WHERE `option_name` = 'cdn_settings' LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `hos_options` (`option_name`,`option_value`) VALUES ('cdn_settings','{\"cdn_static_root\":\"\"}') [ RunTime:0.0000s ]
+
+[ 2017-03-30T22:15:28+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Doctorinfo&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\BigDepartmentModel
+NOTIC: D方法实例化没找到模型类Common\Model\DiseaseModel
+NOTIC: D方法实例化没找到模型类Commom\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Commom\Model\PositionModel
+
+[ 2017-03-30T22:16:22+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Doctorinfo&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\BigDepartmentModel
+NOTIC: D方法实例化没找到模型类Common\Model\DiseaseModel
+NOTIC: D方法实例化没找到模型类Commom\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Commom\Model\PositionModel
+
+[ 2017-03-30T22:16:24+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Doctime&a=index
+NOTIC: D方法实例化没找到模型类Commom\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Commom\Model\TimeModel
+NOTIC: D方法实例化没找到模型类Commom\Model\DoctimeModel
+
+[ 2017-03-30T22:16:27+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Doctime&a=index
+NOTIC: D方法实例化没找到模型类Commom\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Commom\Model\TimeModel
+NOTIC: D方法实例化没找到模型类Commom\Model\DoctimeModel
+
+[ 2017-03-30T22:16:29+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Appoint&a=index
+NOTIC: D方法实例化没找到模型类Commom\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Commom\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Commom\Model\PositionModel
+
+[ 2017-03-30T22:17:26+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Patient&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+
+[ 2017-03-30T22:17:30+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:17:37+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Patient&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+
+[ 2017-03-30T22:17:42+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Patient&a=add
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+
+[ 2017-03-30T22:17:45+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:17:47+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=add
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:17:50+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=patient
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:19:25+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=add
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:19:27+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=patient
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:19:29+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=patient
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:20:19+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=add
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:20:21+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=patient
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:20:26+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=patient
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:20:41+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=add
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:20:43+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=patient
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:20:49+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=doctor
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:20:53+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=doctorcal
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.002000s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005001s ]
+INFO: [ admin_begin ] --START--
+INFO: Run Common\Behavior\AdminDefaultLangBehavior [ RunTime:0.004000s ]
+INFO: [ admin_begin ] --END-- [ RunTime:0.004000s ]
+SQL: SHOW COLUMNS FROM `hos_users` [ RunTime:0.0160s ]
+SQL: SELECT * FROM `hos_users` WHERE `id` = '1' LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+SQL: SHOW COLUMNS FROM `hos_patients` [ RunTime:0.0170s ]
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+SQL: SHOW COLUMNS FROM `hos_doctor` [ RunTime:0.0150s ]
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+SQL: SHOW COLUMNS FROM `hos_order` [ RunTime:0.0150s ]
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+SQL: SHOW COLUMNS FROM `hos_doctime` [ RunTime:0.0150s ]
+SQL: SELECT `time_id` FROM `hos_doctime` WHERE `doctor_id` = 2 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-03-30T22:21:05+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=add_post
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003000s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.003000s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.008000s ]
+INFO: [ admin_begin ] --START--
+INFO: Run Common\Behavior\AdminDefaultLangBehavior [ RunTime:0.004000s ]
+INFO: [ admin_begin ] --END-- [ RunTime:0.004000s ]
+SQL: SHOW COLUMNS FROM `hos_users` [ RunTime:0.0160s ]
+SQL: SELECT * FROM `hos_users` WHERE `id` = '1' LIMIT 1   [ RunTime:0.0020s ]
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+SQL: SHOW COLUMNS FROM `hos_patients` [ RunTime:0.0160s ]
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+SQL: SHOW COLUMNS FROM `hos_doctor` [ RunTime:0.0150s ]
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+SQL: SHOW COLUMNS FROM `hos_order` [ RunTime:0.0150s ]
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+SQL: SHOW COLUMNS FROM `hos_doctime` [ RunTime:0.0150s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `hos_order` WHERE `appoint_time` = 1490976000 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `hos_doctor` [ RunTime:0.0100s ]
+SQL: SELECT `position_appointnum` FROM hos_doctor D INNER JOIN hos_position P ON P.position_id = D.position_id  LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT * FROM `hos_order` WHERE `patient_id` = 5 AND `doctor_id` = 2 AND `appoint_time` = 1490976000 AND `status` <> 3 LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: validate G:\phpstudy\appoint\src\simplewind\Core\Library\Think\Model.class.php 第 1185 行.
+NOTIC: [8] Undefined index: auto G:\phpstudy\appoint\src\simplewind\Core\Library\Think\Model.class.php 第 1128 行.
+SQL: INSERT INTO `hos_order` (`patient_id`,`patient_name`,`doctor_id`,`doctor_name`,`doctor_number`,`bdept_name`,`disease_name`,`doctime`,`order_number`,`appoint_time`) VALUES ('5','ddd','2','gfgf','D2-1','内科','订单','11','217040101','1490976000') [ RunTime:0.0010s ]
+
+[ 2017-03-30T22:21:06+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=add
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:21:09+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:21:47+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=delete&order_id=8
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.002000s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+INFO: [ admin_begin ] --START--
+INFO: Run Common\Behavior\AdminDefaultLangBehavior [ RunTime:0.002000s ]
+INFO: [ admin_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `hos_users` [ RunTime:0.0150s ]
+SQL: SELECT * FROM `hos_users` WHERE `id` = '1' LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+SQL: SHOW COLUMNS FROM `hos_patients` [ RunTime:0.0140s ]
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+SQL: SHOW COLUMNS FROM `hos_doctor` [ RunTime:0.0100s ]
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+SQL: SHOW COLUMNS FROM `hos_order` [ RunTime:0.0100s ]
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+SQL: SHOW COLUMNS FROM `hos_doctime` [ RunTime:0.0090s ]
+SQL: UPDATE `hos_order` SET `status`='3' WHERE ( order_id=8 ) [ RunTime:0.0000s ]
+
+[ 2017-03-30T22:21:48+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:21:52+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:21:56+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=yettreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:22:01+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=notreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:22:05+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:22:06+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:23:24+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:23:27+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=yettreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:23:32+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=notreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:23:35+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=notreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:24:12+08:00 ] ::1 /appoint/src/index.php?g=admin&m=menu&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2017-03-30T22:24:33+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Menu&a=add&parentid=194&menuid=
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2017-03-30T22:25:12+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Menu&a=add_post
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.002000s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005000s ]
+INFO: [ admin_begin ] --START--
+INFO: Run Common\Behavior\AdminDefaultLangBehavior [ RunTime:0.002000s ]
+INFO: [ admin_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `hos_users` [ RunTime:0.0190s ]
+SQL: SELECT * FROM `hos_users` WHERE `id` = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `hos_menu` [ RunTime:0.0210s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `hos_auth_rule` [ RunTime:0.0120s ]
+NOTIC: [8] Undefined index: validate G:\phpstudy\appoint\src\simplewind\Core\Library\Think\Model.class.php 第 1185 行.
+SQL: SELECT * FROM `hos_menu` WHERE `app` = 'Admin' AND `model` = 'Treatment' AND `action` = 'canceltreat' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `parentid` FROM `hos_menu` WHERE `id` = 194 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: auto G:\phpstudy\appoint\src\simplewind\Core\Library\Think\Model.class.php 第 1128 行.
+SQL: INSERT INTO `hos_menu` (`parentid`,`name`,`app`,`model`,`action`,`data`,`icon`,`remark`,`status`,`type`) VALUES ('194','预约取消','Admin','Treatment','canceltreat','','','','1','1') [ RunTime:0.0000s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `hos_auth_rule` WHERE `name` = 'admin/treatment/canceltreat' LIMIT 1   [ RunTime:0.0000s ]
+SQL: INSERT INTO `hos_auth_rule` (`name`,`module`,`type`,`title`) VALUES ('admin/treatment/canceltreat','Admin','admin_url','预约取消') [ RunTime:0.0000s ]
+SQL: SELECT * FROM `hos_menu` WHERE `app` = 'Admin' ORDER BY `listorder` ASC,`app` ASC,`model` ASC,`action` ASC  [ RunTime:0.0020s ]
+NOTIC: [2] mkdir() [<a href='function.mkdir'>function.mkdir</a>]: File exists G:\phpstudy\appoint\src\application\Admin\Controller\MenuController.class.php 第 247 行.
+
+[ 2017-03-30T22:25:13+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Menu&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2017-03-30T22:25:24+08:00 ] ::1 /appoint/src/index.php?g=admin&m=menu&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2017-03-30T22:25:35+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Menu&a=listorders
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.002000s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.006000s ]
+INFO: [ admin_begin ] --START--
+INFO: Run Common\Behavior\AdminDefaultLangBehavior [ RunTime:0.002001s ]
+INFO: [ admin_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `hos_users` [ RunTime:0.0150s ]
+SQL: SELECT * FROM `hos_users` WHERE `id` = '1' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `hos_menu` [ RunTime:0.0160s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `hos_auth_rule` [ RunTime:0.0090s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 110 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 111 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 112 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 113 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 114 [ RunTime:0.0020s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 187 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 192 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 193 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 200 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 188 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 189 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 190 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 191 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 194 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='6' WHERE `id` = 202 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1' WHERE `id` = 195 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='2' WHERE `id` = 196 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='3' WHERE `id` = 197 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='4' WHERE `id` = 199 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='5' WHERE `id` = 198 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='9' WHERE `id` = 132 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 133 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 134 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 135 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 136 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 137 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 138 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 139 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 140 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 141 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 142 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 143 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 144 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 145 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 146 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 147 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 148 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 149 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 160 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 161 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 150 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 151 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 152 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 153 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 154 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='11' WHERE `id` = 109 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 115 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 116 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 117 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 118 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 119 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 120 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 121 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 122 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 123 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 124 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 125 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 126 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 127 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 128 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 166 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 129 [ RunTime:0.0020s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 130 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 156 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 157 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 167 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 168 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1' WHERE `id` = 131 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='10' WHERE `id` = 1 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 2 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 3 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 4 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 5 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 6 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1' WHERE `id` = 7 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 8 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 9 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 10 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 169 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 11 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 12 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 13 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 14 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 15 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 16 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 17 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='2' WHERE `id` = 18 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 19 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 20 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 21 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 22 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 23 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 24 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='3' WHERE `id` = 25 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 26 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 27 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 28 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 29 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 30 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 31 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='4' WHERE `id` = 32 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 33 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 34 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 35 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1' WHERE `id` = 36 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 37 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 38 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='20' WHERE `id` = 85 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 86 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 87 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 88 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 89 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 90 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 91 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 92 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 93 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 94 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 95 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 96 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 97 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 98 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 99 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 100 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 101 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 102 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 103 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 174 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 175 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 176 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 177 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 104 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 105 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 106 [ RunTime:0.0020s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 107 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 108 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='40' WHERE `id` = 39 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 40 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 41 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 42 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 43 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 44 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 45 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 46 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 47 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 48 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 49 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 50 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 51 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 52 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 155 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1' WHERE `id` = 53 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 54 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 55 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 56 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 158 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 159 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 57 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 58 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 59 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 60 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 61 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 62 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 63 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 64 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 65 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 66 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 67 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='2' WHERE `id` = 68 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 69 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 70 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 71 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 72 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 73 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 74 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='3' WHERE `id` = 75 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 76 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 77 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 78 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 79 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 80 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='1000' WHERE `id` = 81 [ RunTime:0.0010s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 82 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='4' WHERE `id` = 83 [ RunTime:0.0000s ]
+SQL: UPDATE `hos_menu` SET `listorder`='0' WHERE `id` = 84 [ RunTime:0.0000s ]
+
+[ 2017-03-30T22:25:37+08:00 ] ::1 /appoint/src/index.php?g=admin&m=menu&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2017-03-30T22:30:19+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:30:32+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:30:38+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:30:49+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:30:56+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:30:59+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:31:01+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:31:06+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:31:36+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:31:48+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:32:20+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:32:22+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=notreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:32:25+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=yettreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:32:27+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:32:29+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:32:32+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=delete&order_id=6
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.003000s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.006000s ]
+INFO: [ admin_begin ] --START--
+INFO: Run Common\Behavior\AdminDefaultLangBehavior [ RunTime:0.008001s ]
+INFO: [ admin_begin ] --END-- [ RunTime:0.008001s ]
+SQL: SHOW COLUMNS FROM `hos_users` [ RunTime:0.0120s ]
+SQL: SELECT * FROM `hos_users` WHERE `id` = '1' LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+SQL: SHOW COLUMNS FROM `hos_patients` [ RunTime:0.0130s ]
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+SQL: SHOW COLUMNS FROM `hos_doctor` [ RunTime:0.0110s ]
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+SQL: SHOW COLUMNS FROM `hos_order` [ RunTime:0.0070s ]
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+SQL: SHOW COLUMNS FROM `hos_doctime` [ RunTime:0.0090s ]
+SQL: UPDATE `hos_order` SET `status`='3' WHERE ( order_id=6 ) [ RunTime:0.0010s ]
+
+[ 2017-03-30T22:32:33+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Registration&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:32:36+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=canceltreat
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+
+[ 2017-03-30T22:32:51+08:00 ] ::1 /appoint/src/index.php?g=Admin&m=Treatment&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PatientsModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctorModel
+NOTIC: D方法实例化没找到模型类Common\Model\OrderModel
+NOTIC: D方法实例化没找到模型类Common\Model\DoctimeModel
+

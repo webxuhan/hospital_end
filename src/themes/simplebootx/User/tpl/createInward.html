@@ -1,0 +1,294 @@
+<!-- 快件下单 -->
+  <ul class="placeOrder-head">
+    <li onclick="otype(1)">{:L("GENERAL_ORDER")}</li>
+    <li class="placeOrder-current">{:L("INWARD_ORDER")}</li>
+    <li onclick="otype(2)">{:L("PACKAGE_ORDER")}</li>
+  </ul>
+  <!--内部件-->
+  <div class="placeOrder-content inwardOrder">
+    <form id="inward">
+      <div class="mailType"><span>{:L("RECEIVE_TYPE")}:</span>
+        <select name="express_type" id="express_type">
+          <option value="3">{:L("RECEIVE_DOMESTIC")}</option>
+        </select>
+        <span></span>
+      </div>
+      <span type="button" class="btn btn-primary js-ajax-submit selectPerson" id="checkStaff">
+        {:L("SELECT_RECEIVER")}
+      </span>
+       <div class="clearfix inwarduser" style="display:none;">
+
+          <span class="recipients"><span>{:L("RECEIVER")}:</span><input type="text" name="receive_name" id="receive_name" value="" readonly></span>
+          <span class="contactPhone"><span>{:L("MOBILE")}:</span><input type="text" name="receive_phone" id="receive_phone" value="" readonly></span><br>
+          <input type="hidden" name="receive_staff_id" id="receive_staff_id" value="">
+      </div>
+        <div class="costCenter"><span>{:L("COSTCENTER")}:</span><span class="costselect">{:L("CHOOSE")}</span>
+        </div>
+        <div class="numberType"><span>{:L("SERIAL_NUM")}:</span>
+            <select name="number_type" id="number_type">
+                <option value="1">{:L("PRE_PRINT")}</option>
+                <option value="2">{:L("SYSTEM_GENERATE")}</option>
+            </select>
+        </div>
+        <div class="parcelNumber"><span>{:L("PACKAGE_NUM")}:</span>
+            <input type="text" value="1" name="express_quantity" id="express_quantity" min="1" onkeyup="NumberCheck(this)">
+
+            <span class="hint">{:L("SYSTEM_DEFAULT")}</span>
+            <div class="tag_number">
+                <span>{:L("SIGN_NUMBER")}1</span>
+                <input type="text" name="serial_number[]" value="">
+                <span class="errhiden">{:L("WRITE_SIGN_NUMBER")}</span>
+                <span class="errhiden">{:L("REPEAT_SIGN_NUMBER")}</span>
+            </div>
+        </div>
+      <button class="submit inwardBtn" type="button">{:L("BTN_REFER")}</button>
+      <button class="reset" type="reset">{:L("CANCEL")}</button>
+    </form>
+  </div>
+
+
+</div>
+<script>
+  function NumberCheck(t){ //输入框只能为整数
+    var num = t.value;
+    if(num < 0){num = 1}
+    var re=/^\d*$/;
+    if(!re.test(num)){
+        isNaN(parseInt(num))?t.value=0:t.value=parseInt(num);
+    }
+  }  
+  function getStaffByJson(send_staff_json) {
+      var obj = eval('(' + send_staff_json + ')');
+      $("#receive_staff_id").val(obj.staff_id);
+      $("#receive_name").val(obj.zn_name);
+      $("#receive_phone").val(obj.mobile);
+  }
+  $(function(){
+      //查询员工按钮点击事件
+      $("#checkStaff").click(function () {
+          console.log('check staff start');
+          Wind.use('artDialog', 'iframeTools', function () {
+              var url = "{:U('Express/SystemUtil/index')}";
+              art.dialog.open(url, {
+                  title: '{:L("CHOSE_STAFF")}',
+                  lock: true,
+                  height: 400,
+                  width: "80%",
+                  // 在open()方法中，init会等待iframe加载完毕后执行
+                  init: function () {
+                      var iframe = this.iframe.contentWindow;
+                      var top = art.dialog.top;// 引用顶层页面window对象
+                  },
+                  ok: function () {
+                      var iframe = this.iframe.contentWindow;
+                      if (!iframe.document.body) {
+                          alert('iframe还没加载完毕呢')
+                          return false;
+                      }
+
+                      $(".clearfix").show();
+                      //获取iframe内嵌信息的json
+                      var send_staff_json = iframe.document.getElementById('staff_json').value;
+                      getStaffByJson(send_staff_json);
+                      return true;
+                  },
+                  cancel: true
+              });
+          });
+
+      });
+      //流水号类型
+      $("#number_type").change(function () {
+          var number_type = $(this).val();
+          if (number_type == 2) {
+              $("#express_quantity").val(1);
+              $("#express_quantity").change();
+              $(".parcelNumber div").hide();
+          } else {
+              $("#express_quantity").val(1);
+              $("#express_quantity").change();
+              $(".parcelNumber div").show();
+          }
+      });
+       //标签数量
+      $("#express_quantity").change(function () {
+          var number_type = $("#number_type").val();
+          var express_quantity = $("#express_quantity").val();
+          var orginLegth = $(".parcelNumber div input[type='text']").length;
+          var num = express_quantity - orginLegth;
+          //增加
+          if (number_type == 1 && num > 0) {
+              //克隆元素
+              for (var i = 0; i < num; i++) { 
+                  $(".tag_number:not(:first)").removeClass("tag_number");
+                  var clone = $(".tag_number").clone(true);
+                  var ctext = '{:L("SIGN_NUMBER")}' + Number(orginLegth + 1 
+                      + i);
+                  var a = clone.children("span").first().text(ctext);
+                  var b = clone.children("input").val("");
+                  var c = clone.children(".errhiden").css("display","none");
+                  $(".parcelNumber").append(clone);
+                  $(".sidebar-nav").css('height',$('.rightBox').height());
+              }
+          }else if(number_type == 1 && num < 0){ //删除
+              $(".parcelNumber div").slice(express_quantity).remove();
+              $(".sidebar-nav").css('height',$('.rightBox').height());
+          }
+      });
+      //成本中心选择
+      $(".costselect").on('click', function () {
+          //添加成本中心弹出层
+          var costids = $(".costids").val();
+          Wind.use('artDialog', 'iframeTools', function () {
+              var url = "{:U('PlaceOrder/costselect')}"+"&costids="+costids;
+              art.dialog.open(url, {
+                  title: '{:L("SELECT_COSTCENTER")}',
+                  lock: true,
+                  height: "40%",
+                  width: "50%",
+                  // 在open()方法中，init会等待iframe加载完毕后执行
+                  init: function () {
+                      var iframe = this.iframe.contentWindow;
+                      var top = art.dialog.top;// 引用顶层页面window对象
+                  },
+                  ok: function () {
+                      var iframe = this.iframe.contentWindow;
+                      if (!iframe.document.body) {
+                          art.dialog.tips('Loading......', 1.5);
+                          return false;
+                      }
+
+                      // 获取iframe嵌套内容
+                      var center_id = new Array();
+                      var checkbox = iframe.document.getElementsByName('costcenter');
+                      $(".cname").remove();
+                      $(".costids").remove();
+                      for (var i = 0; i < checkbox.length; i++) {
+                          
+                          if (checkbox[i].checked == true) {
+                              var center_name = checkbox[i].getAttribute('centername');
+                              center_id.push(checkbox[i].value); 
+                              var a = "<span class='cname'>" + center_name + "</span>";
+                              $(".costCenter").append(a);
+                          }
+
+                      }
+                      var sinput = "<input type='hidden' class='costids' name='center_id' value="+center_id+">"
+                       $(".costCenter").append(sinput);
+
+                  },
+                  cancel: true
+              });
+          });
+      });
+      /*验证开始*/
+      //标签号码不能为空且不能为汉字
+      $("input[name='serial_number[]']").on("blur",function(){
+          var serialbool = /^[u4E00-u9FA5\-]+$/.test($(this).val());
+          if($(this).val() =="" || !serialbool){
+              $(this).next().css("display","inline-block");
+          }else{
+              $(this).next().css("display","none");
+              var currentVal = $(this).val(); 
+              var serial_arr = new Array();
+              $(this).parent().siblings("div").each(function(){
+                 //将当前选中输入框的兄弟输入框push
+                  serial_arr.push($(this).children("input").val());
+              });
+              if($.inArray(currentVal,serial_arr) != -1){ //标签号码不能重复
+                  $(this).next().next().css("display","inline-block");
+              }else{
+                  $(this).next().next().css("display","none");
+                  $(this).removeClass("errorInput");
+              }
+              serial_arr.splice(0,serial_arr.length);         
+          }        
+      });
+      //包裹数量
+         $("#express_quantity").on("blur",function(){
+            var s = $(this).val();
+            if(isNaN(s)){
+                 noty({
+                    text: "{:L('PLEASE_SURE_QUANTITY')}",
+                    type: "error",
+                    layout: "center"
+                });
+            };
+            NumberCheck(this);
+        });
+      /*验证结束*/
+      //提交信息
+      var noty_btn = true; //btn开关   
+      $(".inwardBtn").on('click', function () {
+         if(noty_btn == false){
+              return false;
+          }
+          noty_btn = false;
+          setTimeout(function(){
+              noty_btn = true;
+          },2000);
+          //联系人是否为空
+          var receive_name = $("input[name='receive_name']").val();
+          if(receive_name == ""){
+            noty({
+                text: '{:L("PLEASE_SELECT_RECEIVER")}',
+                type: "error",
+                layout: "center"
+            });
+            return false;
+          }
+          //标签号码是否为空
+          var serialnum = "";
+          $("input[name='serial_number[]']").each(function(){
+              if($(this).val() == "" && $(this).is(':visible')){
+                  serialnum = 1;
+                  $(this).parent().children("input").addClass("errorInput");
+              }else{
+                  serialnum = 0;
+              }
+          });
+          if(receive_name == "" || serialnum == 1){
+                  noty({
+                      text: "{:L('COMPLETE_INFO')}",
+                      type: "error",
+                      layout: "center"
+                  });
+          }else{
+              if(noty_btn){
+                return;
+              }
+              $.ajax({
+                url: '{:U("PlaceOrder/inwardSend")}',
+                method: 'post',
+                data: $("#inward").serialize(),
+                success: function (data) {
+                    if (data.status == 1) {
+                        noty({
+
+                            text: data.info,
+                            type: "success",
+                            layout: "center"
+                        });
+                        $(".reset").trigger("click");
+                    } else {
+                        noty({
+
+                            text: data.info,
+                            type: "error",
+                            layout: "center"
+                        });
+                    }
+                }
+            });
+          }
+          return false;
+      });
+      //取消
+      $('.reset').on('click',function(){
+          $(".parcelNumber div:not(:first)").remove();
+          $(".costCenter .cname").remove();
+          $(".inwarduser").css("display","none");
+      });
+  })
+ 
+</script>

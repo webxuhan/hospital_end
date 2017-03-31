@@ -1,0 +1,68 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#" data-toggle="tab">{:L('ADMIN_MAILER_ACTIVE')}</a></li>
+		</ul>
+		<div class="common-form">
+			<form method="post" class="form-horizontal js-ajax-form" action="{:U('Admin/mailer/active_post')}">
+				<table cellpadding="2" cellspacing="2" width="100%" class="table table-hover table-bordered table-list">
+					<tbody>
+						<tr>
+							<th width="35%">{:L("SEND_PROJECT")}</th>
+							<th width="40%">{:L('EMAIL_TEMPLATE')}</th>
+							<th width="25%">{:L("CHOOSE_OPEN")}</th>
+						</tr>
+						<tr>
+							<td>{:L("SEND_AFTER_LOCATE")}</td>
+							<td>
+							<a href="{:U('Admin/mailer/templet?style=location')}">{:L("EDIT_MAIL")}</a>
+							</td>
+							<td><input type="checkbox" name="lightup[]" value="location" /></td>
+						</tr>
+						<tr>
+							<td>{:L("SEND_AFTER_STAMP")}</td>
+							<td>						    	
+							<a href="{:U('Admin/mailer/templet?style=stamp')}">{:L("EDIT_MAIL")}</a>
+							</td>
+							<td><input type="checkbox" name="lightup[]" value="stamp" /></td>
+						</tr>
+						<tr>
+							<td>{:L("SEND_AFTER_FALSE")}</td>
+							<td>							
+							<a href="{:U('Admin/mailer/templet?style=sendfalse')}">{:L("EDIT_MAIL")}</a>
+							</td>
+							<td><input type="checkbox" name="lightup[]" value="sendfalse" /></td>
+						</tr>
+						<tr>
+							<td>{:L("SEND_AFTER_TRUE")}</td>
+							<td>
+							<a href="{:U('Admin/mailer/templet?style=sendtrue')}">{:L("EDIT_MAIL")}</a>
+							</td>
+							<td><input type="checkbox" name="lightup[]" value="sendtrue" /></td>
+						</tr>
+						<tr>
+							<td>{:L("SEND_AFTER_ORDER")}</td>
+							<td>
+							<a href="{:U('Admin/mailer/templet?style=order')}">{:L("EDIT_MAIL")}</a>
+							</td>
+							<td><input type="checkbox" name="lightup[]" value="order" /></td>
+						</tr>
+						<tr>
+							<td>{:L("SEND_AFTER_AFFRIM")}</td>
+							<td>
+							<a href="{:U('Admin/mailer/templet?style=affirm')}">{:L("EDIT_MAIL")}</a>
+							</td>
+							<td><input type="checkbox" name="lightup[]" value="affirm" /></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary  js-ajax-submit">{:L("SAVE")}</button>
+				</div>
+			</form>
+		</div>
+	</div>	
+</body>
+</html>

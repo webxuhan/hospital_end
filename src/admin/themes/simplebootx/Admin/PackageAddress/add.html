@@ -1,0 +1,114 @@
+<admintpl file="header" />
+<style>
+	.address1{
+		width:100px;
+	}
+</style>
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('PackageAddress/index')}">{:L("ADDRESS_INFO")}</a></li>
+			<li class="active"><a href="{:U('PackageAddress/add')}">{:L("ADD")}</a></li>
+			
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('PackageAddress/add_post')}">
+		
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">{:L("ADDRESS_NAME")}:</label>
+					<div class="controls form-group">
+						<input type="text" name="address_name">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+                <!-- <div class="control-group">
+                    <label class="control-label">{:L("NATIONALITY")}:</label>
+                    <div class="controls">          
+                        <label style="display:inline;"><input type="radio" name="is_abroad" checked="checked" value="0">{:L("HOME")}</label>
+                        <label style="display:inline;"><input type="radio" name="is_abroad" value="1">{:L("ABROAD")}</label>   
+                    </div>
+                </div> -->
+                <div class="control-group">
+                    <label class="control-label">{:L("REGION")}:</label>
+                    <div class="controls form-group">
+                        <select mailroom_regions data-regions="{$test3}" name="address" class="address1"></select>
+                    </div>
+                </div>
+				<div class="control-group">
+					<label class="control-label">{:L("ADDRESS_DETAIL")}:</label>
+					<div class="controls form-group">
+						<input type="text" name="address_detail">
+                        <span class="form-required">*</span>
+					</div>
+				</div>
+				
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script src="__PUBLIC__/js/region_data.js"></script>
+	<script src="__PUBLIC__/js/regions_plugin.js"></script>
+	<script>
+        $(document).ready(function(){
+            $(".js-ajax-form").bootstrapValidator({
+                message: '{:L("IS_NOT_VALID")}',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    address_name: {
+                        validators: {
+                            notEmpty: {
+                                message: '{:L("ADDRESS_NAME_REQUIRED")}'
+                            },
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9_\-\(\)\（\）\u4e00-\u9fa5\s]{1,33}$/,
+                                message: '{:L("ADDRESS_NAME_ERROR")}'
+                            }
+                        }
+                    },
+                    address_detail: {
+                        validators: {
+                            notEmpty: {
+                                message: '{:L("ADDRESS_DETAIL_REQUIRED")}'
+                            },
+                            regexp: {
+                                regexp:/^[a-zA-Z0-9_\-\(\)\（\）\u4e00-\u9fa5\s]{1,33}$/,
+                                message: '{:L("ADDRESS_DETAIL_ERROR")}'
+                            }
+                        }
+                    },
+                }
+            });
+            var form = $(".js-ajax-form");
+            form.submit(function(ev){ev.preventDefault();});
+            $('.js-ajax-submit').on("click", function(ev){
+            	ev.preventDefault();
+                var bootstrapValidator = form.data('bootstrapValidator');
+                if (bootstrapValidator) {
+                    // 修复记忆的组件不验证
+                    bootstrapValidator.validate();
+
+                    if (!bootstrapValidator.isValid()) {
+
+                        return false;
+                    }else{
+                        //$('.js-ajax-submit').removeAttr('disabled');
+                        form.submit();
+                    }
+
+                }
+
+            });
+
+        });
+	</script>
+</body>
+</html>

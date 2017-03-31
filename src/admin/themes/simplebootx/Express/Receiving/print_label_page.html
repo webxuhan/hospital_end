@@ -1,0 +1,28 @@
+
+<style>
+    .bar-code {
+        width: 230px;
+        /*margin-bottom: 0px;*/
+    }  .bar-code .div{
+           margin: 0px;
+       }
+</style>
+<script type="text/javascript" src="__PUBLIC__/js/barcode/JsBarcode.all.min.js"></script>
+<div id="printLabel">
+    <volist name="list" id="vo">
+        <div class="bar-code">
+            <div style="border-bottom: 1px solid #000000; text-align: right;" class="div">{$vo.airway_bill_no}</div>
+            <div>{$vo.job_no}</div>
+            <img id="barCode{$key}" bar-code="barCode" job_no="{$vo.job_no}"/>
+            <div>REC:{$vo.staff_name}</div>
+            <div style="border-top: 1px solid #000000;" class="div">SEAT:{$vo.seat_number}</div>
+            <script>
+                JsBarcode("#barCode{$key}", "{$vo.job_no}",{
+                    displayValue:false,
+                    width: 1,
+                    height: 30
+                });
+            </script>
+        </div>
+    </volist>
+</div>

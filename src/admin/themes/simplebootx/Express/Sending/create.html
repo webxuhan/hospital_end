@@ -1,0 +1,500 @@
+<admintpl file="header"/>
+</head>
+<body>
+<style>
+    .td_top {
+        border-top: solid #e6e4e7 2px;
+        padding-top: 10px;
+    }
+</style>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Sending/index')}">{:L("SENDING_TITLE")}</a></li>
+        <li class="active"><a href="{:U('Sending/create')}">{:L("SENDING_CREATE")}</a></li>
+        <li><a href="{:U('Sending/createPackage')}">{:L("SENDING_CREATE_PACKAGE")}</a></li>
+    </ul>
+    <form method="post" id="sendForm" class="form-horizontal js-ajax-form" action="{:U('Sending/save')}">
+        <input type="hidden" name="express_type" value="1">
+        <input type="hidden" name="service_type" value="1">
+        <input type="hidden" name="send_staff_id" id="send_staff_id">
+        <input type="hidden" name="receive_staff_id" id="receive_staff_id">
+        <fieldset>
+            <div class="control-group">
+                <table border="0" cellpadding="3" cellspacing="0" width="100%">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+                    <tr>
+                        <td>{:L('EXPRESS_NUMBER')}:</td>
+                        <td colspan="3">
+                            <input type="text" name="express_number">
+                            <span>*</span>
+                        </td>
+                        <td>{:L('SERIAL_NUMBER')}:</td>
+                        <td colspan="3">
+                            <input type="text" id="serial_number" name="serial_number">
+                            <span class="form-required">*</span>
+                        </td>
+
+                        <td>{:L('EXPRESS_QUANTITY')}:</td>
+                        <td colspan="3">
+                            <input type="text" style="width: 80px" name="express_quantity" id="express_quantity"
+                                   value="1">
+                            <span class="form-required">*</span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>{:L("EXPRESS_COMPANY")}:</td>
+                        <td colspan="3">
+                            <select style="width: 150px;" name="express_company_id" id="express_company_id">
+                                <option disabled selected>{:L('EXPRESS_COMPANY')}</option>
+                                <foreach name="expressList" item="vo">
+                                    <option value="{$vo.express_id}">{$vo.express_name}</option>
+                                </foreach>
+                            </select>
+                            <span class="form-required">*</span>
+                        </td>
+                        <td>
+                            {:L("ESTIMATED_WEIGHT")}:
+                        </td>
+                        <td colspan="3">
+                            <input type="text" style="width: 80px;" name="estimated_weight" id="estimated_weight">{:L("WEIGHT_UNIT")}
+                        </td>
+                        <td>
+                            {:L("ESTIMATED_EXPENSES")}:
+                        </td>
+                        <td colspan="3">
+                            <input type="text" style="width: 80px;" name="estimated_expenses" id="estimated_expenses">{:L("EXPENSES_UNIT")}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_top"></td>
+                        <td class="td_top" colspan="11">
+                            <button type="button" class="btn btn-primary js-ajax-submit" id="checkStaff">
+                                {:L('CHECK_USER')}
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {:L("SENDING_NAME")}:
+                        </td>
+                        <td colspan="3">
+                            <input type="text" name="sending_name" id="sending_name" disabled>
+                        </td>
+                        <td>
+                            {:L("SENDING_PHONE")}:
+                        </td>
+                        <td colspan="3">
+                            <input type="text" name="sending_phone" id="sending_phone" disabled>
+                        </td>
+                        <td>
+                            {:L("SENDING_DEPARTMENT")}:
+                        </td>
+                        <td colspan="3">
+                            <input type="text" style="width: 150px" name="sending_department" id="sending_department"
+                                   disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{:L("SENDING_PATH")}:</td>
+                        <td colspan="3">
+                            <input type="text" name="sending_path" id="sending_path" disabled>
+                        </td>
+                        <td>
+                            {:L("SENDING_COMMENT")}:
+                        </td>
+                        <td colspan="8">
+                            <textarea style="width: 570px;" rows="2" name="sending_comment" disabled></textarea>
+                        </td>
+                    </tr>
+                    <tbody id="receiveBody">
+                    <tr>
+                        <td class="td_top">
+                            {:L("RECEIVING_NAME")}:
+                        </td>
+                        <td class="td_top" colspan="3">
+                            <input type="text" name="receive_name" id="receive_name">
+                        </td>
+                        <td class="td_top">
+                            {:L("RECEIVING_PHONE")}:
+                        </td>
+                        <td class="td_top" colspan="3">
+                            <input type="text" name="receive_phone" id="receive_phone">
+                        </td>
+                        <td class="td_top">
+                            {:L("RECEIVING_ZIP")}:
+                        </td>
+                        <td class="td_top" colspan="3">
+                            <input type="text" style="width: 150px" name="receive_zip" id="receive_zip">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {:L("RECEIVING_ADDRESS")}:
+                        </td>
+                        <td colspan="11">
+                            <select mailroom_regions data-regions="1" name="address" class="address1"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{:L("RECEIVING_ADDRESS_INFO")}:</td>
+                        <td colspan="11">
+                            <textarea style="width: 600px;" rows="1" name="receive_address"
+                                      id="receive_address"></textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+            <!--<div class="form-actions">发件人信息</div>-->
+
+
+            <div class="control-group" id="item_div">
+                <table>
+                    <tr>
+
+                        <td>
+                            <label class="control-label">{:L("APPROVED")}{:L("WEIGHT")}:</label>
+                            <div class="controls">
+                                <input type="text" style="width: 90px;" onblur='weightTextBlur(this)' data-idx="1"
+                                       id="weight" name="weight">{:L("WEIGHT_UNIT")}
+                            </div>
+                        </td>
+                        <td>
+                            <label class="control-label">{:L("APPROVED")}{:L("EXPENSES")}:</label>
+                            <div class="controls">
+                                <input type="text" style="width: 90px;" readonly="readonly" id="expenses"
+                                       name="expenses">{:L("EXPENSES_UNIT")}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table id="item_div_table">
+
+                </table>
+            </div>
+
+
+        </fieldset>
+        <div class="form-actions">
+            <button type="button" class="btn btn-primary js-ajax-submit" id="subbuttom">{:L('ADD')}</button>
+            <a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/region_data.js"></script>
+<script src="__PUBLIC__/js/regions_plugin.js"></script>
+<script src="__PUBLIC__/js/util/freightCalculationAjax.js"></script>
+<script src="__PUBLIC__/js/util/staffAjax.js"></script>
+<script type="text/javascript">
+
+    //标记当前添加快递单类型 0:通过快递单号 ，1:通过快递单号新增加快递信息与快递申请，2：通过打印的标签修改原有的数据信息
+    var expressNumberType = 0;
+
+    var receiveTableCopy = "";
+
+    //监控界面快捷键，
+    document.onkeyup = function (e) {
+        if (e.shiftKey && e.keyCode == 49) {
+            alert(e.keyCode);
+        }
+    }
+
+
+    //ajax 获取员工信息
+    function getStaffByJson(send_staff_json) {
+        var obj = eval('(' + send_staff_json + ')');
+        $("#send_staff_id").val(obj.staff_id);
+        $("#sending_name").val(obj.zn_name);
+        $("#sending_phone").val(obj.mobile);
+        $("#sending_department").val(obj.department_name);
+        $("#sending_phone").val(obj.mobile);
+        $("#sending_path").val(obj.seat_detail);
+
+    }
+
+    //获取ajax回调staff 数据
+    var staffData = function (data) {
+        if (data.retCode == '1') {
+            alert(data.retMsg);
+            return;
+        }
+        if (data.retCode == '0') {
+            if (data.staff.turnover_status != 0) {
+                alert(data.retMsg);
+            }
+            $("#send_staff_id").val(data.staff.staff_id);
+            $("#sending_name").val(data.staff.zn_name);
+            $("#sending_phone").val(data.staff.mobile);
+            $("#sending_department").val(data.staff.department_name);
+            $("#sending_phone").val(data.staff.mobile);
+            var path = data.staff.seat_detail;
+            $("#sending_path").val(path);
+        }
+    }
+    //获取收件人信息
+    var receiveStaffData = function (data) {
+        if (data.retCode == '1') {
+            alert(data.retMsg);
+            return;
+        }
+        if (data.retCode == '0') {
+            if (data.staff.turnover_status != 0) {
+                alert(data.retMsg);
+            }
+
+            receiveTableCopy = $("#receiveBody").html();
+
+            var htmlStr = "";
+            htmlStr += "<tr>";
+            htmlStr += "<td>{:L('RECEIVING_NAME')}:</td>";
+            htmlStr += "<td colspan='3'><label>" + data.staff.zn_name + "</label></td>";
+            htmlStr += "<td>{:L('RECEIVING_PHONE')}:</td>";
+            htmlStr += "<td colspan='3'><label>" + data.staff.mobile + "</label></td>";
+            htmlStr += "<td>{:L('RECEIVING_DEPARTMENT')}:</td>";
+            htmlStr += "<td colspan='3'><label>" + data.staff.department_name + "</label></td>";
+            htmlStr += "</tr><tr>";
+            htmlStr += "<td>{:L('RECEIVING_PATH')}:</td>";
+            htmlStr += "<td colspan='3'><label>" + data.staff.seat_detail + "</label></td>";
+            htmlStr += "<td></td>";
+            htmlStr += "<td colspan='8'></td>";
+            htmlStr += "</tr>";
+
+            $("#receiveBody").html(htmlStr);
+
+        }
+    }
+
+    //获取快递信息通过流水号
+    function getSendingExpress() {
+        var number = $("#serial_number").val();
+        if (number) {
+            $.ajax({
+                url: "{:U('Sending/getSendExpress')}",
+                type: 'post',
+                dataType: 'json',
+                data: {"serialNumber": number},
+                success: function (data) {
+                    console.log(data);
+
+                    if (data.retCode == '0') {
+                        getStaffById(data.sendingExpress.sendApplication.send_staff_id, "{:U('SystemUtil/checkStaff')}", staffData);
+                        $("#express_type").val(data.sendingExpress.sendApplication.express_type);
+                        $("#send_staff_id").val(data.sendingExpress.sendApplication.send_staff_id);
+                        $("#express_company_id").val(data.sendingExpress.sendApplication.express_company_id);
+                        $("#express_quantity").val(data.sendingExpress.sendApplication.express_quantity);
+                        expressNumberType = data.sendingExpress.sendApplication.number_type;
+                        buildItem(data.sendingExpress.sendItems);
+                        $("#estimated_weight").val(data.sendingExpress.sendApplication.estimated_weight);
+                        $("#estimated_expenses").val(data.sendingExpress.sendApplication.estimated_expenses);
+                        if (data.sendingExpress.sendApplication.receive_staff_id != null && data.sendingExpress.sendApplication.receive_staff_id != "") {
+                            $("#receive_staff_id").val(data.sendingExpress.sendApplication.receive_staff_id);
+                            getStaffById(data.sendingExpress.sendApplication.receive_staff_id, "{:U('SystemUtil/checkStaff')}", receiveStaffData);
+                        } else {
+                            if (receiveTableCopy != "") {
+                                $("#receiveBody").html(receiveTableCopy);
+                            }
+                            $("#receive_name").val(data.sendingExpress.sendApplication.receive_name);
+                            $("#receive_phone").val(data.sendingExpress.sendApplication.receive_phone);
+                            $("#receive_zip").val(data.sendingExpress.sendApplication.receive_zip);
+                            $("#receive_address").val(data.sendingExpress.sendApplication.receive_address);
+                        }
+
+//                        $(".address1").attr("data-regions",data.sendingExpress.regions_area_id);
+//                        regionInitialize();
+                    } else {
+                        alert(data.retMsg);
+                        return;
+                    }
+                },
+                error: function (data, status, e) {
+                    alert(data.retMsg);
+                }
+            });
+        }
+
+    }
+
+    //根据包裹数量添加
+    function buildItem(numbers) {
+        var htmlStr = "";
+        var quantity = $("#express_quantity").val();
+        var serial_number = $("#serial_number").val();
+        if (quantity > 1) {
+            for (var i = 0; i < quantity; i++) {
+                var number = "";
+
+                if (expressNumberType == 0) {
+                    number = i + 1;
+                } else if (expressNumberType == 1) {
+                    number = numbers[i].serial_number;
+                } else if (expressNumberType == 2) {
+                    if (serial_number) {
+                        number = serial_number + "-" + (i + 1);
+                    } else {
+                        number = i + 1;
+                    }
+                }
+
+                htmlStr += "<tr>";
+                htmlStr += "<td width='200px'>" + number + "</td>";
+                htmlStr += "<td>";
+                htmlStr += "<label class='control-label'>" + "{:L('WEIGHT')}" + ":</label>";
+                htmlStr += "<div class='controls'>";
+                htmlStr += "<input type='text' style='width: 90px;' onblur='weightItemBlur(this)' data-idx='" + (i + 1) + "' id='weight" + (i + 1) + "' name='weight" + (i + 1) + "'>{:L('WEIGHT_UNIT')}";
+                htmlStr += "</div></td><td>";
+                htmlStr += "<label class='control-label'></label>";
+                htmlStr += "<div class='controls'>";
+                htmlStr += "";
+                htmlStr += "</div></td></tr>";
+            }
+        }
+
+
+        $("#item_div_table").html(htmlStr);
+    }
+
+    function weightItemBlur(obj) {
+        var weight = obj.value;
+        if (isNaN(weight)) {
+            obj.value = "";
+            return false;
+        }
+        var express_company_id = $("#express_company_id").val();
+        if (!express_company_id) {
+            alert("请选择快递公司");
+            return false;
+        }
+        if (weight > 0) {
+            $("#weight").val(0);
+            var quantity = $("#express_quantity").val();
+            for (var i=1;i<=quantity;i++){
+                $("#weight").val($("#weight"+i).val() * 1 + $("#weight").val() * 1);
+            }
+            $("#weight").blur();
+        }
+    }
+
+    function weightTextBlur(obj) {
+        var weight = obj.value;
+//        var idx = obj.getAttribute("data-idx");
+        if (weight) {
+            if (isNaN(weight)) {
+                obj.value = "";
+                return false;
+            }
+
+            var express_company_id = $("#express_company_id").val();
+            if (!express_company_id) {
+                alert("请选择快递公司");
+                return false;
+            }
+            var regions_id = $("[name='address']").val();
+            if (!regions_id) {
+                alert("无效的收获地址");
+                return false;
+            }
+
+            //获取价格
+            getExpressPrice(regions_id, express_company_id, weight, "{:U('SystemUtil/freightCalculation')}", $("#expenses"));
+//            $("#expenses"+idx).val(price);
+        }
+
+    }
+
+    //界面初始化方法
+    $(function () {
+        //查询员工按钮点击事件
+        $("#checkStaff").click(function () {
+            console.log('check staff start');
+            Wind.use('artDialog', 'iframeTools', function () {
+                var url = "{:U('SystemUtil/index')}";
+                art.dialog.open(url, {
+                    title: '{:L("CHOSE_STAFF")}',
+                    lock: true,
+                    height: 400,
+                    width: "80%",
+                    // 在open()方法中，init会等待iframe加载完毕后执行
+                    init: function () {
+                        var iframe = this.iframe.contentWindow;
+                        var top = art.dialog.top;// 引用顶层页面window对象
+//                        var username = iframe.document.getElementById('xxxxx');
+//                        username.value="hahahahaa";
+//                        top.document.title = '测试';
+                    },
+                    ok: function () {
+                        var iframe = this.iframe.contentWindow;
+                        if (!iframe.document.body) {
+                            alert('iframe还没加载完毕呢')
+                            return false;
+                        }
+
+                        // 获取iframe嵌套内容
+//                        var send_staff_id = iframe.document.getElementById('staff_id').value;
+//                        document.getElementById("send_staff_id").value = send_staff_id;
+                        //获取iframe内嵌信息的json
+                        var send_staff_json = iframe.document.getElementById('staff_json').value;
+                        getStaffByJson(send_staff_json);
+                        return true;
+                    },
+                    cancel: true
+                });
+            });
+
+        });
+
+        //监听流水号输入框回车事件
+        $('#serial_number').bind('keydown', function (event) {
+            if (event.keyCode == "13") {
+                getSendingExpress();
+            }
+        });
+
+        //监听包裹数量变化
+        $('#express_quantity').blur(function () {
+            var quantity = $('#express_quantity').val();
+            if (quantity != null && quantity != '') {
+                if (isNaN(quantity)) {
+                    $('#express_quantity').val(1);
+
+                } else {
+                    buildItem();
+                }
+
+            }
+        });
+
+        //表单提交
+        $('#subbuttom').on("click", function (ev) {
+//            return false;
+            $('.js-ajax-form').submit();
+        });
+
+    });
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<admintpl file="header"/>
+</head>
+
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:U('Sending/expressArchiving')}">{:L("SEND_EXPRESS_ARCHIVING")}</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('Sending/expressArchiving')}">
+        <table>
+            <tr>
+                <td>
+
+                    {:L("SERIAL_NUM")}：
+                    <input type="text" name="serial_number" id="serial_number" style="width: 250px;" value="{:I('request.serial_number/s','')}"
+                    placeholder="请输入{:L('SERIAL_NUM')}">
+                    <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}"/>
+                    <a class="btn btn-danger" href="{:U('Sending/expressArchiving')}">{:L('EMPTY')}</a>
+
+
+                </td>
+            </tr>
+
+        </table>
+
+    </form>
+
+    <form class="" action="{:U('Sending/updateExpressArchiving')}" method="post" id="form2">
+        <input type="hidden" name="style" value="moment">
+        <input type="hidden" name="type" value="{$export['express_type']}">
+        <input type="hidden" name="archivingAction" id="archivingAction" value="">
+        <input type="hidden" name="export_id" value="{$export['id']}">
+        <div class="table-actions">
+            <!--<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Sending/sendingListPrint')}"-->
+            <!--data-subcheck="true">{:L('CHOOSE')}{:L('PRINT')}-->
+            <!--</button>-->
+
+            <button class="btn btn-primary btn-small js-ajax-submit" type="button"
+                    onclick="archiving('1')"
+                    data-action="{:U('Sending/updateExpressArchiving')}">{:L('ARCHIVING')}
+            </button>
+            <button class="btn btn-primary btn-small js-ajax-submit" type="button"
+                    onclick="archiving('2')"
+                    data-action="{:U('Sending/updateExpressArchiving')}">{:L('ABNORMAL')}
+            </button>
+        </div>
+        <table class="table table-hover table-bordered table-list" style="width:120%;">
+
+            <thead>
+            <tr>
+                <th><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                  data-checklist="js-check-x"></label></th>
+                <th>{:L('SERIAL_NUMBER')}</th>
+                <th>{:L("SEND_TIME")}</th>
+                <th>{:L("EXPRESS_TYPE")}</th>
+                <th>{:L("EXPRESS_COMPANY")}</th>
+                <th>{:L("EXPRESS_NUMBER")}</th>
+                <th>{:L("ITEM_QUANTITY")}</th>
+                <th>{:L("STATUS")}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="sendingListItems" item="vo">
+                <tr>
+                    <td>
+                        <!--<if condition="$vo[status] eq 0">-->
+                        <label class="checkbox inline">
+                            <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x"
+                                   name="ids[]" value="{$vo.id}" title="ID:{$vo.id}">
+                        </label>
+                        <!--</if>-->
+                    </td>
+
+
+                    <td><!--{$vo.serial_number}-{$vo.app_number}-->
+                        <foreach name="vo['items']" item="item">
+                            {$item.serial_number} - {$item.app_number}<br>
+                        </foreach></td>
+                    <td>{$vo.create_time|format_day_time}</td>
+                    <td>
+                        {:L("EXPRESS_TYPE_$vo[express_type]")}
+                    </td>
+                    <td>{$vo.express_name}</td>
+                    <td>{$vo.express_number}</td>
+                    <td>{$vo.express_quantity}</td>
+                    <td>{:L("PRINT_STATUS_$vo[status]")}</td>
+                    <!--<td>-->
+                    <!--&lt;!&ndash;<a href='{:U("Staff/edit",array("staff_id"=>$vo["staff_id"]))}'>{:L('EDIT')}</a> |&ndash;&gt;-->
+                    <!--<a href="{:U('Sending/expressPrintInfo',array('id'=>$vo['id']))}">{:L('PRINT')}</a>-->
+                    <!--</td>-->
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                  data-checklist="js-check-x"></label></th>
+                <th>{:L('SERIAL_NUMBER')}</th>
+                <th>{:L("SEND_TIME")}</th>
+                <th>{:L("EXPRESS_TYPE")}</th>
+                <th>{:L("EXPRESS_COMPANY")}</th>
+                <th>{:L("EXPRESS_NUMBER")}</th>
+                <th>{:L("ITEM_QUANTITY")}</th>
+                <th>{:L("STATUS")}</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="pagination">{$page}</div>
+
+        <div class="table-actions">
+            <button class="btn btn-primary btn-small js-ajax-submit" type="button"
+                    onclick="archiving('1')"
+                    data-action="{:U('Sending/updateExpressArchiving')}">{:L('ARCHIVING')}
+            </button>
+            <button class="btn btn-primary btn-small js-ajax-submit" type="button"
+                    onclick="archiving('2')"
+                    data-action="{:U('Sending/updateExpressArchiving')}">{:L('ABNORMAL')}
+            </button>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+
+    //界面初始化方法
+    function archiving(actionType) {
+        if($("#package_address_id_form").val()!=""){
+            var chk_value = [];
+            //get checkbox value
+            $('input[class="js-check"]:checked').each(function () {
+                chk_value.push($(this).val());
+            });
+            if (chk_value.length == 0) {
+                alert("请选择要归档的清单");
+            }else{
+                $("#archivingAction").val(actionType);
+                $("#form2").attr("action","{:U('Sending/updateExpressArchiving')}");
+                $("#form2").submit();
+            }
+
+        }
+    }
+
+
+    //    function send($this) {
+    //        var chk_value = [];
+    //        //get checkbox value
+    //        $('input[class="js-check"]:checked').each(function () {
+    //            chk_value.push($(this).val());
+    //        });
+    //        if (chk_value.length == 0) {
+    //            art.dialog({
+    //                id: 'warning',
+    //                icon: 'warning',
+    //                content: '请至少选择一个员工！',
+    //                cancelVal: '关闭',
+    //                cancel: function () {
+    //                    reloadPage(window);
+    //                },
+    //                ok: function () {
+    //                    reloadPage(window);
+    //                }
+    //            });
+    //        } else {
+    //            $("#form2").attr("action", $($this).attr("form_action"))[0].submit();
+    //        }
+    //    }
+</script>
+</body>
+</html>

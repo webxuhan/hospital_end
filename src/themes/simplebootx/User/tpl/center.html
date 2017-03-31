@@ -1,0 +1,199 @@
+<style>
+    .send-list{
+        display:none;
+    }
+    
+</style>
+<div class="span9 centerContent">
+       <div class="tabs">
+          <span class="addInformation">{:L('PERSON_INFORMATION')}</span>
+       <div class="tab-content">
+       <div class="tab-pane active" id="one">
+              <div class="span2">
+                   <if condition="empty($staff['avatar'])">
+                    <img src="__TMPL__Public/assets/images/headicon_128.png" class="headicon"/>
+                   <else/>
+                    <img src="{:sp_get_user_avatar_url($staff['avatar'])}" class="headicon"/>
+                   </if>
+              </div> 
+              <div class="span3">
+                   <div class="control-group chineseName">
+                         <label class="control-label" for="input-zn_name">{:L('ZN_NAME')}：</label>
+                         <span>{$staff.zn_name|default=L('NOT_FILL_IN')}</span>
+                   </div>
+                   <div class="control-group">
+                         <label class="control-label" for="input-en_name">{:L('EN_NAME')}：</label>
+                         <span>{$staff.en_name|default=L('NOT_FILL_IN')}</span>
+                   </div>
+                   <div class="control-group">
+                        <label class="control-label" for="input-sex">{:L('SEX')}：</label>
+                        <span>
+                         <php>
+                         $sexs=array("0"=>L('SEX_PROTECT'),"1"=>L('SEX_MALE'),"2"=>L('SEX_FEMALE'));
+                         $s = $staff['sex'];
+                         $sex = $sexs[$s];
+                         </php>
+                         {$sex}
+                        </span>
+                   </div>
+                   <div class="control-group">
+                         <label class="control-label" for="input-department">{:L("DEPARTMENT")}：</label>
+                         <span>{$staff.department_name|default=L('NOT_FILL_IN')}</span>
+                   </div>
+                   <div class="control-group">
+                         <label class="control-label" for="input-mobile">{:L('MOBILE')}：</label>
+                         <span>{$staff.mobile|default=L('NOT_FILL_IN')}</span>
+                   </div>
+                   <div class="control-group">
+                         <label class="control-label" for="input-extension_no">{:L('EXTENSION_NO')}：</label>
+                         <span>{$staff.extension_no|default=L('NOT_FILL_IN')}</span>
+                   </div>
+                   <div class="control-group">
+                         <label class="control-label" for="input-seat_no">{:L('SEAT_NO')}：</label>
+                         <span>{$staff.seat_detail|default=L('NOT_FILL_IN')}</span>
+                   </div>
+                   <div class="control-group">
+                         <label class="control-label" for="input-email">{:L('EMAIL')}：</label>
+                         <span>{$staff.email|default=L('NOT_FILL_IN')}</span>
+                   </div>
+                  <div class="controls">
+                        <a url="{:U('Xing/editCenter')}" type="submit" class="btn editCenterBtn">{:L('EDIT_INFO')}</a>
+                   </div>
+             </div>
+      
+       
+
+</div>
+<div class="clearfix index-info">
+      <div class="notreceive current-info">{:L('WAITTING_RECEIVER')}<span>{$receive_num}</span></div>
+      <div class="notsend">{:L('WAITTING_SEND')}<span>{$send_num}</span></div>
+</div> 
+<if condition = "isset($list)">
+  <table class="queryResult receive-list"> <!-- 待收件详情 -->
+        <thead>
+          <tr>
+            <th>{:L("JOB_NO")}</th>
+            <th class="second">{:L("RECEIVER")}</th>
+            <th>{:L("MANAGE_TIME")}</th>
+            <th>{:L("STATUS")}</th>
+            <th>{:L("ACTIONS")}</th>
+          </tr>
+        </thead>
+        <tbody>
+            <foreach name="list" item="ls">
+              <tr>
+                <td>{$ls.job_no}</td>
+                <td>{$ls.staff_name}</td>
+                <td>{$ls.update_time|date="Y-m-d H:i:s",###}</td>
+                <td>{:L("MAILROOM_NOT_RECEIVE")}</td>
+                <td><a class="receiveDetail" receiveid="{$ls.receive_id}">{:L("LOOK_DETAIL")}</a></td>
+              </tr>
+            </foreach>
+        </tbody>        
+  </table>  
+</if>
+<if condition = "isset($sendlist)">
+    <table class="queryResult send-list"> <!-- 待发件详情 -->
+          <thead>
+            <tr>
+              <th>{:L("COURIER_NUMBER")}</th>
+              <th class="second">{:L("RECEIVER")}</th>
+              <th>{:L("MANAGE_TIME")}</th>
+              <th>{:L("STATUS")}</th>
+              <th>{:L("ACTIONS")}</th>
+            </tr>
+          </thead>
+          <tbody>
+              <foreach name="sendlist" item="s">
+                <tr>
+                  <td>{$s.express_number}</td>
+                  <td>{$s.receive_name}</td>
+                  <td>{$s.update_time|date="Y-m-d H:i:s",###}</td>
+                  <td>{:L("WAITTING_SEND")}</td>
+                  <td><a class="sendDetail" sendid="{$s.id}">{:L("LOOK_DETAIL")}</a></td>
+                </tr>
+              </foreach>
+          </tbody>
+    </table>
+</if>
+</div>
+<tc_include file="Public:scripts" />
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+ $(function(){
+        $(".editCenterBtn").on("click",function(){
+
+              var url = $(this).attr("url");
+              $(".main-content").load(url);
+        })
+
+        $(".span2").on('click',function(){
+              $(".main-content").load("{:U('Xing/avatarCenter')}");
+        });
+
+        $(".notreceive").on("click",function(){
+            $(".notsend").removeClass("current-info");
+            $(this).addClass("current-info");
+            $(".receive-list").show();
+            $(".send-list").hide();
+        });
+        $(".notsend").on("click",function(){
+            $(".notreceive").removeClass("current-info");
+            $(this).addClass("current-info");
+            $(".receive-list").hide();
+            $(".send-list").show();
+        });
+        /*查看待收件详情*/
+        $(".receiveDetail").on('click', function() {
+            var receive_id = $(this).attr("receiveid");
+              Wind.use('artDialog', 'iframeTools', function () {
+                var url = "{:U('Xing/receiveDetail')}"+"&receive_id="+receive_id;
+                art.dialog.open(url, {
+                    title: '详细信息',
+                    lock: true,
+                    height: "54%",
+                    width: "80%",
+                    // 在open()方法中，init会等待iframe加载完毕后执行
+                    init: function () {
+                        var iframe = this.iframe.contentWindow;
+                        var top = art.dialog.top;// 引用顶层页面window对象
+                    },
+                    ok: function () {
+                        var iframe = this.iframe.contentWindow;
+                        if (!iframe.document.body) {
+                            art.dialog.tips('Loading......', 1.5);
+                            return false;
+                        }
+                    },
+                    cancel: true
+                });
+            });
+          });//查看详情end
+        //查看待发件详情
+        $(".sendDetail").on('click', function() {
+            var sendid = $(this).attr("sendid");
+              Wind.use('artDialog', 'iframeTools', function () {
+                var url = "{:U('Xing/sendDetail')}"+"&id="+sendid;
+                art.dialog.open(url, {
+                    title: '详细信息',
+                    lock: true,
+                    height: "52%",
+                    width: "80%",
+                    // 在open()方法中，init会等待iframe加载完毕后执行
+                    init: function () {
+                        var iframe = this.iframe.contentWindow;
+                        var top = art.dialog.top;// 引用顶层页面window对象
+                    },
+                    ok: function () {
+                        var iframe = this.iframe.contentWindow;
+                        if (!iframe.document.body) {
+                            art.dialog.tips('Loading......', 1.5);
+                            return false;
+                        }
+                    },
+                    cancel: true
+                });
+            });
+          });//查看详情end
+ });
+</script>

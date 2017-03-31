@@ -1,0 +1,60 @@
+<admintpl file="header" />
+<!-- 修改头像 -->
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Doctorinfo/index')}">医生信息</a></li>
+			<li><a href="{:U('Doctorinfo/add')}">添加</a></li>
+			<li class="active"><a href="{:U('Doctorinfo/avatar')}">添加头像</a></li>
+		</ul>
+
+		<div>
+			<table class="table table-bordered">
+				<form action="{:U('Doctorinfo/add_avatar')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+				<fieldset>
+				<tr>
+					<th><b>医生头像</b></th>
+				</tr>
+				<tr>
+					<td>
+						<if condition="isset($doctor_avatar)">
+							<img src="{:sp_get_image_url($doctor_avatar)}" id="thumb-preview" width="135" style="cursor: hand" />
+						<else />
+						<img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb-preview" width="135" style="cursor: hand" />
+						</if>
+						<input type="hidden" name="avatar" id="thumb" value="">
+						<a href="javascript:upload_one_image('图片上传','#thumb');" class="btn btn-small">选择图片</a>
+					</td>
+				</tr>
+				</fieldset>
+				<tr>
+					<input type="hidden" name="doctor_id" value="{$doctor_id}">
+					<td><button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+						<a class="btn" href="javascript:history.back(-1);">返回</a>
+					</td>
+				</tr>
+			
+			</form>
+			</table>
+		</div>
+</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+<script type="text/javascript">
+	var form = $(".js-ajax-forms");
+	//form.submit(function(ev){ev.preventDefault();});
+
+	$(".js-ajax-submit").on('click', function(ev){
+		ev.preventDefault();
+		var thumb = $("#thumb").val();console.log(thumb);
+		if(thumb == ""){
+			return false;
+		}else{
+			form.submit();
+		}
+			
+		
+		
+	});
+</script>

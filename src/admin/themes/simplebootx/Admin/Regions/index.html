@@ -1,0 +1,36 @@
+<admintpl file="header"/>
+<style>.expander{margin-left: -20px;}</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Regions/index');}">{:L("REGION_INFO")}</a></li>
+			<li><a href="{:U('Regions/add');}">{:L("REGION_ADD")}</a></li>
+		</ul>
+			<div class="table_full">
+				<table class="table table-bordered" id="authrule-tree">
+					<tbody>
+						{$categorys}
+					</tbody>
+				</table>
+			</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+	var ajaxForm_list = $('form.js-ajax-form');
+	if (ajaxForm_list.length) {
+	    Wind.use('ajaxForm', 'artDialog', function () {
+	        //树状按钮文案、状态修改
+			$('button.js-ajax-submit').text(text + '中...').attr('disabled', true).addClass('disabled');
+	    });
+	}
+	$(document).ready(function () {
+		Wind.css('treeTable');
+	    Wind.use('treeTable', function () {
+	        $("#authrule-tree").treeTable({
+	            indent: 20
+	        });
+	    });
+	});
+	</script>
+</body>
+</html>

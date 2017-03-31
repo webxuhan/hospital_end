@@ -1,0 +1,95 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('Seat/index')}">{:L('ADMIN_SEAT_INDEX')}</a></li>
+			<li><a href="{:U('Seat/add')}">{:L('ADMIN_SEAT_ADD')}</a></li>
+            <li class="active"><a href="">{:L('ADMIN_SEAT_EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Seat/edit_post')}">
+			<fieldset>
+				<div class="control-group ">
+					<label style="margin-left:100px" class="form-group">
+						{:L('ADMIN_SEAT_INDEX')}:
+						<input type="text" name="seat_detail" value="{$data.seat_detail}" style="width:200px;margin-left:30px" >
+						<span class="form-required">*</span>
+					</label>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+        <input type="hidden" name="seat_id" value="{$data.seat_id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+				<a class="btn" href="{:U('Seat/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		$(document).ready(function(){
+			$(".js-ajax-form").bootstrapValidator({
+				message: '{:L("IS_NOT_VALID")}',
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+					seat_detail: {
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							notEmpty: {
+								message: '{:L("CONTANT_MUST")}'
+							},
+							stringLength: {
+								min: 1,
+								max: 255,
+								message: '{:L("IS_NOT_LENGTH")}'
+							},
+							regexp: {
+								regexp: /^[a-zA-Z0-9_\-\(\)\（\）]+$/,
+								message: '{:L("IS_VALID")}'
+							}
+						}
+					},
+				}
+			});
+
+
+			/*   $(".js-ajax-form").bootstrapValidator().on('success.form.bv', function(e) {
+			 // 阻止默认事件提交
+			 e.preventDefault();
+			 });*/
+
+			var form = $(".js-ajax-form");
+			form.submit(function(ev){ev.preventDefault();});
+
+			$('.js-ajax-submit').on("click", function(e){e.preventDefault();
+				var bootstrapValidator = form.data('bootstrapValidator');
+
+				if (bootstrapValidator) {
+					// 修复记忆的组件不验证
+					bootstrapValidator.validate();
+
+					if (!bootstrapValidator.isValid()) {
+
+						return false;
+					}else{
+						//$('.js-ajax-submit').removeAttr('disabled');
+						form.submit();
+					}
+				}
+			});
+
+			/*
+			 form.bootstrapValidator().on('success.form.bv', function(e) {
+			 // 阻止默认事件提交
+			 e.preventDefault();
+			 });
+			 */
+
+
+		});
+	</script>
+</body>
+</html>

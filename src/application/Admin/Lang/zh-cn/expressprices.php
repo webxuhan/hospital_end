@@ -1,0 +1,22 @@
+<?php
+return array(
+    'EXPRESS_COMPANY'       => '快递公司',
+    'FIRST_WEIGHT'          => '首重',
+    'EXPRESS_PRICE'         => '价格',
+    'LADDER_WEIGHT_START'  => '重量开始值',
+    'LADDER_WEIGHT_END'    => '重量结束值',
+    'COMPANY_NULL'          => '快递公司不能为空',
+    'REGIONS_ID_NULL'       => '地区不能为空',
+    'FW_PRICE_ID_NULL'      => '首重不能为空',
+    'INTER_PRICE_LIST'      => '价目列表',
+    'INTER_PRICE_ADD'       => '添加价目',
+    'EXPRESS_PRICE_NOTICE' => '注意：重量单位是千克（kg），价格单位是元（¥）',
+    'ADD_LADDER_PRICE'      => '添加阶梯价格',
+    'SELECT_REGION'         => '选择地区',
+    'SHIPPING_REGION'       => '地区',
+    'DISTRIBUTION_REGION'  => '地区',
+    'EXPRESS_DISCOUNT'      => '折扣',
+    'EXPRESS_DISCOUNT_ERROR' => '折扣错误',
+    'IN_REPEATED' => '地区录入重复',
+    'PRICE_EMPTY' => '价格不能为空',
+);

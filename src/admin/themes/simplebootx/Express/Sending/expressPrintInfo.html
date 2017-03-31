@@ -1,0 +1,145 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Sending/expressPrint')}">{:L("EXPRESS_PRINT")}</a></li>
+        <li class="active"><a href="{:U('Sending/expressPrintInfo')}">{:L("EXPRESS_PRINT_INFO")}</a></li>
+    </ul>
+    <form method="post" id="sendForm" class="form-horizontal js-ajax-form">
+        <input type="hidden" name="express_id" id="express_id" value="{$express['id']}">
+        <input type="hidden" name="express_company_id" id="express_company_id" value="{$express['express_company_id']}">
+
+        <fieldset>
+
+            <div class="control-group" >
+                <table>
+                    <tr>
+                        <td width="100px"></td>
+                        <td>
+                            {:L('EXPRESS_NUMBER')}:
+                        </td>
+                        <td>
+                            <input type="text" name="express_number" id="express_number" value="{$express['express_number']}">
+                        </td>
+                        <td width="20px">
+
+                        </td>
+                        <td>
+                            {:L('SERIAL_NUMBER')}:<input type="text" name="serial_number" id="serial_number" value="{$item['serial_number']}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{:L('BIND')}{:L('EXPRESS_NUMBER')}:</td>
+                        <td><input type="text" name="bind_express_number"></td>
+                        <td></td>
+                        <td><button type="button" class="btn btn-primary" id="checkStaff">
+                            {:L('BIND')}{:L('EXPRESS_NUMBER')}
+                        </button></td>
+                    </tr>
+                </table>
+            </div>
+
+            <hr>
+
+
+            <iframe name="printIframe" id="printIframe" width="100%" height="350px" frameborder="1" src="">
+
+            </iframe>
+
+
+        </fieldset>
+        <div class="form-actions">
+            <button type="button" class="btn btn-primary" id="subbuttom" onclick="printExpress()">{:L('PRINT_BTN')}</button>
+            <a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jqprint/jquery.jqprint-0.3.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jqprint/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript">
+
+
+
+    //界面初始化方法
+    $(function () {
+        //监听流水号输入框回车事件
+        $('#serial_number').bind('keydown', function (event) {
+            if (event.keyCode == "13") {
+                var number = $("#serial_number").val();
+                getSendingExpress(number);
+                urlTo();
+            }
+        });
+        $('#express_number').bind('keydown', function (event) {
+            if (event.keyCode == "13") {
+                var number = $("#express_number").val();
+                getSendingExpress(number);
+                urlTo();
+            }
+        });
+
+        //表单提交
+        $('#subbuttom').on("click", function (ev) {
+//            return false;
+//            $('.js-ajax-form').submit();
+        });
+
+        urlTo();
+
+    });
+
+
+
+    function getSendingExpress(number) {
+
+        if (number) {
+            $.ajax({
+                url: "{:U('Sending/getSendExpress')}",
+                type: 'post',
+                dataType: 'json',
+                data: {"serialNumber": number},
+                success: function (data) {
+                    console.log(data);
+
+                    if (data.retCode == '0' || data.retCode == '2') {
+                        $("#express_id").val(data.sendingExpress.sendApplication.id);
+                        $("#express_company_id").val(data.sendingExpress.sendApplication.express_company_id);
+                        $("#express_number").val(data.sendingExpress.sendItems[0].express_number);
+                        $("#serial_number").val(data.sendingExpress.sendItems[0].serial_number);
+                    } else {
+                        alert(data.retMsg);
+                        return;
+                    }
+                },
+                error: function (data, status, e) {
+                    alert(data.retMsg);
+                }
+            });
+        }
+
+    }
+
+    function urlTo() {
+        var express_id = $("#express_id").val();
+        var express_company_id = $("#express_company_id").val();
+        if(express_id&&express_company_id){
+            formatUrlTo(express_id,express_company_id);
+        }
+    }
+    function formatUrlTo(id,company_id) {
+        var url = "{:U('Admin/ExpressTemplate/printtpl')}"+"&express_id="+id+"&express_company_id="+company_id;
+        $("#printIframe").attr("src",url);
+    }
+    
+    function printExpress() {
+        var printPage = $("#printIframe").contents().find("#printDiv");
+        printPage.jqprint();
+    }
+
+</script>
+
+</body>
+</html>

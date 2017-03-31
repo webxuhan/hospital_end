@@ -1,0 +1,116 @@
+<admintpl file="header"/>
+</head>
+
+<body>
+<div class="wrap js-check-wrap">
+
+    <form class="js-ajax-form" action="{:U('Sending/index')}" method="post" id="form2">
+        <input type="hidden" name="style" value="moment">
+        <!--<div class="table-actions">-->
+            <!--<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Sending/delete')}"-->
+                    <!--data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}-->
+            <!--</button>-->
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_IMPORT')}</button>-->
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_EXPORT')}</button>-->
+            <!--<a class="btn btn-primary btn-small" form_action="{:U('Mailer/templet')}" href="JavaScript:;"-->
+               <!--onclick="send(this)">{:L('GROUP_MAIL')}</a>-->
+        <!--</div>-->
+        <table class="table table-hover table-bordered table-list" style="width:120%;">
+
+            <thead>
+            <tr>
+                <th><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                  data-checklist="js-check-x"></label></th>
+                <!--<th>{:L('EXPRESS_TYPE')}</th>-->
+                <!--<th>{:L("EXPRESS_NUMBER")}</th>-->
+                <th>{:L("SERIAL_NUMBER")}</th>
+                <th>{:L("WEIGHT")}</th>
+                <th>{:L("ITEM_QUANTITY")}</th>
+                <!--<th>{:L("OPERATOR")}</th>-->
+                <th>{:L("SEND_TIME")}</th>
+                <!--<th>{:L("STATUS")}</th>-->
+                <!--<th>{:L("ACTIONS")}</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="packageItemList" item="vo">
+                <tr>
+                    <td>
+                        <label class="checkbox inline">
+                            <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x"
+                                   name="ids[]" value="{$vo.id}" title="ID:{$vo.id}">
+                        </label>
+                    </td>
+
+
+
+                    <td>
+                        <foreach name="vo['app']['items']" item="item">
+                            {$item.serial_number} - {$item.app_number}<br>
+                        </foreach>
+                    </td>
+                    <td>{$vo['app']['weight']}{:L("WEIGHT_UNIT")}</td>
+                    <td>{$vo['app']['express_quantity']}</td>
+                    <td>{$vo.create_time|format_day_time}</td>
+
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                  data-checklist="js-check-x"></label></th>
+                <!--<th>{:L('EXPRESS_TYPE')}</th>-->
+                <!--<th>{:L("EXPRESS_NUMBER")}</th>-->
+                <th>{:L("SERIAL_NUMBER")}</th>
+                <th>{:L("WEIGHT")}</th>
+                <th>{:L("ITEM_QUANTITY")}</th>
+                <!--<th>{:L("OPERATOR")}</th>-->
+                <th>{:L("SEND_TIME")}</th>
+                <!--<th>{:L("STATUS")}</th>-->
+                <!--<th>{:L("ACTIONS")}</th>-->
+
+            </tr>
+            </tfoot>
+        </table>
+        <!--<div class="pagination">{$page}</div>-->
+
+        <!--<div class="table-actions">-->
+            <!--<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Sending/delete')}"-->
+                    <!--data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}-->
+            <!--</button>-->
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_IMPORT')}</button>-->
+            <!--<button class="btn btn-primary btn-small " type="button">{:L('DATA_EXPORT')}</button>-->
+            <!--<a class="btn btn-primary btn-small" form_action="{:U('Mailer/templet')}" href="JavaScript:;"-->
+               <!--onclick="send(this)">{:L('GROUP_MAIL')}</a>-->
+        <!--</div>-->
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+//    function send($this) {
+//        var chk_value = [];
+//        //get checkbox value
+//        $('input[class="js-check"]:checked').each(function () {
+//            chk_value.push($(this).val());
+//        });
+//        if (chk_value.length == 0) {
+//            art.dialog({
+//                id: 'warning',
+//                icon: 'warning',
+//                content: '请至少选择一个员工！',
+//                cancelVal: '关闭',
+//                cancel: function () {
+//                    reloadPage(window);
+//                },
+//                ok: function () {
+//                    reloadPage(window);
+//                }
+//            });
+//        } else {
+//            $("#form2").attr("action", $($this).attr("form_action"))[0].submit();
+//        }
+//    }
+</script>
+</body>
+</html>

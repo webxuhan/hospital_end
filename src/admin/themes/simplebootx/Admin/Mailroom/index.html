@@ -1,0 +1,134 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Mailroom/index')}">{:L('ADMIN_MAILROOM_INDEX')}</a></li>
+			<li><a href="{:U('Mailroom/add')}">{:L('ADMIN_MAILROOM_ADD')}</a></li>
+		</ul>
+    <form class="well form-search" method="post" action="{:U('Mailroom/index')}">
+      {:L('NAME')}:
+      <input type="text" name="mailroom_name" style="width: 100px;" value="{:I('request.mailroom_name/s','')}" >
+      {:L('CONTACTS')}:
+      <input type="text" name="contacts" style="width: 60px;" value="{:I('request.contacts/s','')}" >
+			{:L('MOBILE')}:
+			<input type="text" name="mobile" style="width: 80px;" value="{:I('request.mobile/s','')}" >
+			{:L('TEL')}:
+			<input type="text" name="tel" style="width: 100px;" value="{:I('request.tel/s','')}" >
+         {:L('CITY')}:
+        <input type="text" name="city" style="width: 100px;" value="{:I('request.city/s','')}" >
+        {:L('CUSTOMER')}:
+        <input type="text" name="customer" style="width: 80px;" value="{:I('request.customer/s','')}" >
+
+        <input type="submit" class="btn btn-primary" value="{:L('PLEASE_SEARCH')}" />
+      <a class="btn btn-danger" href="{:U('Mailroom/index')}">{:L('PLEASE_CLEAR')}</a>
+    </form>
+
+
+
+		<form method="post" class="js-ajax-form" action="{:U('Mailroom/index')}">
+			<div class="table-actions">
+	      <button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Mailroom/delete')}" data-subcheck="true" data-msg="您确定删除吗？">{:L('DELETE')}</button>
+	      <a class="btn btn-primary btn-small" OnClick='_import()'>{:L('DATA_IMPORT')}</a>
+		  <a class="btn btn-primary btn-small" OnClick='_export()'>{:L('DATA_EXPORT')}</a>
+	    </div>
+			<table class="table table-hover table-bordered table-list "style="able-layout:fixed;word-wrap:break-word;word-break:break-all;">
+				<thead>
+					<tr>
+						<th width="5%"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+                        <th width="18%" >{:L('NAME')}</th>
+                        <th width="10%">{:L('CONTACTS')}</th>
+                        <th width="10%">{:L('MOBILE')}</th>
+                        <th width="10%">{:L('TEL')}</th>
+                        <th width="8%">{:L('CITY')}</th>
+                        <th width="10%">{:L('CUSTOMER')}</th>
+                        <th width="19%">{:L('ADDRESS')}</th>
+                        <th width="10%">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="data" item="vo">
+					<tr>
+						<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.mailroom_id}"></td>
+
+						<td>{$vo.mailroom_name}</td>
+                        <td>{$vo.contacts}</td>
+						<td>{$vo.mobile}</td>
+						<td>{$vo.tel}</td>
+                        <td>{$vo.city}</td>
+                        <td>{$vo.customer}</td>
+                        <td>{$vo.address}</td>
+						<td>
+							<a href="{:U('Mailroom/edit',array('id'=>$vo['mailroom_id']))}">{:L('EDIT')}</a>|
+							<a href="{:U('Mailroom/delete',array('id'=>$vo['mailroom_id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th width="5%"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="18%">{:L('NAME')}</th>
+						<th width="10%">{:L('CONTACTS')}</th>
+						<th width="10%">{:L('MOBILE')}</th>
+						<th width="10%">{:L('TEL')}</th>
+                        <th width="8%">{:L('CITY')}</th>
+                        <th width="10%">{:L('CUSTOMER')}</th>
+                        <th width="19%">{:L('ADDRESS')}</th>
+						<th width="10%">{:L('ACTIONS')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$page}</div>
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Mailroom/delete')}" data-subcheck="true" data-msg="您确定删除吗？">{:L('DELETE')}</button>
+				<a class="btn btn-primary btn-small" OnClick='_import()'>{:L('DATA_IMPORT')}</a>
+		  		<a class="btn btn-primary btn-small" OnClick='_export()'>{:L('DATA_EXPORT')}</a>
+			</div>
+		</form>
+
+
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function _export(){
+			$.ajax({
+			   type: "POST",
+			   url: "{:U('import_export')}",
+			   data: "queue_type=1&action=export",
+			   success: function(msg){
+			     art.dialog({
+					id: 'warning',
+					icon: 'warning',
+					content: '导出成功正在列表，请稍后！',
+					ok: function () {
+						//reloadPage(window);
+					}
+				}); 
+			  }
+			});
+		}
+		function _import(){
+		    Wind.use('artDialog', 'iframeTools', function () {
+		        var ImportUrl = "{:U('import_index')}";
+		        art.dialog.open(ImportUrl, {
+		            title: '{:L("DATA_IMPORT")}',
+		            lock: true,
+		            height: 150,
+		            width: "40%",
+		            // 在open()方法中，init会等待iframe加载完毕后执行
+		            init: function () {
+		                var iframe = this.iframe.contentWindow;
+		                var top = art.dialog.top;// 引用顶层页面window对象
+
+		            },
+		            ok: function () {				
+		                return true;                
+		            },
+		            cancel: true
+		        });
+		    });
+		}
+	</script>
+</body>
+</html>

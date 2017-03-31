@@ -1,0 +1,111 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Positions/index')}">职位信息</a></li>
+			<li class="active"><a href="{:U('Positions/add')}">添加</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Positions/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">职位名称:</label>
+					<div class="controls form-group">
+						<input type="text" name="position_name">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">预约价格:</label>
+					<div class="controls form-group">
+						<input type="text" name="position_price">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">每日预约量:</label>
+					<div class="controls form-group">
+						<input type="text" name="position_appointnum">
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+	$(document).ready(function(){
+            $(".js-ajax-form").bootstrapValidator({
+                message: '输入的值无效!',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    position_name: {
+                        validators: {
+                            notEmpty: {
+                                message: '职位名称不可为空'
+                            },
+                            regexp: {
+								regexp: /^[\u4e00-\u9fa5\s]+$/,
+								message: '请输入汉字!'
+							}
+                        }
+                    },
+                    position_appointnum: {
+                        validators: {
+                            notEmpty: {
+                                message: '每日预约量不可为空'
+                            },
+                            regexp: {
+								regexp: /^[1-9]|[1-9][0-9]+$/,
+								message: '请输入数字格式!'
+							}
+                        }
+                    },
+                    position_price:{
+                        validators: {
+                        	notEmpty: {
+                                message: '预约价格不可为空'
+                            },
+                        	regexp: {
+                                regexp: /\d{1,5}(\.\d{1,2})?$/,
+                                message: '请填写正确的价格'
+                            }
+                        }
+                    }   
+					
+                }
+            });
+
+            var form = $(".js-ajax-form");
+            form.submit(function(ev){ev.preventDefault();});
+
+            $('.js-ajax-submit').on("click", function(ev){
+            	ev.preventDefault();
+                var bootstrapValidator = form.data('bootstrapValidator');
+
+                if (bootstrapValidator) {
+                    // 修复记忆的组件不验证
+                    bootstrapValidator.validate();
+
+                    if (!bootstrapValidator.isValid()) {
+
+                        return false;
+                    }else{
+                        //$('.js-ajax-submit').removeAttr('disabled');
+                        form.submit();
+                    }
+
+                }
+
+            });
+
+        });
+</script>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="__PUBLIC__/css/combo.select/combo.select.css">
+	<style>
+	.centers-add>select{width: 120px;height: 30px}
+</style>
+</head>
+<body>
+	
+<div>
+<form class="centers-add">
+	<select name="center_id" id ="center_id" class="select_center">
+		<foreach name="costs" item="vo">
+			<option value="{$vo.center_id}">{$vo.center_name}</option>
+		</foreach>
+	</select>
+</form>
+</div>
+
+</body>
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/js/combo.select/jquery.combo.select.js"></script>
+<script>
+	$(function(){
+		  $("select[name='center_id']").comboSelect(); //select初始化
+	})
+</script>
+</html>
+
+

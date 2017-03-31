@@ -1,0 +1,144 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Patient/index')}">病人信息</a></li>
+			<li><a href="{:U('Patient/add')}">添加</a></li>
+			<li class="active"><a href="javascript:;">编辑</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Patient/edit_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">病人名称:</label>
+					<div class="controls form-group">
+						<input type="text" name="patient_name" value="{$patient.patient_name}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">性别:</label>
+					<div class="controls form-group">
+						<input type="radio" name="patient_sex" value="0" <if condition="$patient['patient_sex'] eq 0">checked</if>><span>男</span>
+						<input type="radio" name="patient_sex" value="1" <if condition="$patient['patient_sex'] eq 1">checked</if>><span>女</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">身份证号:</label>
+					<div class="controls form-group">
+						<input type="text" name="patient_idcard" value="{$patient.patient_idcard}">
+						<span class="form-required">*</span>
+					</div>
+				</div>		
+				<div class="control-group">
+					<label class="control-label">邮箱:</label>
+					<div class="controls form-group">
+						<input type="text" name="patient_email" value="{$patient.patient_email}">
+					</div>
+				</div>	
+				<div class="control-group">
+					<label class="control-label">手机号:</label>
+					<div class="controls form-group">
+						<input type="text" name="patient_mobile" value="{$patient.patient_mobile}">
+						<span class="form-required">*</span>
+					</div>
+				</div>	
+				
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="patient_id" value="{$patient.patient_id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+	$(document).ready(function(){
+            $(".js-ajax-form").bootstrapValidator({
+                message: '输入的值无效!',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                   patient_name: {
+                        validators: {
+                            notEmpty: {
+                                message: '病人名称不可为空'
+                            },
+                            stringLength: {
+								min: 1,
+								max: 30,
+								message: '填写名称太长'
+							},
+                            regexp: {
+								regexp: /^[a-zA-Z0-9_\u4e00-\u9fa5\s]+$/,
+								message: '请输入字母数字或下划线或汉字!'
+							}
+                        }
+                    },
+                    patient_email:{
+                        validators: {
+                        	notEmpty: {
+                                message: '邮箱不可为空'
+                            },
+                            emailAddress: {
+					            message: '邮箱格式错误'
+					        },
+                        }
+                    },
+                    patient_mobile:{
+                        validators: {
+                        	notEmpty: {
+                                message: '手机号码不可为空'
+                            },
+                        	regexp: {
+                                regexp: /^1(3|4|5|7|8)\d{9}$/,
+                                message: '请填写正确的手机号码'
+                            }
+                        }
+                    },
+                    patient_idcard:{
+                        validators: {
+                        	notEmpty: {
+                                message: '身份证号不可为空'
+                            },
+                        	regexp: {
+                                regexp: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
+                                message: '请填写正确的身份证号'
+                            }
+                        }
+                    }
+					
+                }
+            });
+
+            var form = $(".js-ajax-form");
+            form.submit(function(ev){ev.preventDefault();});
+
+            $('.js-ajax-submit').on("click", function(ev){
+            	ev.preventDefault();
+                var bootstrapValidator = form.data('bootstrapValidator');
+
+                if (bootstrapValidator) {
+                    // 修复记忆的组件不验证
+                    bootstrapValidator.validate();
+
+                    if (!bootstrapValidator.isValid()) {
+
+                        return false;
+                    }else{
+                        //$('.js-ajax-submit').removeAttr('disabled');
+                        form.submit();
+                    }
+
+                }
+
+            });
+
+        });
+</script>

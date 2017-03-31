@@ -1,0 +1,95 @@
+<admintpl file="header" />
+</head>
+
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Queue/index')}">{:L('IMPORT_EXPORT_QUEUE')}</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('Queue/index')}">
+			<table>
+				<tr>
+					<td>
+		            {:L('TASK_NAME')}:
+		            <input type="text" name="name" style="width: 100px;" value="{:I('request.name/s','')}" placeholder="请输入{:L('TASK_NAME')}">
+		            </td>
+		            <td>
+		            {:L('TASK_STATUS')}：
+					<select style="width: 100px;" name="task_status">
+		            	<option disabled selected>{:L('TO_CHOOSE')}</option>
+		            	<foreach name="status" item="vo" key="k">
+		            	<option value="{$k+1}">{$vo}</option>
+		            	</foreach>
+		            </select>
+		            {:L('QUEUE_TYPE')}：
+					<select style="width: 100px;" name="queue_type">
+		            	<option disabled selected>{:L('TO_CHOOSE')}</option>
+		            	<foreach name="queue_type" item="vo" key="k">
+		            	<option value="{$k+1}">{$vo}</option>
+		            	</foreach>
+		            </select>
+		            <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}" />
+		            <a class="btn btn-danger" href="{:U('Queue/index',array('action'=>'export'))}">{:L('EMPTY')}</a>
+		            </td>
+	            </tr>
+            </table>
+        </form>
+		<table class="table table-hover table-bordered table-list" style="width:120%;">
+
+			<thead>
+				<tr>
+					<th>{:L('TASK_NAME')}</th>
+					<th>{:L('TASK_STATUS')}</th>
+					<th>{:L('QUEUE_TYPE')}</th>
+					<th>{:L('CREATE_TIME')}</th>
+					<th>{:L('UPDATE_TIME')}</th>
+					<th>{:L("ACTIONS")}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="list" item="vo">
+				<tr>
+				<td>{$vo.name}</td>
+				<td>{$status[$vo['status']]}
+				<if condition="$vo['status'] eq 0">
+					({$vo.params.params.error_reson})
+				</if>
+				</td>
+				<td>{$queue_type[$vo['queue_type']-1]}</td>
+				<td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>
+				<td>{$vo.update_time|date="Y-m-d H:i:s",###}</td>
+				<td>
+					<if condition="$vo['queue_type'] eq 1">
+					    <if condition="$vo['status'] eq 1">
+						<a data-toggle="tooltip" title="{:L('CLICK_DOWNLOAD')}" href='{:U("Queue/download",array("task_id"=>$vo["id"]))}'>{:L('DOWNLOAD')}</a>
+						<else/>
+						<span data-toggle="tooltip" title="{:L('CANNOT_DOWNLOAD')}" >{:L('DOWNLOAD')}</span>
+						</if>
+						|
+					</if>
+					
+					<a class="js-ajax-delete" href="{:U('Queue/delete',array('task_id'=>$vo['id']))}">{:L('DELETE')}</a>
+
+				</td>
+				</tr>
+				</foreach>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>{:L('TASK_NAME')}</th>
+					<th>{:L('TASK_STATUS')}</th>
+					<th>{:L('QUEUE_TYPE')}</th>
+					<th>{:L('CREATE_TIME')}</th>
+					<th>{:L('UPDATE_TIME')}</th>
+					<th>{:L("ACTIONS")}</th>
+				</tr>
+			</tfoot>
+		</table>
+		<div class="pagination">{$page}</div>
+		
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+
+</body>
+
+</html>

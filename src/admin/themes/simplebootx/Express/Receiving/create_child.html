@@ -1,0 +1,14 @@
+<volist name="list" id="vo">
+    <tr>
+        <td>{$vo.airway_bill_no}</td>
+        <td>{$vo.job_no}</td>
+        <td>{$express_attr[$vo['express_attr']]}</td>
+        <td>{$vo.express_name}</td>
+        <td>{$vo.package_num}</td>
+        <td>{$inside_and_outside[$vo['inside_and_outside']]}</td>
+        <td>{$vo.create_time|format_day_time}</td>
+        <td>
+            <a href="javascript:;" data-url="{:U('Receiving/del',array('receive_id'=>$vo['receive_id']))}" class="delete-receiving">{:L('DELETE')}</a>
+        </td>
+    </tr>
+</volist>

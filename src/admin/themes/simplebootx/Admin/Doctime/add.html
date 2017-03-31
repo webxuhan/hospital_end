@@ -1,0 +1,106 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Doctime/index')}">工作时间</a></li>
+			<li class="active"><a href="{:U('Doctime/add')}">添加</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Doctime/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">医生编号:</label>
+					<div class="controls form-group">
+						<input type="text" name="doctor_number">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">医生姓名:</label>
+					<div class="controls form-group">
+						<input type="text" name="doctor_name" readonly>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">工作时间:</label>
+					<foreach name="doctime" item="dt">
+					<div class="controls form-group">
+						<input type="checkbox" name="time_id[]" value="{$dt.time_id}"><span>{$dt.time_name}</span>
+					</div>
+					</foreach>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="doctor_id" value="">
+				<button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+	$(document).ready(function(){
+            $(".js-ajax-form").bootstrapValidator({
+                message: '输入的值无效!',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                   doctor_number: {
+                        validators: {
+                            notEmpty: {
+                                message: '医生编号不可为空'
+                            }   
+                        }
+                    }  
+                }
+            });
+            /*获取医生信息*/
+            $("input[name='doctor_number']").on("blur", function(){
+            	$.ajax({
+            		url:"{:U('Doctime/doctorinfo')}",
+            		method:"post",
+	            	data:{"doctor_number" :$ (this).val()},
+            		success:function(data){
+            			if(data.status == 1){
+            				$("input[name='doctor_name']").val(data.info);
+            				$("input[name='doctor_id']").val(data.doctor_id);
+            			}else{
+            				$("input[name='doctor_name']").val(" ");
+            				Wind.use("artDialog", "iframeTools", function() {
+								art.dialog.tips(data.info, 1.5);
+							});
+            			}
+            		}
+            	});
+            });
+            
+
+            var form = $(".js-ajax-form");
+            form.submit(function(ev){ev.preventDefault();});
+
+            $('.js-ajax-submit').on("click", function(ev){
+            	ev.preventDefault();
+                var bootstrapValidator = form.data('bootstrapValidator');
+
+                if (bootstrapValidator) {
+                    // 修复记忆的组件不验证
+                    bootstrapValidator.validate();
+
+                    if (!bootstrapValidator.isValid()) {
+
+                        return false;
+                    }else{
+                        form.submit();
+                    }
+
+                }
+
+            });
+
+        });
+</script>

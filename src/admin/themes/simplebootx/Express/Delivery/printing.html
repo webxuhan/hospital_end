@@ -1,0 +1,174 @@
+<admintpl file="header" />
+
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:U('Delivery/printing')}">{:L('PRINT_DELIVERY_FORM')}</a></li>
+        <li><a href="{:U('Delivery/print_list')}">{:L('PRINT_DELIVERY_QUERY')}</a></li>
+    </ul>
+    <form method="post" id="receivingForm" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label">{:L('WAY')}</label>
+            <div class="controls">
+                <select id="select_way">
+                    <option value="">{:L('TO_CHOOSE')}</option>
+                    <volist name="way_list" id="vo">
+                        <option value="{$vo.way_id}" <if condition="$vo['way_id'] eq $selected_way_id">selected="selected"</if>>{$vo.way_name}</option>
+                    </volist>
+                </select>
+                <a class="btn btn-primary" id="print_way" href="javascript:;" data-url="{:U('printing')}">{:L('SEARCH')}</a>
+                &nbsp;&nbsp;&nbsp;
+                <input type="text" style="width: 400px;" id="airway_bill_no" placeholder="{:L('AIRWAY_BILL_NO_OR_JOB_NO')}">
+                <a class="btn btn-primary" id="search_received" href="javascript:;" data-url="{:U('print_bill_no')}">{:L('SEARCH')}</a>
+            </div>
+        </div>
+    </form>
+
+    <form method="post" id="receive_form">
+        <div class="table-actions">
+            <a class="btn btn-primary btn-small" id="print_delivery" href="javascript:;" data-url="{:U('print_post')}">{:L('PRINT')}</a>
+            <input type="hidden" name="airway_bill_no">
+            <input type="hidden" name="way_id" value="{$selected_way_id}">
+        </div>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th><input type="checkbox" checked id="selectAllReceive"></th>
+                <th>{:L('EXPRESS_ATTR')}</th>
+                <th>{:L('JOB_NO')}</th>
+                <th>{:L('AIRWAY_BILL_NO')}</th>
+                <th>{:L('STAFF_NAME')}</th>
+                <th>{:L('SEND_COMPANY')}</th>
+                <th>{:L('IS_TO_PAY_PART')}</th>
+                <th>{:L('REMARK')}</th>
+                <!--<th width="60">{:L('ACTIONS')}</th>-->
+            </tr>
+            </thead>
+            <tbody id="receiving_list">
+            <volist name="list" id="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" name="receive_ids[]" checked value="{$vo.receive_id}" class="receive-ids">
+                        <input type="hidden" name="seat_ids[]" value="{$vo.seat_id}">
+                    </td>
+                    <td>{$express_attr[$vo['express_attr']]}</td>
+                    <td>{$vo.job_no}</td>
+                    <td>{$vo.airway_bill_no}</td>
+                    <td>{$vo.staff_name}</td>
+                    <td>{$vo.send_company}</td>
+                    <td>{$to_pay_part[$vo['to_pay_part']]}</td>
+                    <td>{$vo.remark}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+        <div id="pageArr">
+            {:L('PAGE_NUMBER')}
+            <select id="page_num" name="page_num" style="width: 80px;">
+                <volist name="page_arr" id="vo">
+                <option value="{$vo}" <if condition="$vo eq $page_num">selected="selected"</if>>{$vo}</option>
+                </volist>
+            </select>
+        </div>
+    </form>
+</div>
+</body>
+<div id="print_page" style="display: none;"></div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jqprint/jquery.jqprint-0.3.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jqprint/jquery-migrate-1.2.1.min.js"></script>
+<script>
+    $(function() {
+        var form =  $("#receivingForm");
+        form.submit(function(e){e.preventDefault();});
+
+        $("#airway_bill_no").on("keydown",function(e){
+            if(e.keyCode == 13) {
+                var form = $("#search_receiving");
+                form.find("input[name=next_step]").remove();
+                searchReceived();
+            }
+        });
+
+        var receiving_list = $("#receiving_list");
+
+        // show message
+        function showMsg(msg) {
+            Wind.use("artDialog", "iframeTools", function() {
+                art.dialog.tips(msg, 3);
+            });
+        }
+
+        // 搜索一个快件
+        function searchReceived() {
+            var url = $("#search_received").attr("data-url");
+            var bill_no_value = $("#airway_bill_no").val();
+            $("input[name=airway_bill_no]").val(bill_no_value);
+            $.ajax({
+                url: url,
+                data: {
+                    airway_bill_no: bill_no_value
+                },
+                method: "post",
+                dataType: "json",
+                success: function(data) {
+                    if(data.status) {
+                        receiving_list.html(data.info);
+                    } else {
+                        showMsg(data.info)
+                    }
+                }// end function success
+            });// end function ajax
+        }// end function searchReceived
+
+        // 搜索单个件打印
+        $("#search_received").on("click", searchReceived);
+
+        $("#print_way").on("click", function() {
+
+            var url = $(this).attr("data-url");
+            var select_way = $("#select_way");
+            var page_num = $("#page_num");
+            if(select_way.val()) url += "&way_id=" + select_way.val();
+            if(page_num.val()) url += "&page_num=" + page_num.val();
+            window.location.href = url;
+        });
+
+        $("#print_delivery").on("click", function() {
+            var url = $("#print_delivery").attr("data-url");
+            $.ajax({
+                url: url,
+                data: $("#receive_form").serialize(),
+                method: "post",
+                dataType: "json",
+                success: function(data) {
+                    if(data.status) {
+                        var page = $("#print_page");
+
+                        page.html(data.info);
+                        page.show();
+                        page.jqprint();
+                        page.hide();
+
+                    } else {
+                        showMsg(data.info)
+                    }
+                }
+            });
+        });
+
+        // 全选事件
+        $(document).on("click", "#selectAllReceive", function() {
+            $(".receive-ids").attr("checked", $(this).attr("checked") ? true : false );
+        });
+
+        // 单个选中事件
+        $(document).on("click", ".receive-ids", function() {
+            $("#selectAllReceive").attr("checked",$(".receive-ids:checked").length == $(".receive-ids").length ? true : false);
+        });
+
+    });
+</script>
+</html>

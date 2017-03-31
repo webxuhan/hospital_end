@@ -1,0 +1,144 @@
+<admintpl file="header" />
+<style>
+	.address1{
+		width:100px;
+	}
+</style>
+</head>
+
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('PackageAddress/index')}">{:L("ADDRESS_INFO")}</a></li>
+			<li><a href="{:U('PackageAddress/add')}">{:L("ADD")}</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('PackageAddress/index')}">
+			<table>
+				<tr>
+					<td>
+		            {:L("ADDRESS_NAME")}:
+		            <input type="text" name="address_name" style="width: 100px;" value="{:I('request.address_name/s','')}" placeholder="{:L('PLEASE_INPUT')}{:L('ADDRESS_NAME')}">
+		            {:L('REGION')}：
+		            <select mailroom_regions data-regions="{:I('request.address/s','')}" name="address" class="address1"></select>
+		            </td>
+		            <td>
+		            <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}" />
+		            <a class="btn btn-danger" href="{:U('PackageAddress/index')}">{:L('EMPTY')}</a>
+		            </td>		            
+	            </tr>
+            </table>
+
+        </form>
+    
+		<form class="js-ajax-form" action="{:U('PackageAddress/delete')}" method="post">
+			<input type="hidden" name="style" value="moment">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('PackageAddress/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+				<a class="btn btn-primary btn-small" OnClick='_import()'>{:L('DATA_IMPORT')}</a>
+				<a class="btn btn-primary btn-small" OnClick='_export()'>{:L('DATA_EXPORT')}</a>
+			</div>
+			<table class="table table-hover table-bordered table-list" style="width:120%;">
+
+				<thead>
+					<tr>
+						<th  width="5%"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="10%">{:L("ADDRESS_NAME")}</th>
+						<th width="5%"> {:L('COUNTRY')}</th>
+						<th width="10%">{:L('PROVINCE')}</th>
+						<th width="10%">{:L('CITY')}</th>
+						<th width="10%">{:L('COUNTY')}</th>
+						<th width="15%">{:L('ADDRESS_DETAIL')}</th>
+						<th width="12%">{:L("ACTIONS")}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="address" item="vo" key="k">
+					<tr>
+					<td>
+						<label class="checkbox inline">
+							<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.address_id}" title="ID:{$vo.address_id}">
+						</label>
+
+					</td>
+					
+					<td>{$vo.address_name}</td>
+					<td>{$regions[$vo['country_id']]}</td>
+					<td>{$regions[$vo['province_id']]}</td>
+					<td>{$regions[$vo['city_id']]}</td>
+					<td>{$regions[$vo['county_id']]}</td>
+					<td>{$vo.address_detail}</td>
+
+					<td>
+						<a href='{:U("PackageAddress/edit",array("address_id"=>$vo["address_id"]))}'>{:L('EDIT')}</a> |
+						<a class="js-ajax-delete" href="{:U('PackageAddress/delete',array('address_id'=>$vo['address_id']))}">{:L('DELETE')}</a>
+					</td>
+					</tr>
+					</foreach>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th width="5%"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="10%">{:L("ADDRESS_NAME")}</th>
+						<th width="10%">{:L('COUNTRY')}</th>
+						<th width="10%">{:L('PROVINCE')}</th>
+						<th width="10%">{:L('CITY')}</th>
+						<th width="10%">{:L('COUNTY')}</th>
+						<th width="15%">{:L('ADDRESS_DETAIL')}</th>
+						<th width="12%">{:L("ACTIONS")}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$page}</div>
+	
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('PackageAddress/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+				<a class="btn btn-primary btn-small" OnClick='_import()'>{:L('DATA_IMPORT')}</a>
+				<a class="btn btn-primary btn-small" OnClick='_export()'>{:L('DATA_EXPORT')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script src="__PUBLIC__/js/region_data.js"></script>
+	<script src="__PUBLIC__/js/regions_plugin.js"></script>
+	<script>
+		function _export(){
+			$.ajax({
+			   type: "POST",
+			   url: "{:U('import_export')}",
+			   data: "queue_type=1&action=export",
+			   success: function(msg){
+			     art.dialog({
+					id: 'warning',
+					icon: 'warning',
+					content: '导出成功正在列表，请稍后！',
+					ok: function () {
+						//reloadPage(window);
+					}
+				}); 
+			  }
+			});
+		}
+		function _import(){
+		    Wind.use('artDialog', 'iframeTools', function () {
+		        var ImportUrl = "{:U('import_index')}";
+		        art.dialog.open(ImportUrl, {
+		            title: '{:L("DATA_IMPORT")}',
+		            lock: true,
+		            height: 150,
+		            width: "40%",
+		            // 在open()方法中，init会等待iframe加载完毕后执行
+		            init: function () {
+		                var iframe = this.iframe.contentWindow;
+		                var top = art.dialog.top;// 引用顶层页面window对象
+
+		            },
+		            ok: function () {				
+		                return true;                
+		            },
+		            cancel: true
+		        });
+		    });
+		}
+	</script>
+</body>
+</html>

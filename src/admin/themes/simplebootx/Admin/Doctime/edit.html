@@ -1,0 +1,46 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Doctime/index')}">工作时间</a></li>
+			<li><a href="{:U('Doctime/add')}">添加</a></li>
+            <li class="active"><a href="javascript:;">编辑</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Doctime/edit_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">医生编号:</label>
+					<div class="controls form-group">
+						<input type="text" name="doctor_number" value="{$dwtime.doctor_number}" disabled>
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">医生姓名:</label>
+					<div class="controls form-group">
+						<input type="text" name="doctor_name" value="{$dwtime.doctor_name}" disabled>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">工作时间:</label>
+					<foreach name="doctime" item="dt">
+					<div class="controls form-group">
+						<input type="checkbox" name="time_id[]" value="{$dt.time_id}" 
+                        <foreach name="dwtime['time_id']" item="time"><if condition="$time eq $dt['time_id']">checked</if></foreach>><span>{$dt.time_name}</span>
+					</div>
+					</foreach>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="work_id" value="{$dwtime.work_id}">
+				<button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+</script>

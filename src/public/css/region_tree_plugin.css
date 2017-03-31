@@ -1,0 +1,57 @@
+.region_tree_list {
+    width: 80%;
+    font-size: 14px;
+    left:30px;
+    top: 30px;
+    position: absolute;
+    display: none;
+}
+.region_tree_list .determine_region_tree {
+    border-radius: 5px;
+    height: 18px;
+    line-height: 18px;
+    background: #949092;
+    color: white;
+    padding: 2px 5px;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+}
+.region_tree_list .node-hasc, .region_tree_list .node-child-box {
+    clear: both;
+}
+.region_tree_list .node-child-box {
+    display: none;
+}
+.region_tree_list .node {
+    display: block;
+    height: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    zoom: 1;
+}
+.region_tree_list .node-hasc .node-handle {
+    display: inline-block;
+    width: 20px;
+    background: url(../../public/images/treeico.gif) no-repeat 50% -126px;
+    cursor: pointer;
+}
+.region_tree_list .node-hasc .node-close {
+    width: 20px;
+    /*background-position: 50% -106px;*/
+    background: url(../../public/images/treeico.gif) no-repeat 50% -106px;
+    cursor: pointer;
+}
+
+.region_tree_list .node-name {
+    color: #666;
+    padding-right: 10px;
+}
+.region_tree_list div{
+    padding-left: 15px;
+}
+span.node-hasc>span.node-close{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}

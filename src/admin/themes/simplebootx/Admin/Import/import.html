@@ -1,0 +1,19 @@
+<body>
+<div class="wrap js-check-wrap">
+    
+    <form action="{:U($url)}" method="post" enctype="multipart/form-data">
+    <input type="hidden" value="2" name="queue_type">
+    <input type="hidden" value="import" name="action">
+        <table>
+            <tr>
+                <th>选择要导入的列表</th>
+            </tr> 
+             
+            <tr><td><input type="file" name="file"></td></tr>
+            <tr><td><input type="submit" value="{:L('DATA_IMPORT')}"/></td></tr>           
+        </table>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

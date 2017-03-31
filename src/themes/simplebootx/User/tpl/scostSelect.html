@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>首页</title>
+<meta charset="utf-8">
+</head>
+<body>
+	<form>
+		<table>
+			<foreach name="scosts" item="sc">
+			
+				<tr>
+					<td>
+						
+						<input type="checkbox" name="costcenter" value="{$sc.center_id}" centername="{$sc.center_name}"
+						<foreach name="costids" item="cid"><if condition="isset($costids) && $sc['center_id'] == $cid">checked</if></foreach>>
+						<span>{$sc.center_name}</span>
+
+					</td>
+
+				</tr>
+			
+			</foreach>
+		</table>
+	</form>
+</body>
+</html>
+<script src="__PUBLIC__/js/jquery.js"></script>

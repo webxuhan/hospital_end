@@ -1,0 +1,108 @@
+<admintpl file="header"/>
+</head>
+
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Sending/sendingList')}">{:L("SENDING_LIST")}</a></li>
+        <li><a href="{:U('Sending/sendingPackageList')}">{:L("SENDING_PACKAGE_LIST")}</a></li>
+        <li><a href="{:U('Sending/sendingListHistory')}">{:L("SENDING_LIST_HISTORY")}</a></li>
+    </ul>
+
+
+    <form class="" action="" method="post" id="form2">
+        <input type="hidden" name="style" value="moment">
+        <div class="table-actions">
+            <!--<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Sending/sendingListPrint')}"-->
+            <!--data-subcheck="true">{:L('CHOOSE')}{:L('PRINT')}-->
+            <!--</button>-->
+
+            <button class="btn btn-primary btn-small js-ajax-submit" type="button"
+                    onclick="printTable()"
+                    data-action="">{:L('CHOOSE')}{:L('PRINT')}
+            </button>
+        </div>
+        <table id="printTable" class="table table-hover table-bordered table-list" style="width:120%;">
+
+            <thead>
+            <tr>
+                <th colspan="9" style="text-align: right">{$export['serial_number']}</th>
+
+            <tr>
+                <th>{:L('TABLE_NUM')}</th>
+                <th>{:L('SERIAL_NUMBER')}</th>
+                <th>{:L("SEND_TIME")}</th>
+                <th>{:L("EXPRESS_TYPE")}</th>
+                <th>{:L("EXPRESS_COMPANY")}</th>
+                <th>{:L("EXPRESS_NUMBER")}</th>
+                <th>{:L("ITEM_QUANTITY")}</th>
+                <th>{:L("SENDING_COMMENT")}</th>
+                <th>{:L("SIGN")}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="exportItems" item="vo" key="k">
+                <tr>
+                    <td>
+                        {$k+1}
+                    </td>
+
+
+                    <td><!--{$vo.serial_number}-{$vo.app_number}-->
+                        <foreach name="vo['items']" item="item">
+                            {$item.serial_number} - {$item.app_number}<br>
+                        </foreach></td>
+                    <td>{$vo.create_time|format_day_time}</td>
+                    <td>
+                        {:L("EXPRESS_TYPE_$vo[express_type]")}
+                    </td>
+                    <td>{$vo.express_name}</td>
+                    <td>{$vo.express_number}</td>
+                    <td>{$vo.express_quantity}</td>
+                    <td>{$vo.send_comment}</td>
+                    <td></td>
+                    <!--<td>-->
+                    <!--&lt;!&ndash;<a href='{:U("Staff/edit",array("staff_id"=>$vo["staff_id"]))}'>{:L('EDIT')}</a> |&ndash;&gt;-->
+                    <!--<a href="{:U('Sending/expressPrintInfo',array('id'=>$vo['id']))}">{:L('PRINT')}</a>-->
+                    <!--</td>-->
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>{:L('TABLE_NUM')}</th>
+                <th>{:L('SERIAL_NUMBER')}</th>
+                <th>{:L("SEND_TIME")}</th>
+                <th>{:L("EXPRESS_TYPE")}</th>
+                <th>{:L("EXPRESS_COMPANY")}</th>
+                <th>{:L("EXPRESS_NUMBER")}</th>
+                <th>{:L("ITEM_QUANTITY")}</th>
+                <th>{:L("SENDING_COMMENT")}</th>
+                <th>{:L("SIGN")}</th>
+
+            </tr>
+            </tfoot>
+        </table>
+        <!--<div class="pagination">{$page}</div>-->
+
+        <!--<div class="table-actions">-->
+            <!--<button class="btn btn-primary btn-small js-ajax-submit" type="button"-->
+                    <!--onclick="sendPackage(this)"-->
+                    <!--data-action="{:U('Sending/createSendingListPrint')}">{:L('CHOOSE')}{:L('PRINT')}-->
+            <!--</button>-->
+        <!--</div>-->
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jqprint/jquery.jqprint-0.3.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jqprint/jquery-migrate-1.2.1.min.js"></script>
+<script>
+
+    function printTable() {
+        var printPage = $("#printTable");
+        printPage.jqprint();
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('Seat/index')}">{:L('ADMIN_SEAT_INDEX')}</a></li>
+			<li ><a href="{:U('Seat/add')}">{:L('ADMIN_SEAT_ADD')}</a></li>
+		    <li class="active"><a href="{:U('Seat/batch_add')}">{:L('ADMIN_SEAT_BATCH_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Seat/batch_add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label style="margin-left:100px" class="form-group">
+						{:L('BUILDING')}:<span style="margin-left:30px;">{$pre.b_pre}</span>
+						<input type="text" name="building" style="width:40px;margin-right:30px" >
+						{:L('FLOOR')}:<span style="margin-left:30px;">{$pre.f_pre}</span>
+						<input type="text" name="floor" style="width:40px;margin-right:30px">
+						{:L('AREA')}:<span style="margin-left:30px;">{$pre.a_pre}</span>
+						<input type="text" name="area" style="width:40px;margin-right:30px">
+						<span class="form-required">*</span>
+					</label>
+				</div>
+				<div class="control-group">
+					<label style="margin-left:100px" class="form-group">
+					{:L('SEAT')}:<span style="margin-left:5px;">{$pre.s_pre}</span>
+					<input type="text" name="seat_start" style="width:40px;margin-right:30px">
+					~
+					<span style="margin-left:32px;">{$pre.s_pre}</span>
+					<input type="text" name="seat_end" style="width:40px;margin-right:30px">
+					<span class="form-required">*</span>
+					</label>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		$(document).ready(function(){
+			$(".js-ajax-form").bootstrapValidator({
+				message: '{:L("IS_NOT_VALID")}',
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+					building: {
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							notEmpty: {
+								message: '{:L("NAME_MUST_B")}'
+							},
+							stringLength: {
+								min: 1,
+								max: 10,
+								message: '{:L("IS_NOT_LENGTH")}'
+							},
+							regexp: {
+								regexp: /^[a-zA-Z0-9]+$/,
+								message: '{:L("IS_VALID")}'
+							}
+						}
+					},
+					floor: {
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							notEmpty: {
+								message: '{:L("NAME_MUST_F")}'
+							},
+							stringLength: {
+								min: 1,
+								max: 10,
+								message: '{:L("IS_NOT_LENGTH")}'
+							},
+							regexp: {
+								regexp: /^[a-zA-Z0-9]+$/,
+								message: '{:L("IS_VALID")}'
+							}
+						}
+					},
+					area: {
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							notEmpty: {
+								message: '{:L("NAME_MUST_A")}'
+							},
+							stringLength: {
+								min: 1,
+								max: 10,
+								message: '{:L("IS_NOT_LENGTH")}'
+							},
+							regexp: {
+								regexp: /^[a-zA-Z0-9]+$/,
+								message: '{:L("IS_VALID")}'
+							}
+						}
+					},
+					seat_start: {
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							notEmpty: {
+								message: '{:L("NAME_MUST_S")}'
+							},
+							stringLength: {
+								min: 1,
+								max: 10,
+								message: '{:L("IS_NOT_LENGTH")}'
+							},
+							regexp: {
+								regexp: /^[0-9]+$/,
+								message: '{:L("IS_NOT_NUM")}'
+							}
+						}
+					},
+					seat_end: {
+						message: '{:L("IS_NOT_VALID")}',
+						validators: {
+							notEmpty: {
+								message: '{:L("NAME_MUST_S")}'
+							},
+							stringLength: {
+								min: 1,
+								max: 10,
+								message: '{:L("IS_NOT_LENGTH")}'
+							},
+							regexp: {
+								regexp: /^[0-9]+$/,
+								message: '{:L("IS_NOT_NUM")}'
+							}
+						}
+					},
+				}
+			});
+
+
+			/*   $(".js-ajax-form").bootstrapValidator().on('success.form.bv', function(e) {
+			 // 阻止默认事件提交
+			 e.preventDefault();
+			 });*/
+
+			var form = $(".js-ajax-form");
+			form.submit(function(ev){ev.preventDefault();});
+
+			$('.js-ajax-submit').on("click", function(e){e.preventDefault();
+				var bootstrapValidator = form.data('bootstrapValidator');
+
+				if (bootstrapValidator) {
+					// 修复记忆的组件不验证
+					bootstrapValidator.validate();
+
+					if (!bootstrapValidator.isValid()) {
+
+						return false;
+					}else{
+						//$('.js-ajax-submit').removeAttr('disabled');
+						form.submit();
+					}
+
+				}
+
+			});
+
+			/*
+			 form.bootstrapValidator().on('success.form.bv', function(e) {
+			 // 阻止默认事件提交
+			 e.preventDefault();
+			 });
+			 */
+
+
+		});
+	</script>
+</body>
+</html>

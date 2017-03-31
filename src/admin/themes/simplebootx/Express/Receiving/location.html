@@ -1,0 +1,298 @@
+<admintpl file="header" />
+
+<style>
+    .radio-label {
+        display: inline-block;
+    }
+    .received-div {
+        display: inline-block;
+        margin: 2px 10px 2px 2px;
+    }
+    #checkStaff{
+        margin-top: -10px;
+        margin-left: 20px;
+    }
+    form textarea,input[type=text] {
+        margin-bottom: 0px;
+    }
+    .table td{
+        padding: 2px 2px 2px 8px;;
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:U('Receiving/location')}">{:L('LOCATE_INBOX')}</a></li>
+    </ul>
+    <form id="search_receiving" style="margin-top: -20px;" method="post" class="form-horizontal" action="{:U('Receiving/add_post')}">
+        <fieldset>
+            <div class="control-group">
+                <div class="received-div">
+                    <label class="radio-label">{:L('EXPRESS_NUMBER')}:</label>
+                    <input id="express_number" type="text">
+                </div>
+                <div class="received-div">
+                    <label class="radio-label">{:L('JOB_NO')} :</label>
+                    <input id="job_no" type="text" value="{$job_no}">
+                </div>
+                <a class="btn btn-primary" id="search_received" href="javascript:;" data-url="{:U('Receiving/search_received')}">{:L('SEARCH')}</a>
+                <div>
+                    <div class="received-div">
+                        <label class="radio-label">{:L('EXPRESS_ATTR')}:</label>
+                        <input id="express_attr" type="text" readonly>
+                    </div>
+
+                    <div class="received-div">
+                        <label class="radio-label">{:L('EXPRESS_COMPANY')}:</label>
+                        <input id="express_name" type="text" readonly>
+                    </div>
+                    <div class="received-div">
+                        <label class="radio-label">{:L('INSIDE_AND_OUTSIDE')}:</label>
+                        <input id="inside_and_outside" type="text" readonly>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <form style="margin-top: -34px;" method="post" id="location_form" action="{:U('Receiving/location_post')}">
+        <table class="table table-hover table-bordered">
+            <tr><td colspan="6">{:L('RECIPIENT_INFORMATION')}</td></tr>
+            <tr>
+                <td>{:L('CONTACT_NAME')}</td>
+                <td colspan="3">
+                    <input type="text" readonly name="staff_name" id="staff_name">
+                    <a class="btn btn-primary" id="checkStaff">
+                        {:L('CHECK_USER')}
+                    </a>
+                    <input type="hidden" name="staff_id" id="staff_id">
+                    <input type="hidden" name="staff_department_id" id="staff_department_id">
+                    <input type="hidden" name="seat_id" id="seat_id">
+                </td>
+                <td>{:L('DEPARTMENT')}</td>
+                <td><input type="text" readonly name="staff_department" id="staff_department"></td>
+            </tr>
+            <tr>
+                <td>{:L('CONTACT_MOBILE')}</td>
+                <td><input type="text" name="staff_mobile" id="staff_mobile"></td>
+                <td>{:L('CONTACT_TEL')}</td>
+                <td><input type="text" name="staff_tel" id="staff_tel"></td>
+                <td>{:L('SEAT_NO')}</td>
+                <td><input type="text" name="seat_number" id="seat_number"></td>
+            </tr>
+            <tr>
+                <td>{:L('REMARK')}</td>
+                <td colspan="5"><textarea style="width: 80%" rows="1" name="remark" id="remark"></textarea></td>
+            </tr>
+        </table>
+        <table class="table table-hover table-bordered" style="margin-top: -20px;">
+            <tr><td colspan="6">{:L('SENDER_INFORMATION')}</td></tr>
+            <tr>
+                <td>{:L('CONTACT_NAME')}</td>
+                <td><input type="text" name="send_name" id="send_name"></td>
+                <td>{:L('CONTACT_MOBILE')}</td>
+                <td><input type="text" name="send_mobile" id="send_mobile"></td>
+                <td>{:L('CONTACT_TEL')}</td>
+                <td><input type="text" name="send_tel" id="send_tel"></td>
+            </tr>
+            <tr>
+                <td>{:L('SEND_ADDRESS')}</td>
+                <td colspan="5">
+                    <select id="send_region_id" mailroom_regions name="send_region_id" data-regions=""></select>
+                    <br>
+                    <input type="text" id="send_detail_addr" name="send_detail_addr" placeholder="{:L('DETAIL_ADDRESS')}" style="width: 300px;">
+                </td>
+            </tr>
+            <tr>
+                <td>{:L('COMPANY')}</td>
+                <td colspan="4"><input type="text" id="send_company" name="send_company" style="width: 70%;"></td>
+                <td>
+                    <a class="btn btn-primary" id="location_staff">{:L('SAVE')}</a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-primary" id="location_staff_next">{:L('SAVE_NEXT')}</a>
+                </td>
+            </tr>
+        </table>
+        <table class="table table-hover table-bordered" style="margin-top: -20px;">
+            <thead>
+            <tr>
+                <th>{:L('EXPRESS_NUMBER')}</th>
+                <th>{:L('JOB_NO')}</th>
+                <th >{:L('EXPRESS_ATTR')}</th>
+                <th >{:L('EXPRESS_COMPANY')}</th>
+                <th>{:L('PACKAGE_NUMBER')}</th>
+                <th>{:L('INSIDE_AND_OUTSIDE')}</th>
+                <th width="120">{:L('CREATE_TIME')}</th>
+            </tr>
+            </thead>
+            <tbody id="receiving_list">
+
+            </tbody>
+        </table>
+
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+
+<script src="__PUBLIC__/js/region_data.js"></script>
+<script src="__PUBLIC__/js/regions_plugin.js"></script>
+</body>
+
+<script>
+    $(function() {
+        $("form").submit(function(ev){ev.preventDefault();});
+
+        function clearReceived() {
+            var tmp = '';
+            $("#receiving_list").html(tmp);
+            $("#express_attr").val(tmp);
+            $("#express_name").val(tmp);
+            $("#inside_and_outside").val(tmp);
+        }
+        function clearForm() {
+            $("#location_form").find("input,select").val("");
+            $("#search_receiving").find("input,select").val("");
+        }
+
+        function searchReceivedFun() {
+            var url = $("#search_received").attr("data-url");
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                method: 'post',
+                data: {
+                    airway_bill_no: $("#express_number").val(),
+                    job_no: $("#job_no").val()
+                },
+                success: function (data) {
+                    if(data.status) {
+                        data.url && (window.location.href = data.url);
+                        if(data.info.page) {
+                            $("#receiving_list").html(data.info.page);
+                            var tmpData = data.info.data;
+                            if(tmpData) {
+                                $("#express_number").val(tmpData.airway_bill_no);
+                                $("#express_attr").val(tmpData.express_attr);
+                                $("#express_name").val(tmpData.express_name);
+                                $("#inside_and_outside").val(tmpData.inside_and_outside);
+                                $("#staff_id").val(tmpData.staff_id);
+                                $("#staff_department_id").val(tmpData.staff_department_id);
+                                $("#seat_id").val(tmpData.seat_id);
+                                $("#staff_department").val(tmpData.staff_department);
+                                $("#staff_mobile").val(tmpData.staff_mobile);
+                                $("#staff_tel").val(tmpData.staff_tel);
+                                $("#staff_name").val(tmpData.staff_name);
+                                $("#seat_number").val(tmpData.seat_number);
+                                $("#remark").val(tmpData.remark);
+                                $("#send_name").val(tmpData.send_name);
+                                $("#send_mobile").val(tmpData.send_mobile);
+                                $("#send_tel").val(tmpData.send_tel);
+                                $("#send_detail_addr").val(tmpData.send_detail_addr);
+                                $("#send_region_id").attr("data-regions", tmpData.send_region_id);
+                                $("#send_company").val(tmpData.send_company);
+                            }// end if
+
+                        } else {
+                            clearReceived();
+                            data.info && data.info.msg && Wind.use("artDialog", "iframeTools", function() {
+                                art.dialog.tips(data.info.msg, 1.5);
+                            });
+                        }
+
+                    } else {
+                        Wind.use("artDialog", "iframeTools", function() {
+                            art.dialog.tips(data.info, 1.5);
+                        });
+                    }
+                }// end success function
+            });
+        }
+        $("#job_no").on("keydown",function(e){
+            if(e.keyCode == 13) {
+                var form = $("#search_receiving");
+                form.find("input[name=next_step]").remove();
+                searchReceivedFun();
+            }
+        });
+
+        if($("#job_no").val()) searchReceivedFun();
+
+        // add event
+        $("#search_received").on("click",searchReceivedFun);
+
+        function locationStaffFun() {
+            var form = $("#location_form");
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                dataType: "json",
+                method: form.attr("method"),
+                success: function(data) {
+                    if(data.status) {
+                        data.url && (window.location.href = data.url);
+                        clearForm();
+                        clearReceived();
+                    } else {
+                        Wind.use("artDialog", "iframeTools", function() {
+                            art.dialog.tips(data.info, 1.5);
+                        });
+                    }
+                }
+            });// end ajax
+        }// end locationStaffFun
+
+        $("#location_staff").on("click", function() {
+            var form = $("#receivingForm");
+            form.append('<input name="next_step" value="next_step" type="hidden">');
+            locationStaffFun();
+        });
+
+        // 设置员工信息
+        function setStaff(obj) {
+            obj = eval( '(' + obj + ')' );
+
+            $("#staff_name").val(obj.zn_name);
+            $("#staff_id").val(obj.staff_id);
+            $("#staff_mobile").val(obj.mobile);
+            $("#staff_tel").val(obj.extension_no);
+            $("#staff_department_id").val(obj.department_id);
+            $("#staff_department").val(obj.department_name);
+            $("#seat_number").val(obj.seat_detail);
+            $("#seat_id").val(obj.seat_id);
+        }
+
+        // 选择员工
+        $("#checkStaff").on("click", function () {
+            Wind.use('artDialog', 'iframeTools', function () {
+                var url = "{:U('SystemUtil/index')}";
+                art.dialog.open(url, {
+                    title: '{:L("CHECK_USER")}',
+                    lock: true,
+                    height: 400,
+                    width: "80%",
+                    // 在open()方法中，init会等待iframe加载完毕后执行
+                    init: function () {
+                        var iframe = this.iframe.contentWindow;
+                        var top = art.dialog.top;// 引用顶层页面window对象
+                    },
+                    ok: function () {
+                        var iframe = this.iframe.contentWindow;
+                        if (!iframe.document.body) {
+                            art.dialog.tips('Loading......', 1.5);
+                            return false;
+                        }
+
+                        // 获取iframe嵌套内容
+                        var staff_json = iframe.document.getElementById('staff_json').value;
+                        setStaff(staff_json);
+                    },
+                    cancel: true
+                });
+            });
+
+        });// end checkStaff
+    });
+</script>
+</html>
