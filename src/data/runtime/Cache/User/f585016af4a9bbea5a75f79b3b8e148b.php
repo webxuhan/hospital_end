@@ -15,8 +15,8 @@
 				<img src="/hospital_end/src/public/images/dbnav.png" alt=""><span>15111511431电话预约</span>
 			</p>
 			<p class="dbnav_context_right" id="isLogin">欢迎来到山西省预约挂号平台 请
-				<a href="login.html" class="db_login">登录</a>
-				<a href="register.html" class="db_register">注册</a>
+				<a href="<?php echo U('Login/index');?>" class="db_login">登录</a>
+				<a href="<?php echo U('Register/index');?>" class="db_register">注册</a>
 			</p>
 		</div>
 	</div>
@@ -41,11 +41,11 @@
 		<div class="index_nav">
 			<ul class="index_nav_ul">
 				<li class="index_nav_lic">全部科室</li>
-				<li><a href="diseaseRegistered.html">按疾病挂号</a></li>
-				<li><a href="doctorRegistered.html">按医生挂号</a></li>
-				<li class="nav_color"><a href="visitTheTable.html">医生出诊表</a></li>
+				<li><a href="<?php echo U('Xing/diseaseRegistered');?>">按疾病挂号</a></li>
+				<li><a href="<?php echo U('Xing/doctorRegistered');?>">按医生挂号</a></li>
+				<li class="nav_color"><a href="<?php echo U('Xing/visitTheTable');?>">医生出诊表</a></li>
 				<li><a href="#">最新公告</a></li>
-				<li class="personalCenter"><a href="login.html">个人中心</a></li>
+				<li class="personalCenter"><a href="<?php echo U('Xing/login');?>">个人中心</a></li>
 			</ul>
 		</div>
 	</div>
@@ -60,6 +60,21 @@
 							<a href="#">冠心病</a>
 							<a href="#">高血压</a>
 						</span>
+						<div class="index_top_showvalue" style="display:none">
+							<div class="idnex_top_con_zwc">
+								<div class="index_top_con_w">
+									<p class="index_top_hdvalue_p">
+										<span>口腔科</span>
+									</p>
+									<ul class="index_top_hdvalue_ul">
+										<li><a href="#">口腔科</a><i></i></li>
+										<li><a href="#">口腔科</a><i></i></li>
+										<li><a href="#">口腔科</a><i></i></li>
+										<li><a href="#">口腔科</a><i></i></li>
+									</ul>
+								</div>
+							</div>
+						</div>
 					</li>
 					<li><i class="i_t_s1"></i>
 						<span><b>内科</b>
@@ -121,7 +136,7 @@
 					<span class="i_t_s13"><a href="#" class="index_top_a_none">其他科室</a></span>
 				</p>
 			</div>
-			<div class="index_top_hdvalue" style="position:absolute;left:0;display:none">
+		<!-- 	<div class="index_top_hdvalue" style="position:absolute;left:0;display:none">
 				<div class="index_top_con_st">
 					<div class="index_top_con_zwc">
 						<div class="index_top_con_w">
@@ -144,9 +159,9 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<!-- 左导航详情 -->
-			<div class="index_top_showvalue" style="display:none">
+		<!-- 	<div class="index_top_showvalue" style="display:none">
 				<div class="idnex_top_con_zwc">
 					<div class="index_top_con_w">
 						<p class="index_top_hdvalue_p">
@@ -160,7 +175,7 @@
 						</ul>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<!-- 轮播图 -->
 		<div class="index_jdt">

@@ -3,24 +3,24 @@
 <head>
 	<meta charset="UTF-8">
 	<title>山西省医院挂号平台</title>
-	<link rel="stylesheet" href="css/index.css">
-	<link rel="shortcut icon" href="images/favicon.ico" >
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+	<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" >
 </head>
 <body>
 	<!-- 头部 -->
 	<div class="dbnav">
 		<div class="dbnav_context">
 			<p class="dbnav_context_left">
-				<img src="images/dbnav.png" alt=""><span>15111511431电话预约</span>
+				<img src="__PUBLIC__/images/dbnav.png" alt=""><span>15111511431电话预约</span>
 			</p>
 			<p class="dbnav_context_right" id="isLogin">欢迎来到山西省预约挂号平台 请
-				<a href="login.html" class="db_login">登录</a>
-				<a href="register.html" class="db_register">注册</a>
+				<a href="{:U('Login/index')}" class="db_login">登录</a>
+				<a href="{:U('Register/index')}" class="db_register">注册</a>
 			</p>
 		</div>
 	</div>
 	<div class="top">
-		<div class="top_left"><a href=""><img src="images/logo.png" alt=""></a></div>
+		<div class="top_left"><a href=""><img src="__PUBLIC__/images/logo.png" alt=""></a></div>
 		<div class="top_search">
 			<form action="" method="get" name="search">
 				<div class="option"><span>疾病</span></div>
@@ -34,19 +34,19 @@
 	<div class="nav">
 		<div class="nav_box">
 			<ul class="nav_ul">
-				<li><a href="index.html">首页</a></li>
-				<li class="nav_color"><a href="diseaseRegistered.html">按疾病挂号</a></li>
-				<li><a href="doctorRegistered.html">按医生挂号</a></li>
-				<li><a href="visitTheTable.html">医生出诊表</a></li>
+				<li><a href="{:U('Xing/index')}">首页</a></li>
+				<li class="nav_color"><a href="{:U('Xing/diseaseRegistered')}">按疾病挂号</a></li>
+				<li><a href="{:U('Xing/doctorRegistered')}">按医生挂号</a></li>
+				<li><a href="{:U('Xing/visitTheTable')}">医生出诊表</a></li>
 				<li><a href="#">最新公告</a></li>
-				<li class="personalCenter"><a href="login.html">个人中心</a></li>
+				<li class="personalCenter"><a href="{:U('Xing/personalCenter')}">个人中心</a></li>
 			</ul>
 		</div>
 	</div>
 	<!-- 头部结束 -->
 	<!-- 主内容区 -->
 	<div class="ksghny_top">
-		<h3>心脏病<a href="diseaseRegistered.html">选择其他疾病</a></h3>
+		<h3>心脏病<a href="{:U('Xing/diseaseRegistered')}">选择其他疾病</a></h3>
 	</div>
 	<div class="dissease_introduce">
 		<span>病理介绍</span>
@@ -57,7 +57,7 @@
 	<div class="doctorBox">
 		<div class="doctorInfo">
 			<div class="leftInfo">
-				<div class="doctorImg"><img src="images/doctor_1.jpg" alt=""></div>
+				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
 				<div class="doctorIntroduce">
 					<span class="doctorName">申长礼</span>
 					<span class="doctorTitle">国家特贴主任医师</span>
@@ -80,7 +80,7 @@
 		</div>
 		<div class="doctorInfo">
 			<div class="leftInfo">
-				<div class="doctorImg"><img src="images/doctor_1.jpg" alt=""></div>
+				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
 				<div class="doctorIntroduce">
 					<span class="doctorName">申长礼</span>
 					<span class="doctorTitle">国家特贴主任医师</span>
@@ -103,7 +103,7 @@
 		</div>
 		<div class="doctorInfo">
 			<div class="leftInfo">
-				<div class="doctorImg"><img src="images/doctor_1.jpg" alt=""></div>
+				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
 				<div class="doctorIntroduce">
 					<span class="doctorName">申长礼</span>
 					<span class="doctorTitle">国家特贴主任医师</span>
@@ -126,7 +126,7 @@
 		</div>
 		<div class="doctorInfo">
 			<div class="leftInfo">
-				<div class="doctorImg"><img src="images/doctor_1.jpg" alt=""></div>
+				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
 				<div class="doctorIntroduce">
 					<span class="doctorName">申长礼</span>
 					<span class="doctorTitle">国家特贴主任医师</span>
@@ -149,7 +149,7 @@
 		</div>
 		<div class="doctorInfo">
 			<div class="leftInfo">
-				<div class="doctorImg"><img src="images/doctor_1.jpg" alt=""></div>
+				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
 				<div class="doctorIntroduce">
 					<span class="doctorName">申长礼</span>
 					<span class="doctorTitle">国家特贴主任医师</span>
@@ -165,12 +165,80 @@
 					<p>就诊总量</p>
 				</div>
 				<div class="infoRgiht">
-					<div><span class="referencePrice">参考费用:</span><span>40.50</span>元</div>
+					<div><span>参考费用:</span><span>40.50</span>元</div>
 					<div class="subscribeStatus">已约满</div>
 				</div>
 			</div>
 		</div>
-	</div>
+		<div class="doctorInfo">
+			<div class="leftInfo">
+				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
+				<div class="doctorIntroduce">
+					<span class="doctorName">申长礼</span>
+					<span class="doctorTitle">国家特贴主任医师</span>
+					<span>山西省医院</span>
+					<span>内科</span>
+				</div>
+			</div>
+			<div class="rightInfo">
+				<div class="infoLeft">
+					<span>11111</span>
+					<p>预约总量</p>
+					<span>10000</span>
+					<p>就诊总量</p>
+				</div>
+				<div class="infoRgiht">
+					<div><span>参考费用:</span><span>40.50</span>元</div>
+					<div class="subscribeStatus">已约满</div>
+				</div>
+			</div>
+		</div>
+	</div><div class="doctorInfo">
+			<div class="leftInfo">
+				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
+				<div class="doctorIntroduce">
+					<span class="doctorName">申长礼</span>
+					<span class="doctorTitle">国家特贴主任医师</span>
+					<span>山西省医院</span>
+					<span>内科</span>
+				</div>
+			</div>
+			<div class="rightInfo">
+				<div class="infoLeft">
+					<span>11111</span>
+					<p>预约总量</p>
+					<span>10000</span>
+					<p>就诊总量</p>
+				</div>
+				<div class="infoRgiht">
+					<div><span>参考费用:</span><span>40.50</span>元</div>
+					<div class="subscribeStatus">已约满</div>
+				</div>
+			</div>
+		</div>
+		<div class="doctorInfo">
+			<div class="leftInfo">
+				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
+				<div class="doctorIntroduce">
+					<span class="doctorName">申长礼</span>
+					<span class="doctorTitle">国家特贴主任医师</span>
+					<span>山西省医院</span>
+					<span>内科</span>
+				</div>
+			</div>
+			<div class="rightInfo">
+				<div class="infoLeft">
+					<span>11111</span>
+					<p>预约总量</p>
+					<span>10000</span>
+					<p>就诊总量</p>
+				</div>
+				<div class="infoRgiht">
+					<div><span>参考费用:</span><span>40.50</span>元</div>
+					<div class="subscribeStatus">已约满</div>
+				</div>
+			</div>
+		</div>
 	<div class="paging_disease_gh">
 		<div id="address-paging" class="tcdPageCode"></div>
 	</div>
@@ -179,8 +247,8 @@
 		<div class="templatemo_footer">Copyright © 2048 <a href="#">山西省医院</a> | Template from wuxin</div>
 	</div>
 </body>
-<script src="js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="js/jquery.page.js"></script>
+<script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.page.js"></script>
 <script>
 	$(function(){
 		$("#address-paging").createPage({

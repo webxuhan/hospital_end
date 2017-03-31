@@ -203,7 +203,7 @@ span.disableBtn input{cursor: not-allowed}
     min-height: 383px; 
     overflow: hidden;
 }
-.index_top_nav li {
+.index_top_nav>li {
     padding-left: 8px;
     cursor: pointer;
     width: 182px;

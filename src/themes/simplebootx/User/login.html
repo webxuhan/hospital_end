@@ -3,24 +3,24 @@
 <head>
 	<meta charset="UTF-8">
 	<title>山西省医院挂号平台</title>
-	<link rel="stylesheet" href="css/index.css">
-	<link rel="shortcut icon" href="images/favicon.ico" >
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+	<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" >
 </head>
 <body>
 	<!-- 头部 -->
 	<div class="dbnav">
 		<div class="dbnav_context">
 			<p class="dbnav_context_left">
-				<img src="images/dbnav.png" alt=""><span>15111511431电话预约</span>
+				<img src="__PUBLIC__/images/dbnav.png" alt=""><span>15111511431电话预约</span>
 			</p>
 			<p class="dbnav_context_right" id="isLogin">欢迎来到山西省预约挂号平台 请
-				<a href="login.html" class="db_login">登录</a>
-				<a href="register.html" class="db_register">注册</a>
+				<a href="{:U('Login/index')}" class="db_login">登录</a>
+				<a href="{:U('Register/index')}" class="db_register">注册</a>
 			</p>
 		</div>
 	</div>
 	<div class="top">
-		<div class="top_left"><a href=""><img src="images/logo.png" alt=""></a></div>
+		<div class="top_left"><a href=""><img src="__PUBLIC__/images/logo.png" alt=""></a></div>
 		<div class="top_search">
 			<form action="" method="get" name="search">
 				<div class="option"><span>疾病</span></div>
@@ -34,12 +34,12 @@
 	<div class="nav">
 		<div class="nav_box">
 			<ul class="nav_ul">
-				<li><a href="index.html">首页</a></li>
-				<li><a href="diseaseRegistered.html">按疾病挂号</a></li>
-				<li><a href="doctorRegistered.html">按医生挂号</a></li>
-				<li><a href="visitTheTable.html">医生出诊表</a></li>
+				<li><a href="{:U('Xing/index')}">首页</a></li>
+				<li><a href="{:U('Xing/diseaseRegistered')}">按疾病挂号</a></li>
+				<li><a href="{:U('Xing/doctorRegistered')}">按医生挂号</a></li>
+				<li><a href="{:U('Xing/visitTheTable')}">医生出诊表</a></li>
 				<li><a href="#">最新公告</a></li>
-				<li class="personalCenter nav_color"><a href="personalCenter.html">个人中心</a></li>
+				<li class="personalCenter nav_color"><a href="{:U('Xing/personalCenter')}">个人中心</a></li>
 			</ul>
 		</div>
 	</div>
@@ -66,8 +66,8 @@
 			</form>
 		</div>
 		<div class="rightLogin">
-			<p><span>还没有注册？</span><a href="register.html" class="no_register">注册</a></p>
-			<div class="loginImgBox"><img src="images/reg_ad.jpg" alt=""></div>
+			<p><span>还没有注册？</span><a href="{:U('Register/index')}" class="no_register">注册</a></p>
+			<div class="loginImgBox"><img src="__PUBLIC__/images/reg_ad.jpg" alt=""></div>
 		</div>
 	</div>
 	<!-- 底部 -->
@@ -75,8 +75,8 @@
 		<div class="templatemo_footer">Copyright © 2048 <a href="#">山西省医院</a> | Template from wuxin</div>
 	</div>
 </body>
-<script src="js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="js/jquery.page.js"></script>
+<script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.page.js"></script>
 <script>
 	$(function(){
 		$(".agreementHead").on("click",function(){

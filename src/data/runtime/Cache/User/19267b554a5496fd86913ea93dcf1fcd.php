@@ -1,152 +1,92 @@
 <?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
-<html style="height:100%">
+<html lang="en">
 <head>
-<title><?php echo ($site_name); ?></title>
-<meta name="keywords" content="<?php echo ($site_seo_keywords); ?>" />
-<meta name="description" content="<?php echo ($site_seo_description); ?>">
-<meta name="author" content="ThinkCMF">
-<link rel="stylesheet" href="/hospital_end/src/public/css/index.css">
+	<meta charset="UTF-8">
+	<title>山西省医院挂号平台</title>
+	<link rel="stylesheet" href="/hospital_end/src/public/css/index.css">
+	<link rel="shortcut icon" href="/hospital_end/src/public/images/favicon.ico" >
 </head>
-<body style="height:100%">
-	<div class="login-index clearfix">
-		<div class="container tc-main">
-			<div class="index-logobox">
-				<img src="/hospital_end/src/public/images/Login-logo.png" alt="">111
-			</div>
-			<div class="row">
-					<p class="text-center"><?php echo L("STAFF_LOGIN");?></p>
-					<form class="form-horizontal js-ajax-form" action="<?php echo U('user/login/dologin');?>" method="post">
-						<div class="control-group firstDiv">
-							<input type="text" id="input_username" name="username" placeholder="<?php echo L('MOBILE_MAIL');?>" class="span4" onkeyup="this.value=this.value.replace(/[^\x00-\xff]/g, '')">
-						</div>
-
-						<div class="control-group">
-							<input type="password" id="input_password" name="password" placeholder="<?php echo L('PASSWORD');?>" class="span4" onkeyup="this.value=this.value.replace(/[^\x00-\xff]/g, '')">
-						</div>
-
-						<div class="control-group">
-							<div class="span4 verifyBox">
-								<input type="text" id="input_verify" name="verify"  placeholder="<?php echo L('VERIFY_CODE');?>" style="width:40%;" required maxlength="4" onkeyup="this.value=this.value.replace(/[^\x00-\xff]/g, '')">
-								<?php echo sp_verifycode_img('length=4&font_size=14&width=100&height=34&charset=2345678&use_noise=1&use_curve=0');?>
-							</div>
-							
-						</div>
-
-						<div class="control-group loginBtn">
-							<button class="btn btn-primary js-ajax-submit span4" type="submit"><?php echo L("LOGIN");?></button>
-						</div>
-
-						<div class="control-group" style="text-align: center;">
-							<ul class="inline">
-								<!-- <li><a href="<?php echo leuu('user/register/index');?>">现在注册</a></li> -->
-								<!-- <li><a href="<?php echo U('user/login/forgot_password');?>">忘记密码</a></li> -->
-							</ul>
-						</div>
-					</form>
-				</div>
+<body>
+	<!-- 头部 -->
+	<div class="dbnav">
+		<div class="dbnav_context">
+			<p class="dbnav_context_left">
+				<img src="/hospital_end/src/public/images/dbnav.png" alt=""><span>15111511431电话预约</span>
+			</p>
+			<p class="dbnav_context_right" id="isLogin">欢迎来到山西省预约挂号平台 请
+				<a href="<?php echo U('Login/index');?>" class="db_login">登录</a>
+				<a href="<?php echo U('Register/index');?>" class="db_register">注册</a>
+			</p>
 		</div>
 	</div>
-	
-	<!-- /container -->
-
-	<script type="text/javascript">
-//全局变量
-var GV = {
-    ROOT: "/hospital_end/src/",
-    WEB_ROOT: "/hospital_end/src/",
-    JS_ROOT: "public/js/"
-};
-</script>
-   <!-- Placed at the end of the document so the pages load faster -->
-   <script src="/hospital_end/src/public/js/jquery.js"></script>
-   <script src="/hospital_end/src/public/js/wind.js"></script>
-   <script src="/hospital_end/src/public/js/noty/noty.js"></script>
-   <script src="/hospital_end/src/themes/simplebootx/Public/assets/simpleboot/bootstrap/js/bootstrap.min.js"></script>
-   <script src="/hospital_end/src/public/js/frontend.js"></script>
-<script>
-$(function(){
-	$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
-	
-	$("#main-menu li.dropdown").hover(function(){
-		$(this).addClass("open");
-	},function(){
-		$(this).removeClass("open");
-	});
-	
-	$.post("<?php echo U('user/index/is_login');?>",{},function(data){
-		if(data.status==1){
-			if(data.user.avatar){
-				$("#main-menu-user .headicon").attr("src",data.user.avatar.indexOf("http")==0?data.user.avatar:"<?php echo sp_get_image_url('[AVATAR]','!avatar');?>".replace('[AVATAR]',data.user.avatar));
-			}
-			
-			$("#main-menu-user .user-nicename").text(data.user.user_nicename!=""?data.user.user_nicename:data.user.user_login);
-			$("#main-menu-user li.login").show();
-			
-		}
-		if(data.status==0){
-			$("#main-menu-user li.offline").show();
-		}
-		
-		/* $.post("<?php echo U('user/notification/getLastNotifications');?>",{},function(data){
-			$(".nav .notifactions .count").text(data.list.length);
-		}); */
-		
-	});	
-	;(function($){
-		$.fn.totop=function(opt){
-			var scrolling=false;
-			return this.each(function(){
-				var $this=$(this);
-				$(window).scroll(function(){
-					if(!scrolling){
-						var sd=$(window).scrollTop();
-						if(sd>100){
-							$this.fadeIn();
-						}else{
-							$this.fadeOut();
-						}
-					}
-				});
-				
-				$this.click(function(){
-					scrolling=true;
-					$('html, body').animate({
-						scrollTop : 0
-					}, 500,function(){
-						scrolling=false;
-						$this.fadeOut();
-					});
-				});
-			});
-		};
-	})(jQuery); 
-	
-	$("#backtotop").totop();
-	
-	
-});
-</script>
-
-
+	<div class="top">
+		<div class="top_left"><a href=""><img src="/hospital_end/src/public/images/logo.png" alt=""></a></div>
+		<div class="top_search">
+			<form action="" method="get" name="search">
+				<div class="option"><span>疾病</span></div>
+				<div class="sbox"><input type="text" placeholder="请输入搜索内容" autocomplete="off"></div>
+				<div class="sbtn">
+					<input type="submit" value="">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="nav">
+		<div class="nav_box">
+			<ul class="nav_ul">
+				<li><a href="<?php echo U('Xing/index');?>">首页</a></li>
+				<li><a href="<?php echo U('Xing/diseaseRegistered');?>">按疾病挂号</a></li>
+				<li><a href="<?php echo U('Xing/doctorRegistered');?>">按医生挂号</a></li>
+				<li><a href="<?php echo U('Xing/visitTheTable');?>">医生出诊表</a></li>
+				<li><a href="#">最新公告</a></li>
+				<li class="personalCenter nav_color"><a href="<?php echo U('Xing/personalCenter');?>">个人中心</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- 头部结束 -->
+	<!-- 主内容区 -->
+	<div class="loginBox">
+		<div class="leftLogin">
+			<form action="">
+				<div class="formgroup">
+					<label for="loginName">登录名:</label>
+					<div class="formInputBox"><input type="text" placeholder="请输入手机号码或者身份证" id="loginName"></div>
+				</div>
+				<div class="formgroup">
+					<label for="userPsd">密码:</label>
+					<div class="formInputBox"><input type="password" placeholder="请输入6-16位字符密码" id="userPsd"></div>
+				</div>
+				<div class="formgroup">
+					<label for="verificationCode">验证码:</label>
+					<div class="formInputBox"><input type="password" placeholder="请输入验证码" id="verificationCode"></div>
+					<img src="" alt="">
+				</div>
+				<div class="formgroup"><a href="" class="psdBack">找回密码</a></div>
+				<div class="loginBtn"><a href="">登录</a></div>
+			</form>
+		</div>
+		<div class="rightLogin">
+			<p><span>还没有注册？</span><a href="<?php echo U('Register/index');?>" class="no_register">注册</a></p>
+			<div class="loginImgBox"><img src="/hospital_end/src/public/images/reg_ad.jpg" alt=""></div>
+		</div>
+	</div>
+	<!-- 底部 -->
+	<div class="index_footer">
+		<div class="templatemo_footer">Copyright © 2048 <a href="#">山西省医院</a> | Template from wuxin</div>
+	</div>
 </body>
+<script src="/hospital_end/src/public/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/hospital_end/src/public/js/jquery.page.js"></script>
 <script>
-$(function(){
-	$("input[name='verify']").on("blur",function(){
-		var verify = $("input[name='verify']").val();
-		if(verify !=""){$("input[name='verify']").removeClass("errorInput");}
-	});
-	$(".btn").on("click",function(){
-		var verify = $("input[name='verify']").val();
-		if(verify == ""){
-			noty({
-				text: "<?php echo L('VERIFY_CODE_NULL');?>",
-	            type:"error",
-	            layout:"center"
-			});
-			$("input[name='verify']").addClass("errorInput");
-		}
-		
-	});
-});
+	$(function(){
+		$(".agreementHead").on("click",function(){
+			var result = $(".agreementContent").css("display");
+			if(result == "none"){
+				 $(".agreementContent").css("display","block");
+			}else{
+				 $(".agreementContent").css("display","none");
+			}
+		})
+	})
 </script>
 </html>
