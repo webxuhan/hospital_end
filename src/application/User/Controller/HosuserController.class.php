@@ -36,6 +36,7 @@ class HosuserController extends AdminbaseController {
 		$count=$hosuser_model->count();
 		$page = $this->page($count, 20);
 		$lists = $hosuser_model
+		->where($where)
 		->order("hosuser_id DESC")
 		->limit($page->firstRow . ',' . $page->listRows)
 		->select();
