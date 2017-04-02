@@ -55,81 +55,29 @@
 		<div class="index_top_left">
 			<div class="index_top_navbar">
 				<ul class="index_top_nav">
+				<foreach name="dept" item="vo" key="k">
 					<li><i class="i_t_s1"></i>
-						<span><b>内科</b>
-							<a href="#">冠心病</a>
-							<a href="#">高血压</a>
+						<span><b>{$vo.bdept_name}</b>
+							<a href="#">{$vo.disease.0.disease_name}</a>
+							<a href="#">{$vo.disease.1.disease_name}</a>
 						</span>
 						<div class="index_top_showvalue" style="display:none">
 							<div class="idnex_top_con_zwc">
 								<div class="index_top_con_w">
 									<p class="index_top_hdvalue_p">
-										<span>口腔科</span>
+										<span>{$vo.bdept_name}</span>
 									</p>
 									<ul class="index_top_hdvalue_ul">
-										<li><a href="#">口腔科</a><i></i></li>
-										<li><a href="#">口腔科</a><i></i></li>
-										<li><a href="#">口腔科</a><i></i></li>
-										<li><a href="#">口腔科</a><i></i></li>
+										<foreach name='vo.disease' item="v">
+										<li><a href="#">{$v.disease_name}</a><i></i></li>
+										</foreach>
 									</ul>
 								</div>
 							</div>
 						</div>
 					</li>
-					<li><i class="i_t_s1"></i>
-						<span><b>内科</b>
-							<a href="#">冠心病</a>
-							<a href="#">高血压</a>
-						</span>
-					</li>
-					<li><i class="i_t_s1"></i>
-						<span><b>内科</b>
-							<a href="#">冠心病</a>
-							<a href="#">高血压</a>
-						</span>
-					</li>
-					<li><i class="i_t_s1"></i>
-						<span><b>内科</b>
-							<a href="#">冠心病</a>
-							<a href="#">高血压</a>
-						</span>
-					</li>
-					<li><i class="i_t_s1"></i>
-						<span><b>内科</b>
-							<a href="#">冠心病</a>
-							<a href="#">高血压</a>
-						</span>
-					</li>
-					<li><i class="i_t_s1"></i>
-						<span><b>内科</b>
-							<a href="#">冠心病</a>
-							<a href="#">高血压</a>
-						</span>
-					</li>
-					<li><i class="i_t_s1"></i>
-						<span><b>内科</b>
-							<a href="#">冠心病</a>
-							<a href="#">高血压</a>
-						</span>
-					</li>
-					<li><i class="i_t_s1"></i>
-						<span><b>内科</b>
-							<a href="#">冠心病</a>
-							<a href="#">高血压</a>
-						</span>
-					</li>
-					<li><i class="i_t_s1"></i>
-						<span><b>内科</b>
-							<a href="#">冠心病</a>
-							<a href="#">高血压</a>
-						</span>
-					</li>
-					<li><i class="i_t_s1"></i>
-						<span><b>内科</b>
-							<a href="#">冠心病</a>
-							<a href="#">高血压</a>
-						</span>
-					</li>
+				</foreach>
+					
 				</ul>
 				<p class="index_top_nav_p">
 					<i class="i_t_qt"></i>

@@ -4,28 +4,35 @@ namespace User\Controller;
 use Common\Controller\HomebaseController;
 
 class IndexController extends HomebaseController {
+
+    protected $dept_model;
+    protected $disease_model;
+    /**
+     * 验证是否开启记录
+     * @author wuxin 2017/02/08
+     */
+    public function _initialize() {
+        parent::_initialize();
+        $this->dept_model = M('BigDepartment');
+        $this->disease_model = M('Disease');
+
+    }
     
     // 前台用户首页 (公开)
 	public function index() {
-	    
-		$id=I("get.id",0,'intval');
-		
-		$users_model=M("Users");
-		
-		$user=$users_model->where(array("id"=>$id))->find();
-		
-// //		if(empty($user)){
-// //			$this->error("查无此人！");
-// //		}
-//         if(sp_is_user_login()){ //已经登录时直接跳到首页
-
-//             header("Location:./index.php?g=user&m=xing");
-// //            $this->error("查无此人！");
-//         } else {
-//             header("Location:./index.php?g=user&m=index");
-//         }
-		print_r($_SESSION);
-		$this->assign($user);
+        //科室疾病关联
+        $list = $this->dept_model
+                     ->limit(10)
+                     ->field('bdept_id,bdept_name')
+                     ->select();
+        foreach( $list as $k => $v ){
+            $disease = $this->disease_model
+                            ->where('bdept_id='.$v['bdept_id'])
+                            ->field('disease_id,disease_name')
+                            ->select();
+            $list[$k]['disease'] = $disease;
+        }
+        $this->assign('dept', $list);
 		$this->display(":index");
 
     }
