@@ -117,7 +117,7 @@ class DoctorinfoController extends AdminbaseController {
 				$_POST['disease_name'] = $bdept['disease_name'];
 				$doc_number = $this->doctor_model
 									->where(array('bdept_id' => $bdept['bdept_id']))
-									->order("bdept_id DESC")
+									->order("doctor_id DESC")
 									->limit(1)
 									->getField("doctor_number");
 				if(empty($doc_number)){

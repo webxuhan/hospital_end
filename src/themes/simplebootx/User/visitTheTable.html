@@ -47,103 +47,62 @@
 	<!-- 主内容区 -->
 	<div class="timeTable">
 		<table cellspacing="0" cellpadding="5">
-			<caption>门诊出诊时间安排</caption>
+			<caption>医生出诊时间安排</caption>
 			<thead>
 				<th>科室</th>
-				<th>姓名</th>
+				<th>姓名（医生编号）</th>
 				<th>周一</th>
 				<th>周二</th>
 				<th>周三</th>
 				<th>周四</th>
 				<th>周五</th>
 				<th>周六</th>
-				<th>周末</th>
+				<th>周日</th>
 			</thead>
 			<tbody>
+			<volist name="doctor" id="vo">
 				<tr>
-					<td rowspan="4">内科</td>
-					<td>武鑫</td>
-					<td>全天</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>下午</td>
-					<td></td>
+					<php>
+						if($vo['docnum'] == 0){
+							$vo['docnum'] = 1;
+						}
+						$oldk = 1;
+					</php>
+					<td rowspan='{$vo.docnum}'>{$vo.bdept_name}</td>
+					<if condition = "!empty($vo['doctor'])">
+					<volist name="vo.doctor" id="v" key="k">
+					<if condition="$k gt $oldk">
+					<tr></if>
+					<td>{$v.doctor_name}（{$v.doctor_number}）</td>
+					<for start='1' end='8' >
+					<td>
+						<php>
+							$a = (string)((2*$i-1).','.(2*$i));
+							$b = (string)(2*$i-1);
+							$c = (string)(2*$i);
+							$d = $v['time_id'];
+							if(strpos($v['time_id'], $a) !== false){
+								$wtime = '全天';
+							}elseif(strpos($v['time_id'], $b) !== false){
+								$wtime = '上午';
+							}elseif(strpos($v['time_id'], $c) !== false){
+								$wtime = '下午';
+							}else{
+								$wtime = "";
+							}
+							$oldk = $k;
+						</php>
+						{$wtime}
+					</td>
+					<if condition="$k gt $oldk">
+					</tr></if>
+					</for>
+					</volist>
+					<else />
+					<td colspan="8">暂无医生信息</td>
+					</if>
 				</tr>
-				<tr>
-					<td>鲁超男</td>
-					<td>全天</td>
-					<td></td>
-					<td></td>
-					<td>全天</td>
-					<td></td>
-					<td>全天</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>吴志鹏</td>
-					<td></td>
-					<td>全天</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>下午</td>
-					<td></td>
-				</tr>
-				<tr>
-					
-					<td>李丹</td>
-					<td></td>
-					<td>全天</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>下午</td>
-					<td></td>
-				</tr>
-					<tr>
-					<td rowspan="4">神经内科</td>
-					<td>武鑫</td>
-					<td>全天</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>下午</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>鲁超男</td>
-					<td>全天</td>
-					<td></td>
-					<td></td>
-					<td>全天</td>
-					<td></td>
-					<td>全天</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>吴志鹏</td>
-					<td></td>
-					<td>全天</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>下午</td>
-					<td></td>
-				</tr>
-				<tr>
-					
-					<td>李丹</td>
-					<td></td>
-					<td>全天</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>下午</td>
-					<td></td>
-				</tr>
+			</volist>
 			</tbody>
 		</table>
 	</div>
@@ -160,10 +119,10 @@
 <script>
 	$(function(){
 		$("#address-paging").createPage({
-	        pageCount:7,
-	        current:1,
+	        pageCount:{$total_page},
+	        current:{$current_page},
 	        backFn:function(page){
-	        	// $('.main-content').load("{:U("Xing/addressCenter")}",{page:page});
+	        	$('body').load("{:U('Xing/visitTheTable')}",{page:page});
 	        }
 	    });
 	});

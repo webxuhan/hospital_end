@@ -51,19 +51,14 @@
 		</div>
 		<div class="ksgh_top_content">
 			<ul class="ksgh_top_ul">
-				<li><a href="#">神经内科</a></li>
-				<li><a href="#">神经内科</a></li>
-				<li><a href="#">神经内科</a></li>
-				<li><a href="#">神经内科</a></li>
-				<li><a href="#">神经内科</a></li>
-				<li><a href="#">神经内科</a></li>
-				<li><a href="#">神经内科</a></li>
-				<li><a href="#">神经内科</a></li>
+				<volist name="hot_dept" id="vo">
+				<li><a href="#">{$vo.bdept_name}</a></li>
+				</volist>
 			</ul>
-			<a href="#" class="ksgh_top_block">展开全部</a>
+			<!-- <a href="#" class="ksgh_top_block">展开全部</a>
 			<ul class="ksgh_top_ul2">
 				<li><a href="#">急诊科</a></li>
-			</ul>
+			</ul> -->
 		</div>
 	</div>
 	<!-- 热门科室结束 -->
