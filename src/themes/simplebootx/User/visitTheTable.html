@@ -45,69 +45,71 @@
 	</div>
 	<!-- 头部结束 -->
 	<!-- 主内容区 -->
-	<div class="timeTable">
-		<table cellspacing="0" cellpadding="5">
-			<caption>医生出诊时间安排</caption>
-			<thead>
-				<th>科室</th>
-				<th>姓名（医生编号）</th>
-				<th>周一</th>
-				<th>周二</th>
-				<th>周三</th>
-				<th>周四</th>
-				<th>周五</th>
-				<th>周六</th>
-				<th>周日</th>
-			</thead>
-			<tbody>
-			<volist name="doctor" id="vo">
-				<tr>
-					<php>
-						if($vo['docnum'] == 0){
-							$vo['docnum'] = 1;
-						}
-						$oldk = 1;
-					</php>
-					<td rowspan='{$vo.docnum}'>{$vo.bdept_name}</td>
-					<if condition = "!empty($vo['doctor'])">
-					<volist name="vo.doctor" id="v" key="k">
-					<if condition="$k gt $oldk">
-					<tr></if>
-					<td>{$v.doctor_name}（{$v.doctor_number}）</td>
-					<for start='1' end='8' >
-					<td>
+	<div class="tableContent">
+		<div class="timeTable">
+			<table cellspacing="0" cellpadding="5">
+				<caption>医生出诊时间安排</caption>
+				<thead>
+					<th>科室</th>
+					<th>姓名（医生编号）</th>
+					<th>周一</th>
+					<th>周二</th>
+					<th>周三</th>
+					<th>周四</th>
+					<th>周五</th>
+					<th>周六</th>
+					<th>周日</th>
+				</thead>
+				<tbody>
+				<volist name="doctor" id="vo">
+					<tr>
 						<php>
-							$a = (string)((2*$i-1).','.(2*$i));
-							$b = (string)(2*$i-1);
-							$c = (string)(2*$i);
-							$d = $v['time_id'];
-							if(strpos($v['time_id'], $a) !== false){
-								$wtime = '全天';
-							}elseif(strpos($v['time_id'], $b) !== false){
-								$wtime = '上午';
-							}elseif(strpos($v['time_id'], $c) !== false){
-								$wtime = '下午';
-							}else{
-								$wtime = "";
+							if($vo['docnum'] == 0){
+								$vo['docnum'] = 1;
 							}
-							$oldk = $k;
+							$oldk = 1;
 						</php>
-						{$wtime}
-					</td>
-					<if condition="$k gt $oldk">
-					</tr></if>
-					</for>
-					</volist>
-					<else />
-					<td colspan="8">暂无医生信息</td>
-					</if>
-				</tr>
-			</volist>
-			</tbody>
-		</table>
-	</div>
-	<div class="paging_timeTable">
-		<div id="address-paging" class="tcdPageCode"></div>
+						<td rowspan='{$vo.docnum}'>{$vo.bdept_name}</td>
+						<if condition = "!empty($vo['doctor'])">
+						<volist name="vo.doctor" id="v" key="k">
+						<if condition="$k gt $oldk">
+						<tr></if>
+						<td>{$v.doctor_name}（{$v.doctor_number}）</td>
+						<for start='1' end='8' >
+						<td>
+							<php>
+								$a = (string)((2*$i-1).','.(2*$i));
+								$b = (string)(2*$i-1);
+								$c = (string)(2*$i);
+								$d = $v['time_id'];
+								if(strpos($v['time_id'], $a) !== false){
+									$wtime = '全天';
+								}elseif(strpos($v['time_id'], $b) !== false){
+									$wtime = '上午';
+								}elseif(strpos($v['time_id'], $c) !== false){
+									$wtime = '下午';
+								}else{
+									$wtime = "";
+								}
+								$oldk = $k;
+							</php>
+							{$wtime}
+						</td>
+						<if condition="$k gt $oldk">
+						</tr></if>
+						</for>
+						</volist>
+						<else />
+						<td colspan="8">暂无医生信息</td>
+						</if>
+					</tr>
+				</volist>
+				</tbody>
+			</table>
+		</div>
+		<div class="paging_timeTable">
+			<div id="address-paging" class="tcdPageCode"></div>
+		</div>
 	</div>
 	<!-- 底部 -->
 	<div class="index_footer">
@@ -117,8 +119,12 @@
 <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/jquery.page.js"></script>
 <script>
+	tableContentHeight($(".tableContent"));
 	$(function(){
-		$("#address-paging").createPage({
+		$(window).resize(function(){ 
+			tableContentHeight($(".tableContent"));
+		});
+		$("#address-paging").createPage({ // 分页
 	        pageCount:{$total_page},
 	        current:{$current_page},
 	        backFn:function(page){
@@ -126,5 +132,12 @@
 	        }
 	    });
 	});
+	function tableContentHeight(data) { //底部footer调整
+		if(data.height() > $(window).height()){
+
+		} else {
+			$(".tableContent").css("height",$(window).height()-266);
+		}
+	}
 </script>
 </html>
