@@ -46,13 +46,13 @@
 	<!-- 头部结束 -->
 	<!-- 主内容区 -->
 	<div class="registerBox">
-		<form action="" class="registerForm">
+		<form action="{:U(user/Register/doregister)}" class="registerForm">
 			<div class="registerHeader"><span>实名注册</span></div>
 			<div class="registerContent">
 				<div class="register_content">
 					<div class="formgroup usename">
 						<span class="name">真实姓名:</span>
-						<div class="formInputBox"><input type="text" id="usename" name="username"></div>
+						<div class="formInputBox"><input type="text" id="usename" name="hosuser_name"></div>
 						<div class="hintBox">
 							<span>
 								<div class="annotation"><font class="red">*</font>请输入您的真实姓名注册</div>
@@ -62,7 +62,7 @@
 					</div>
 					<div class="formgroup">
 						<span class="name">密&emsp;&emsp;码:</span>
-						<div class="formInputBox"><input type="password" id="userPassword" name="userPassword" maxlength="16"></div>
+						<div class="formInputBox"><input type="password" id="userPassword" name="hosuser_password" maxlength="16"></div>
 						<div class="hintBox">
 							<span>
 								<div class="annotation"><font class="red">*</font>请输入6-16位字符，超过16位的按前16位计算</div>
@@ -72,7 +72,7 @@
 					</div>
 					<div class="formgroup verifyPsd">
 						<span class="name">密码确认:</span>
-						<div class="formInputBox"><input type="text" id="verifyPsd" name="verifyPsd" maxlength="16"></div>
+						<div class="formInputBox"><input type="password" id="verifyPsd" maxlength="16"></div>
 						<div class="hintBox">
 							<span>
 								<div class="annotation"><font class="red">*</font>请重复输入上面的密码</div>
@@ -82,7 +82,7 @@
 					</div>
 					<div class="formgroup idNumber">
 						<span class="name">身份证号:</span>
-						<div class="formInputBox"><input type="text" id="idNumber" name="idNumber"></div>
+						<div class="formInputBox"><input type="text" id="idNumber" name="idcard"></div>
 						<div class="hintBox">
 							<span>
 								<div class="annotation"><font class="red">*</font>请输入有效证件号码注册</div>
@@ -92,7 +92,7 @@
 					</div>
 					<div class="formgroup phoneNumber">
 						<span class="name">手机号码:</span>
-						<div class="formInputBox"><input type="text" id="phoneNumber" name="phoneNumber"></div>
+						<div class="formInputBox"><input type="text" id="phoneNumber" name="mobile"></div>
 						<div class="hintBox">
 							<span>
 								<div class="annotation"><font class="red">*</font>请输入真实有效的手机号码注册</div>
@@ -112,7 +112,7 @@
 					</div>
 					<div class="formgroup">
 						<span class="name">联系地址:</span>
-						<div class="formInputBox"><input type="text" id="contactAddress" name="username"></div>
+						<div class="formInputBox"><input type="text" id="contactAddress" name="address"></div>
 						<div class="hintBox">
 							<span>
 								<div class="annotation">请输入您常用的联系地址</div>
@@ -123,8 +123,9 @@
 					<div class="formgroup verifyCode">
 						<span class="name">验证码:</span>
 						<div class="formInputBox">
-							<input type="text" id="verifyCode" name="verifyCode">
-							<img src="" alt="">
+							<input type="text" id="verifyCode" name="verify" onkeyup="this.value=this.value.replace(/[^\x00-\xff]/g, '')">
+							{:sp_verifycode_img('length=4&font_size=12&width=90&height=28&charset=2345678&use_noise=1&use_curve=0')}
+							<!-- <img src="" alt=""> -->
 						</div>
 						<div class="hintBox">
 							<span>
@@ -132,6 +133,7 @@
 							</span>
 							<span class="errhint">请输入验证码</span>
 						</div>
+						
 					</div>
 					<div class="formgroup endDiv">
 						<font class="red">*</font>
@@ -176,7 +178,7 @@
 						</p>
 					</div>
 					<div class="btnBox">
-						<span class="btn disableBtn"><input type="submit" name="" value="注册" disabled="disabled"></span>
+						<span class="btn disableBtn"><input type="submit" value="注册" id="registerbtn" disabled="disabled"></span>
 						<!-- <span class="btn disableBtn"><button disabled="disabled">注册</button></span> -->
 						<span class="resetBtn"><a href="" onclick="javascript:history.go(-1);return false;">返回</a></span>
 					</div>
@@ -192,6 +194,7 @@
 <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/jquery.page.js"></script>
 <script src="__PUBLIC__/js/xinValidate.js"></script>
+<script src="__PUBLIC__/js/noty/noty.js"></script>
 <script>
 	$(function(){
 		$(".agreementHead").on("click",function(){
@@ -217,6 +220,30 @@
 				$(".btn input").attr("disabled",true);
 			}
 		})
+		//提交
+		$("#registerbtn").on('click', function(){
+			$.ajax({
+				url:"{:U('Register/doregister')}",
+				method:'post',
+				data:$('form').serialize(),
+				success:function(data){
+					if(data.status == 1){
+						noty({
+							text: data.info,
+				            type:"success",
+				            layout:"center"
+						});
+						$('body').load("{:U('Xing/index')}");
+					}else{
+						noty({
+							text: data.info,
+				            type:"error",
+				            layout:"center"
+						});
+					}
+				}
+			});
+		});
 	});
 </script>
 </html>
