@@ -58,8 +58,8 @@
 				<foreach name="dept" item="vo" key="k">
 					<li><i class="i_t_s1"></i>
 						<span><b>{$vo.bdept_name}</b>
-							<a href="#">{$vo.disease.0.disease_name}</a>
-							<a href="#">{$vo.disease.1.disease_name}</a>
+							<a href="{:U('Xing/disease_gh', array('disease_id' => $vo['disease'][1]['disease_id']))}">{$vo.disease.1.disease_name}</a>
+							<a href="{:U('Xing/disease_gh', array('disease_id' => $vo['disease'][0]['disease_id']))}">{$vo.disease.0.disease_name}</a>
 						</span>
 						<div class="index_top_showvalue" style="display:none">
 							<div class="idnex_top_con_zwc">
@@ -69,7 +69,7 @@
 									</p>
 									<ul class="index_top_hdvalue_ul">
 										<foreach name='vo.disease' item="v">
-										<li><a href="#">{$v.disease_name}</a><i></i></li>
+										<li><a href="{:U('Xing/disease_gh', array('disease_id' => $v['disease_id']))}">{$v.disease_name}</a><i></i></li>
 										</foreach>
 									</ul>
 								</div>
@@ -84,46 +84,6 @@
 					<span class="i_t_s13"><a href="#" class="index_top_a_none">其他科室</a></span>
 				</p>
 			</div>
-		<!-- 	<div class="index_top_hdvalue" style="position:absolute;left:0;display:none">
-				<div class="index_top_con_st">
-					<div class="index_top_con_zwc">
-						<div class="index_top_con_w">
-							<p class="index_top_hdvalue_p"><span>内科</span></p>
-							<ul class="index_top_hdvalue_ul">
-								<li><a href="#">心血管内科</a><i></i></li>
-								<li><a href="#">心血管内科</a><i></i></li>
-								<li><a href="#">心血管内科</a><i></i></li>
-							</ul>
-						</div>
-						<div class="index_top_con_w">
-							<p class="index_top_hdvalue_p"><span>内科常见疾病</span></p>
-							<ul class="index_top_hdvalue_ul">
-								<li><a href="#" class="index_top_hd_color">冠心病</a><i></i></li>
-								<li><a href="#" class="index_top_hd_color">高血压</a><i></i></li>
-								<li><a href="#">心律失常</a><i></i></li>
-								<li><a href="#">心律失常</a><i></i></li>
-								<li><a href="#">心律失常</a><i></i></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div> -->
-			<!-- 左导航详情 -->
-		<!-- 	<div class="index_top_showvalue" style="display:none">
-				<div class="idnex_top_con_zwc">
-					<div class="index_top_con_w">
-						<p class="index_top_hdvalue_p">
-							<span>口腔科</span>
-						</p>
-						<ul class="index_top_hdvalue_ul">
-							<li><a href="#">口腔科</a><i></i></li>
-							<li><a href="#">口腔科</a><i></i></li>
-							<li><a href="#">口腔科</a><i></i></li>
-							<li><a href="#">口腔科</a><i></i></li>
-						</ul>
-					</div>
-				</div>
-			</div> -->
 		</div>
 		<!-- 轮播图 -->
 		<div class="index_jdt">
@@ -142,9 +102,16 @@
 			<div class="subscribe">
 				<h2><span>快速预约</span></h2>
 				<form name="searchForm">
-					<p><select name="" id="" class="subscribe_p_select"><option value="">请选择科室</option></select></p>
-					<p><select name="" id="" class="subscribe_p_select"><option value="">请选择疾病</option></select></p>
-					<p><select name="" id="" class="subscribe_p_select"><option value="">请选择医生</option></select></p>
+					<p><select name="bdept_id" id="" class="subscribe_p_select deptselect">
+						<option value="">请选择科室</option>
+					<volist name="selectdept" id="v">
+						<option value="{$v.bdept_id}">{$v.bdept_name}</option>
+					</volist>
+					</select></p>
+					<p><select name="disease_id" id="" class="subscribe_p_select diseaseselect">
+						<option value="">请选择疾病</option>
+					</select></p>
+					<p><select name="doctor_id" id="" class="subscribe_p_select doctorselect"><option value="">请选择医生</option></select></p>
 					<a href="#" class="ksbz_kscx">快速查询</a>
 				</form>
 			</div>
@@ -238,6 +205,7 @@
 <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
 <script src="__PUBLIC__/js/jquery.bxslider.js"></script>
 <script src="__PUBLIC__/js/index.js"></script>
+<script src="__PUBLIC__/js/noty/noty.js"></script>
 <script>
 	$(function(){ 
 	 // $('.bxslider').bxSlider({ 
@@ -260,6 +228,75 @@
 	  
 	 }); 
 	 // s.startAuto();
+	 /*搜索挂号 疾病*/
+	 $(".deptselect").on('change',function(){
+	 	var dept_id = $(this).val();
+	 	$.ajax({
+	 		url:'{:U("Xing/selectdisease")}',
+	 		method:"post",
+	 		data:{bdept_id:dept_id},
+	 		success:function(data){
+	 			var list = eval('(' + data + ')');
+	 			$(".diseaseselect option").not(":first").remove();
+	 			$(".doctorselect option").not(":first").remove();
+	 			list.forEach(function(item,index){
+	 				var str = '<option value="'+item.disease_id+'">'+item.disease_name+'</option>';
+	 				$(".diseaseselect").append(str);
+	 			});
+	 		}
+	 	});
+	 });
+	 /*搜索挂号 医生*/
+	 $(".diseaseselect").on('change',function(){
+	 	var disease_id = $(this).val();
+	 	$.ajax({
+	 		url:'{:U("Xing/selectdoctor")}',
+	 		method:"post",
+	 		data:{disease_id:disease_id},
+	 		success:function(data){
+	 			var list = eval('(' + data + ')');
+	 			$(".doctorselect option").not(":first").remove();
+	 			list.forEach(function(item,index){
+	 				var str = '<option value="'+item.doctor_id+'">'+item.doctor_name+'</option>';
+	 				$(".doctorselect").append(str);
+	 			});
+	 		}
+	 	});
+	 });
+	 /*快速预约*/
+	 $(".ksbz_kscx").on('click', function(){
+	 	var bdept_id = $(".deptselect").val();
+	 	var disease_id = $(".diseaseselect").val();
+	 	var doctor_id = $(".doctorselect").val();
+	 	if(bdept_id == ""){
+	 		noty({
+                text: "请选择科室",
+                type: "error",
+                timeout:1,
+                layout: "center"
+            });
+            return false;
+	 	}else if(disease_id == ""){
+	 		noty({
+                text: "请选择疾病类",
+                type: "error",
+                timeout:1,
+                layout: "center"
+            });
+            return false;
+	 	}else if(doctor_id == ""){
+	 		noty({
+                text: "请选择医生",
+                type: "error",
+                timeout:1,
+                layout: "center"
+            });
+            return false;
+	 	}
+	 	/*提交信息*/
+	 	$("body").load("{:U('Xing/doctorRegistered')}",{doctor_id:doctor_id});
+	 	/*提交信息结束*/
+	 });
 	});
 </script>
 </html>

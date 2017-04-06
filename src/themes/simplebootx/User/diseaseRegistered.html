@@ -70,9 +70,9 @@
 				<tbody>
 					<tr>
 						<!-- <php>dump($vo['disease']);</php> -->
-						<volist name='vo.disease' id="v" mod="15">
-				                <td><a href="{:U('Xing/disease_gh')}">{$v.disease_name}</a></td>
-				        <eq name="mod" value="14"></tr></eq>
+						<volist name='vo.disease' id="v" mod="8">
+				                <td><a href="{:U('Xing/disease_gh', array('disease_id' => $v['disease_id']))}">{$v.disease_name}</a></td>
+				        <eq name="mod" value="7"></tr></eq>
 						</volist>
 					</tr>
 				</tbody>

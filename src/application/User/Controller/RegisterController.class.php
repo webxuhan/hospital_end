@@ -19,11 +19,11 @@ class RegisterController extends HomebaseController {
 	
     // 前台用户注册
 	public function index(){
-	    if(sp_is_user_login()){ //已经登录时直接跳到首页
-	        redirect(__ROOT__."/");
-	    }else{
+	    // if(sp_is_user_login()){ //已经登录时直接跳到首页
+	    //     redirect(__ROOT__."/");
+	    // }else{
 	        $this->display(":register");
-	    }
+	    // }
 	}
 	
 	// 前台用户注册提交

@@ -36,6 +36,9 @@ class XingController extends HomebaseController {
             $list[$k]['disease'] = $disease;
         }
         $this->assign('dept', $list);
+        //挂号查找
+        $dept = $this->dept_model->field('bdept_id,bdept_name')->select();
+        $this->assign('selectdept', $dept);
         $this -> display(":index");
     }
    /**
@@ -71,6 +74,31 @@ class XingController extends HomebaseController {
     *@author wuxin
     */
     public function doctorRegistered(){
+        $param = I("param.");
+        if($param['doctor_name'] != ""){
+            $where['doctor_name'] = get_search_str(trim($param['doctor_name']));
+        }if($param['doctor_number'] != ""){
+            $where['doctor_number'] = get_search_str(trim($param['doctor_number']));
+        }
+        $doctor_page = 10;//每页显示的条数
+        $page = I('page');
+        if(!empty($page)){
+            $current_page = $page;
+        }else{
+            $current_page = 1;
+        }
+        $doctor_num = $this->doctor_model->count();
+        $total_page = ceil($doctor_num/$doctor_page);
+        $doctor = $this->doctor_model
+                       ->table('__DOCTOR__ D')
+                       ->join("__POSITION__ P ON P.position_id = D.position_id")
+                       ->where($where)
+                       ->limit($doctor_page*($current_page - 1) , $doctor_page)
+                       ->field('D.*,P.position_name,P.position_price')
+                       ->select();
+        $this->assign("doctor", $doctor);
+        $this->assign("total_page", $total_page);
+        $this->assign("current_page", $current_page);
         $this->display(":doctorRegistered");
    }
    /**
@@ -112,7 +140,47 @@ class XingController extends HomebaseController {
     public function personalCenter(){
         $this->display(":personalCenter");
    }
+   /**
+    *查看疾病
+    *
+    *@author wuxin
+    */
     public function disease_gh(){
+        $disease_id = I('disease_id');
+        $doctor_page = 2;//每页显示的条数
+        $page = I('page');
+        if(!empty($page)){
+            $current_page = $page;
+        }else{
+            $current_page = 1;
+        }
+        $list = $this->disease_model->where('disease_id='.$disease_id)->find();//疾病内容
+        $doctor_num = $this->doctor_model->where('disease_id='.$disease_id)->count();
+        $total_page = ceil($doctor_num/$doctor_page);
+        $doctor = $this->doctor_model
+                       ->table('__DOCTOR__ D')
+                       ->join("__POSITION__ P ON P.position_id = D.position_id")
+                       ->where('D.disease_id='.$disease_id)
+                       ->limit($doctor_page*($current_page - 1) , $doctor_page)
+                       ->field('D.*,P.position_name,P.position_price')
+                       ->select();
+        $this->assign("doctor", $doctor);
+        $this->assign("disease", $list);
+        $this->assign("total_page", $total_page);
+        $this->assign("current_page", $current_page);
         $this->display(":disease_gh");
+   }
+
+   /*科室后的疾病科*/
+   public function selectdisease(){
+        $bdept_id = I('bdept_id');
+        $list = $this->disease_model->where('bdept_id='.$bdept_id)->field('disease_id,disease_name')->select();
+        echo json_encode($list);
+   }
+   /*疾病后的医生*/
+   public function selectdoctor(){
+        $disease_id = I('disease_id');
+        $list = $this->doctor_model->where('disease_id='.$disease_id)->field('doctor_id,doctor_name')->select();
+        echo json_encode($list);
    }
 }

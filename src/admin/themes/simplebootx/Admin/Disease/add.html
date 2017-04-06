@@ -39,6 +39,18 @@
 						<input type="text" name="disease_mobile">
 					</div>
 				</div>	
+				<div class="control-group">
+					<label class="control-label">详细介绍:</label>
+					<div class="controls form-group">
+						<textarea name="disease_detail" rows="4"></textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">常见症状:</label>
+					<div class="controls form-group">
+						<input type="text" name="common_symptom">
+					</div>
+				</div>
 			</fieldset>
 			<div class="form-actions">
 				<button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
@@ -100,6 +112,21 @@
 						}
 					},
 					
+					disease_detail:{
+                        validators: {
+                        	notEmpty: {
+                                message: '请填写疾病详细介绍'
+                            }
+                        }
+                    },
+
+                    common_symptom:{
+                        validators: {
+                        	notEmpty: {
+                                message: '请填写疾病常见症状'
+                            }
+                        }
+                    }
                 }
             });
 

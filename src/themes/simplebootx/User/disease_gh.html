@@ -46,199 +46,46 @@
 	<!-- 头部结束 -->
 	<!-- 主内容区 -->
 	<div class="ksghny_top">
-		<h3>心脏病<a href="{:U('Xing/diseaseRegistered')}">选择其他疾病</a></h3>
+		<h3>{$disease.disease_name}<a href="{:U('Xing/diseaseRegistered')}">选择其他疾病</a></h3>
 	</div>
 	<div class="dissease_introduce">
 		<span>病理介绍</span>
-		<p>心脏病是一类比较常见的循环系统疾病。循环系统由心脏、血管和调节血液循环的神经体液组织构成，循环系统疾病也称为心血管病，包括上述所有组织器官的疾病，在内科疾病中属于常见病，其中以心脏病最为多见，能显著地影响患者的劳动力。</p>
+		<p>{$disease.disease_detail}</p>
 		<b>常见症状:</b>
-		<div>心悸、呼吸困难、发绀、咳嗽、咯血、胸痛、水肿、少尿等。</div>
+		<div>{$disease.common_symptom}</div>
 	</div>
 	<div class="doctorBox">
+		<volist name="doctor" id="vo">
 		<div class="doctorInfo">
 			<div class="leftInfo">
-				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
+				<div class="doctorImg">
+					<if condition="empty($vo['doctor_avatar'])">
+						<img src="__PUBLIC__/images/doctor_1.jpg" alt="">
+					<else/>
+                    	<img src="{:sp_get_image_url($vo['doctor_avatar'])}" alt="">
+                    </if>		
+				</div>
 				<div class="doctorIntroduce">
-					<span class="doctorName">申长礼</span>
-					<span class="doctorTitle">国家特贴主任医师</span>
+					<span class="doctorName">{$vo.doctor_name}</span>
+					<span class="doctorTitle">{$vo.position_name}</span>
 					<span>山西省医院</span>
-					<span>内科</span>
+					<span>{$vo.bdept_name}</span>
 				</div>
 			</div>
 			<div class="rightInfo">
 				<div class="infoLeft">
-					<span>11111</span>
+					<span>{$vo.appoint_totalnum}</span>
 					<p>预约总量</p>
-					<span>10000</span>
+					<span>{$vo.expire_totalnum}</span>
 					<p>就诊总量</p>
 				</div>
 				<div class="infoRgiht">
-					<div><span>参考费用:</span><span>40.50</span>元</div>
-					<div class="subscribeStatus">已约满</div>
+					<div><span>参考费用:</span><span>{$vo.position_price}</span>元</div>
+					<a class="subscribeStatus">预约</a>
 				</div>
 			</div>
 		</div>
-		<div class="doctorInfo">
-			<div class="leftInfo">
-				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
-				<div class="doctorIntroduce">
-					<span class="doctorName">申长礼</span>
-					<span class="doctorTitle">国家特贴主任医师</span>
-					<span>山西省医院</span>
-					<span>内科</span>
-				</div>
-			</div>
-			<div class="rightInfo">
-				<div class="infoLeft">
-					<span>11111</span>
-					<p>预约总量</p>
-					<span>10000</span>
-					<p>就诊总量</p>
-				</div>
-				<div class="infoRgiht">
-					<div><span>参考费用:</span><span>40.50</span>元</div>
-					<div class="subscribeStatus">已约满</div>
-				</div>
-			</div>
-		</div>
-		<div class="doctorInfo">
-			<div class="leftInfo">
-				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
-				<div class="doctorIntroduce">
-					<span class="doctorName">申长礼</span>
-					<span class="doctorTitle">国家特贴主任医师</span>
-					<span>山西省医院</span>
-					<span>内科</span>
-				</div>
-			</div>
-			<div class="rightInfo">
-				<div class="infoLeft">
-					<span>11111</span>
-					<p>预约总量</p>
-					<span>10000</span>
-					<p>就诊总量</p>
-				</div>
-				<div class="infoRgiht">
-					<div><span>参考费用:</span><span>40.50</span>元</div>
-					<div class="subscribeStatus">已约满</div>
-				</div>
-			</div>
-		</div>
-		<div class="doctorInfo">
-			<div class="leftInfo">
-				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
-				<div class="doctorIntroduce">
-					<span class="doctorName">申长礼</span>
-					<span class="doctorTitle">国家特贴主任医师</span>
-					<span>山西省医院</span>
-					<span>内科</span>
-				</div>
-			</div>
-			<div class="rightInfo">
-				<div class="infoLeft">
-					<span>11111</span>
-					<p>预约总量</p>
-					<span>10000</span>
-					<p>就诊总量</p>
-				</div>
-				<div class="infoRgiht">
-					<div><span>参考费用:</span><span>40.50</span>元</div>
-					<div class="subscribeStatus">已约满</div>
-				</div>
-			</div>
-		</div>
-		<div class="doctorInfo">
-			<div class="leftInfo">
-				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
-				<div class="doctorIntroduce">
-					<span class="doctorName">申长礼</span>
-					<span class="doctorTitle">国家特贴主任医师</span>
-					<span>山西省医院</span>
-					<span>内科</span>
-				</div>
-			</div>
-			<div class="rightInfo">
-				<div class="infoLeft">
-					<span>11111</span>
-					<p>预约总量</p>
-					<span>10000</span>
-					<p>就诊总量</p>
-				</div>
-				<div class="infoRgiht">
-					<div><span>参考费用:</span><span>40.50</span>元</div>
-					<div class="subscribeStatus">已约满</div>
-				</div>
-			</div>
-		</div>
-		<div class="doctorInfo">
-			<div class="leftInfo">
-				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
-				<div class="doctorIntroduce">
-					<span class="doctorName">申长礼</span>
-					<span class="doctorTitle">国家特贴主任医师</span>
-					<span>山西省医院</span>
-					<span>内科</span>
-				</div>
-			</div>
-			<div class="rightInfo">
-				<div class="infoLeft">
-					<span>11111</span>
-					<p>预约总量</p>
-					<span>10000</span>
-					<p>就诊总量</p>
-				</div>
-				<div class="infoRgiht">
-					<div><span>参考费用:</span><span>40.50</span>元</div>
-					<div class="subscribeStatus">已约满</div>
-				</div>
-			</div>
-		</div>
-	</div><div class="doctorInfo">
-			<div class="leftInfo">
-				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
-				<div class="doctorIntroduce">
-					<span class="doctorName">申长礼</span>
-					<span class="doctorTitle">国家特贴主任医师</span>
-					<span>山西省医院</span>
-					<span>内科</span>
-				</div>
-			</div>
-			<div class="rightInfo">
-				<div class="infoLeft">
-					<span>11111</span>
-					<p>预约总量</p>
-					<span>10000</span>
-					<p>就诊总量</p>
-				</div>
-				<div class="infoRgiht">
-					<div><span>参考费用:</span><span>40.50</span>元</div>
-					<div class="subscribeStatus">已约满</div>
-				</div>
-			</div>
-		</div>
-		<div class="doctorInfo">
-			<div class="leftInfo">
-				<div class="doctorImg"><img src="__PUBLIC__/images/doctor_1.jpg" alt=""></div>
-				<div class="doctorIntroduce">
-					<span class="doctorName">申长礼</span>
-					<span class="doctorTitle">国家特贴主任医师</span>
-					<span>山西省医院</span>
-					<span>内科</span>
-				</div>
-			</div>
-			<div class="rightInfo">
-				<div class="infoLeft">
-					<span>11111</span>
-					<p>预约总量</p>
-					<span>10000</span>
-					<p>就诊总量</p>
-				</div>
-				<div class="infoRgiht">
-					<div><span>参考费用:</span><span>40.50</span>元</div>
-					<div class="subscribeStatus">已约满</div>
-				</div>
-			</div>
-		</div>
+	</volist>
 	<div class="paging_disease_gh">
 		<div id="address-paging" class="tcdPageCode"></div>
 	</div>
@@ -252,10 +99,10 @@
 <script>
 	$(function(){
 		$("#address-paging").createPage({
-	        pageCount:7,
-	        current:1,
+	        pageCount:{$total_page},
+	        current:{$current_page},
 	        backFn:function(page){
-	        	// $('.main-content').load("{:U("Xing/addressCenter")}",{page:page});
+	        	$('body').load("{:U('Xing/disease_gh')}",{page:page,disease_id:{$disease.disease_id}});
 	        }
 	    });
 	});

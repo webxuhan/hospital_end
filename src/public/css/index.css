@@ -813,7 +813,7 @@ span.disableBtn input{cursor: not-allowed}
 .infoLeft>span{color: #76d3f6}
 .infoLeft>p{line-height: 28px}
 .rightInfo{font-size: 14px}
-.subscribeStatus{width: 156px;height: 26px;color: #fff;background: #52bde9;text-align: center;line-height: 26px;margin-top: 20px;cursor:pointer;}
+.subscribeStatus{width: 156px;height: 26px;color: #fff;background: #52bde9;text-align: center;line-height: 26px;margin-top: 20px;cursor:pointer;display:inline-block;}
 .paging_disease_gh,.paging_timeTable{width: 1000px;margin: 0 auto;overflow: hidden;}
 .paging_disease_gh .tcdPageCode{float: right;position: relative;left: 22px}
 
