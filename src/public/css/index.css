@@ -882,12 +882,29 @@ li.personalCenter{float: right;}
     border-radius: 2px;
     padding: 5px;
 }
+.vertifyBox>input{
+    width: 90px;
+    height: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    padding: 5px;
+  /*  position: relative;
+    bottom: 9px;*/
+}
+.vertifyBox>img{float: right;position: relative;top: 3px}
 .hintBox{
     margin-left: 15px;
     float: left;
     position: relative;
     width: 430px;
     /*white-spacing: nowrap;*/
+}
+.formgroup>.vertifyBox{
+    width: 210px;
+    line-height: 32px;
+    float: left;
+    height: 32px;
+    vertical-align: middle;
 }
 .annotation{float: left;color: #B6B6B6;}
 .red{color: #f00;}

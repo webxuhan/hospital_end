@@ -50,16 +50,18 @@
 			<form >
 				<div class="formgroup">
 					<label for="loginName">登录名:</label>
-					<div class="formInputBox"><input type="text" placeholder="请输入手机号码或者身份证" id="loginName" name="user_name"></div>
+					<div class="formInputBox"><input type="text" placeholder="请输入手机号码或者身份证" id="loginName" name="user_name" autocomplete="off"></div>
 				</div>
 				<div class="formgroup">
 					<label for="userPsd">密码:</label>
-					<div class="formInputBox"><input type="password" placeholder="请输入6-16位字符密码" id="userPsd" name="hosuser_password"></div>
+					<div class="formInputBox"><input type="password" placeholder="请输入6-16位字符密码" id="userPsd" name="hosuser_password"  autocomplete="off"></div>
 				</div>
 				<div class="formgroup">
 					<label for="verificationCode">验证码:</label>
-					<div class="formInputBox"><input type="text" name="verify" placeholder="请输入验证码" id="verificationCode"  onkeyup="this.value=this.value.replace(/[^\x00-\xff]/g, '')"></div>
-					{:sp_verifycode_img('length=4&font_size=12&width=90&height=28&charset=2345678&use_noise=1&use_curve=0')}
+					<div class="vertifyBox">
+						<input type="text" name="verify" placeholder="请输入验证码" id="verificationCode"  onkeyup="this.value=this.value.replace(/[^\x00-\xff]/g, '')">
+						{:sp_verifycode_img('length=4&font_size=12&width=88&height=28&charset=2345678&use_noise=1&use_curve=0')}
+					</div>
 				</div>
 				<div class="formgroup"><a href="" class="psdBack">找回密码</a></div>
 				<div class="loginBtn"><a href="" id="loginbtn">登录</a></div>

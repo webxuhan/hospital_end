@@ -52,7 +52,7 @@
 				<div class="register_content">
 					<div class="formgroup usename">
 						<span class="name">真实姓名:</span>
-						<div class="formInputBox"><input type="text" id="usename" name="hosuser_name"></div>
+						<div class="formInputBox"><input type="text" id="usename" name="hosuser_name" autocomplete="off"></div>
 						<div class="hintBox">
 							<span>
 								<div class="annotation"><font class="red">*</font>请输入您的真实姓名注册</div>
@@ -62,7 +62,7 @@
 					</div>
 					<div class="formgroup">
 						<span class="name">密&emsp;&emsp;码:</span>
-						<div class="formInputBox"><input type="password" id="userPassword" name="hosuser_password" maxlength="16"></div>
+						<div class="formInputBox"><input type="password" id="userPassword" name="hosuser_password" maxlength="16" autocomplete="off"></div>
 						<div class="hintBox">
 							<span>
 								<div class="annotation"><font class="red">*</font>请输入6-16位字符，超过16位的按前16位计算</div>
@@ -72,7 +72,7 @@
 					</div>
 					<div class="formgroup verifyPsd">
 						<span class="name">密码确认:</span>
-						<div class="formInputBox"><input type="password" id="verifyPsd" maxlength="16"></div>
+						<div class="formInputBox"><input type="password" id="verifyPsd" maxlength="16" autocomplete="off"></div>
 						<div class="hintBox">
 							<span>
 								<div class="annotation"><font class="red">*</font>请重复输入上面的密码</div>
@@ -122,9 +122,9 @@
 					</div>
 					<div class="formgroup verifyCode">
 						<span class="name">验证码:</span>
-						<div class="formInputBox">
+						<div class="vertifyBox">
 							<input type="text" id="verifyCode" name="verify" onkeyup="this.value=this.value.replace(/[^\x00-\xff]/g, '')">
-							{:sp_verifycode_img('length=4&font_size=12&width=90&height=28&charset=2345678&use_noise=1&use_curve=0')}
+							{:sp_verifycode_img('length=4&font_size=12&width=88&height=28&charset=2345678&use_noise=1&use_curve=0')}
 							<!-- <img src="" alt=""> -->
 						</div>
 						<div class="hintBox">
