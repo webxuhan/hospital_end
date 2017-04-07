@@ -10,7 +10,18 @@ namespace User\Controller;
 use Common\Controller\AdminbaseController;
 
 class HosuserController extends AdminbaseController {
-	
+
+	protected $hosuser_model;
+
+    /**
+     * 验证是否开启记录
+     * @author wuxin 2017/02/08
+     */
+    public function _initialize() {
+        parent::_initialize();
+        $this->hosuser_model = M('Hosuser');
+    }
+
 	// 后台第三方用户列表
 	public function index(){
 		/*搜索条件*/
@@ -43,6 +54,22 @@ class HosuserController extends AdminbaseController {
 		$this->assign("page", $page->show('Admin'));
 		$this->assign('lists', $lists);
 		$this->display();
+	}
+	/**
+    *编辑个人信息
+    *
+    *@author wuxin
+    */
+	public function personedit(){
+		if($this->hosuser_model->create() !== false){
+			if($this->hosuser_model->save() !== false){
+				$this->success("编辑成功");
+			}else{
+				$this->error("编辑失败");
+			}
+		} else {
+			$this->error($this->hosuser_model->getError());
+		}
 	}
 	
 }

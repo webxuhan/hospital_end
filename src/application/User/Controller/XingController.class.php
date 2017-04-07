@@ -8,6 +8,7 @@ class XingController extends HomebaseController {
     protected $dept_model;
     protected $disease_model;
     protected $doctor_model;
+    protected $hosuser_model;
 
     /**
      * 验证是否开启记录
@@ -18,7 +19,7 @@ class XingController extends HomebaseController {
         $this->dept_model = M('BigDepartment');
         $this->disease_model = M('Disease');
         $this->doctor_model = M('Doctor');
-        
+        $this->hosuser_model = M('Hosuser');
     }
     
     //搜索结果页面
@@ -137,7 +138,15 @@ class XingController extends HomebaseController {
         $this->assign("doctor", $list);
         $this->display(":visitTheTable");
    }
+   /**
+    *个人信息
+    *
+    *@author wuxin
+    */
     public function personalCenter(){
+        $hosuser_id = get_current_userid();
+        $list = $this->hosuser_model->where("hosuser_id=".$hosuser_id)->find();
+        $this->assign("hosuser", $list);
         $this->display(":personalCenter");
    }
    /**

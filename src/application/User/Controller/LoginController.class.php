@@ -18,19 +18,19 @@ class LoginController extends HomebaseController {
     }
     // 前台用户登录
 	public function index(){
-	    // $redirect=I('get.redirect','');
-	    // if(empty($redirect)){
-	    //     $redirect=$_SERVER['HTTP_REFERER'];
-	    // }else{
-	    //     $redirect=base64_decode($redirect);
-	    // }
-	    // session('login_http_referer',$redirect);
+	    $redirect=I('get.redirect','');
+	    if(empty($redirect)){
+	        $redirect=$_SERVER['HTTP_REFERER'];
+	    }else{
+	        $redirect=base64_decode($redirect);
+	    }
+	    session('login_http_referer',$redirect);
 
-	    // if(sp_is_user_login()){ //已经登录时直接跳到首页
-	    //     redirect(U("Xing/index"));
-	    // }else{
+	    if(sp_is_user_login()){ //已经登录时直接跳到首页
+	        redirect(U("Xing/personalCenter"));
+	    }else{
 	        $this->display(":login");
-	    //}
+	    }
 	}
 
     public function dologin(){
@@ -51,6 +51,8 @@ class LoginController extends HomebaseController {
         $where["_complex"] = $map;
         $find = $this->hosuser_model->where($where)->find();
         if($find){
+            // var_dump($find['hosuser_id']);
+            sp_update_current_user($find);
             $this->success("登录成功！");
         }else{
             $this->error("登录失败！");
