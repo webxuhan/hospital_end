@@ -13,10 +13,17 @@
 			<p class="dbnav_context_left">
 				<img src="__PUBLIC__/images/dbnav.png" alt=""><span>15111511431电话预约</span>
 			</p>
+			<if condition="sp_is_user_login()">
+			<p class="dbnav_context_right" id="isLogin">
+				{$_SESSION['hosuser']['hosuser_name']} 欢迎来到山西省预约挂号平台
+				<a href="{:U('Index/logout')}" class="db_login">注销</a>
+			</p>
+			<else />
 			<p class="dbnav_context_right" id="isLogin">欢迎来到山西省预约挂号平台 请
 				<a href="{:U('Login/index')}" class="db_login">登录</a>
 				<a href="{:U('Register/index')}" class="db_register">注册</a>
 			</p>
+			</if>
 		</div>
 	</div>
 	<div class="top">

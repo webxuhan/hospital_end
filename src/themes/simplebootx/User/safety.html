@@ -14,10 +14,17 @@
 			<p class="dbnav_context_left">
 				<img src="__PUBLIC__/images/dbnav.png" alt=""><span>15111511431电话预约</span>
 			</p>
+			<if condition="sp_is_user_login()">
+			<p class="dbnav_context_right" id="isLogin">
+				{$_SESSION['hosuser']['hosuser_name']} 欢迎来到山西省预约挂号平台
+				<a href="{:U('Index/logout')}" class="db_login">注销</a>
+			</p>
+			<else />
 			<p class="dbnav_context_right" id="isLogin">欢迎来到山西省预约挂号平台 请
 				<a href="{:U('Login/index')}" class="db_login">登录</a>
 				<a href="{:U('Register/index')}" class="db_register">注册</a>
 			</p>
+			</if>
 		</div>
 	</div>
 	<div class="top">
@@ -40,7 +47,7 @@
 				<li><a href="{:U('Xing/doctorRegistered')}">按医生挂号</a></li>
 				<li><a href="{:U('Xing/visitTheTable')}">医生出诊表</a></li>
 				<li><a href="#">最新公告</a></li>
-				<li class="personalCenter nav_color"><a href="{:U('Xing/personalCenter')}">个人中心</a></li>
+				<li class="personalCenter"><a href="{:U('Login/index')}">个人中心</a></li>
 			</ul>
 		</div>
 	</div>
@@ -59,7 +66,7 @@
 				<form action="">
 					<div class="formgroup">
 						<span class="name">原始密码:</span>
-						<div class="formInputBox"><input type="password" id="userPassword" name="hosuser_password" maxlength="16" autocomplete="off"></div>
+						<div class="formInputBox"><input type="password" id="userPassword" name="old_password" maxlength="16" autocomplete="off"></div>
 						<div class="hintBox">
 							<span class="errhint">请输入6-16位字符，超过16位的按前16位计算</span>
 							<span class="errhint">密码不能为空</span>
@@ -75,7 +82,7 @@
 					</div>
 					<div class="formgroup verifyPsd">
 						<span class="name">密码确认:</span>
-						<div class="formInputBox"><input type="password" id="verifyPsd" maxlength="16" autocomplete="off"></div>
+						<div class="formInputBox"><input type="password" name="repassword" id="verifyPsd" maxlength="16" autocomplete="off"></div>
 						<div class="hintBox">
 							<span>
 								<div class="annotation"><font class="red">*</font>请重复输入上面的密码</div>
@@ -83,7 +90,7 @@
 							<span class="errhint">两次输入的密码不一致</span>
 						</div>
 					</div>
-					<button>保存</button>
+					<button class="passwordedit">保存</button>
 				</form>
 			</div>
 		</div>
@@ -96,6 +103,7 @@
 <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/jquery.page.js"></script>
 <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/js/noty/noty.js"></script>
 <script>
 	tableContentHeight($(".personalBox"));
 	$(function(){
@@ -108,5 +116,30 @@
 			$(".personalBox").css("height",$(window).height()-266);
 		}
 	}
+	/*编辑*/
+	$(".passwordedit").on('click', function(){
+		$.ajax({
+			url:"{:U('Hosuser/passwordedit')}",
+			method:"post",
+			data:$('form').serialize(),
+			success:function(data){
+				if(data.status == 1){
+					noty({
+						text: data.info,
+			            type:"success",
+			            layout:"center"
+					});
+					$('body').load("{:U('Xing/safety')}");
+				}else{
+					noty({
+						text: data.info,
+			            type:"error",
+			            layout:"center"
+					});
+				}
+			}
+		});
+		return false;
+	});
 </script>
 </html>
