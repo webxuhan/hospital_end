@@ -40,7 +40,7 @@
 				<li><a href="{:U('Xing/doctorRegistered')}">按医生挂号</a></li>
 				<li><a href="{:U('Xing/visitTheTable')}">医生出诊表</a></li>
 				<li><a href="#">最新公告</a></li>
-				<li class="personalCenter nav_color"><a href="{:U('Xing/personalCenter')}">个人中心</a></li>
+				<li class="personalCenter"><a href="{:U('Login/index')}">个人中心</a></li>
 			</ul>
 		</div>
 	</div>
@@ -59,14 +59,14 @@
 				<form action="">
 					<div class="formgroup usename">
 						<span class="name">真实姓名:</span>
-						<div class="formInputBox"><input type="text" id="usename" name="hosuser_name" autocomplete="off"></div>
+						<div class="formInputBox"><input type="text" id="usename" name="hosuser_name" autocomplete="off" value="{$hosuser.hosuser_name}"></div>
 						<div class="hintBox">
 							<span class="errhint">用户名不能为空</span>
 						</div>
 					</div>
 					<div class="formgroup idNumber">
 						<span class="name">身份证号:</span>
-						<div class="formInputBox"><input type="text" id="idNumber" name="idcard"></div>
+						<div class="formInputBox"><input type="text" id="idNumber" name="idcard" value="{$hosuser.idcard}"></div>
 						<div class="hintBox">
 							<span class="errhint">请输入有效证件号码注册</span>
 							<span class="errhint">身份证不合法</span>
@@ -74,21 +74,21 @@
 					</div>
 					<div class="formgroup phoneNumber">
 						<span class="name">手机号码:</span>
-						<div class="formInputBox"><input type="text" id="phoneNumber" name="mobile"></div>
+						<div class="formInputBox"><input type="text" id="phoneNumber" name="mobile" value="{$hosuser.mobile}"></div>
 						<div class="hintBox">
 							<span class="errhint">请输入有效的手机号码</span>
 						</div>
 					</div>
 					<div class="formgroup email">
 						<span class="name">电子邮箱:</span>
-						<div class="formInputBox"><input type="text" id="email" name="email"></div>
+						<div class="formInputBox"><input type="text" id="email" name="email" value="{$hosuser.email}"></div>
 						<div class="hintBox">
 							<span class="errhint">请输入有效的Email</span>
 						</div>
 					</div>
 					<div class="formgroup">
 						<span class="name">联系地址:</span>
-						<div class="formInputBox"><input type="text" id="contactAddress" name="address"></div>
+						<div class="formInputBox"><input type="text" id="contactAddress" name="address" value="{$hosuser.address}"></div>
 						<div class="hintBox">
 							<span>
 								<div class="annotation">此为您常用的联系地址</div>
@@ -96,7 +96,8 @@
 							<span class="errhint"></span>
 						</div>
 					</div>
-					<button>确认编辑</button>
+					<input type="hidden" id="contactAddress" name="hosuser_id" value="{$hosuser.hosuser_id}">
+					<button class="personedit">确认编辑</button>
 				</form>
 			</div>
 		</div>
@@ -109,8 +110,9 @@
 <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/jquery.page.js"></script>
 <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/js/noty/noty.js"></script>
 <script>
-	tableContentHeight($(".personalBox"));
+	// tableContentHeight($(".personalBox"));
 	$(function(){
 		$(".nav-tabs>li>a.individual").tab("show");
 	});
@@ -121,5 +123,30 @@
 			$(".personalBox").css("height",$(window).height()-266);
 		}
 	}
+	/*编辑*/
+	$(".personedit").on('click', function(){
+		$.ajax({
+			url:"{:U('Hosuser/personedit')}",
+			method:"post",
+			data:$('form').serialize(),
+			success:function(data){
+				if(data.status == 1){
+					noty({
+						text: data.info,
+			            type:"success",
+			            layout:"center"
+					});
+					$('body').load("{:U('Xing/personalCenter')}");
+				}else{
+					noty({
+						text: data.info,
+			            type:"error",
+			            layout:"center"
+					});
+				}
+			}
+		});
+		return false;
+	});
 </script>
 </html>

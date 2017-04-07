@@ -54,7 +54,7 @@ class IndexController extends HomebaseController {
     		include UC_CLIENT_ROOT."client.php";
     		echo uc_user_synlogout();
     	}
-    	session("user",null);//只有前台用户退出
+    	session("hosuser",null);//只有前台用户退出
         $url = U("Login/index");
     	// redirect(__ROOT__."/");
         redirect($url);

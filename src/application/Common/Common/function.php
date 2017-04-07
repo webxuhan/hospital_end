@@ -20,8 +20,8 @@ function sp_get_current_admin_id(){
  * @return boolean
  */
 function sp_is_user_login(){
-    $session_user=session('user');
-	return !empty($session_user);
+    $session_hosuser=session('hosuser');
+	return !empty($session_hosuser);
 }
 
 /**
@@ -29,9 +29,9 @@ function sp_is_user_login(){
  * @return array|boolean
  */
 function sp_get_current_user(){
-    $session_user=session('user');
-	if(!empty($session_user)){
-		return $session_user;
+    $session_hosuser=session('hosuser');
+	if(!empty($session_hosuser)){
+		return $session_hosuser;
 	}else{
 		return false;
 	}
@@ -42,7 +42,7 @@ function sp_get_current_user(){
  * @param array $user 前台用户的信息
  */
 function sp_update_current_user($user){
-	session('user',$user);
+	session('hosuser',$user);
 }
 
 /**
@@ -50,9 +50,9 @@ function sp_update_current_user($user){
  * @return int
  */
 function get_current_userid(){
-	$session_user_id=session('user.id');
-	if(!empty($session_user_id)){
-		return $session_user_id;
+	$session_hosuser_id=session('hosuser.hosuser_id');
+	if(!empty($session_hosuser_id)){
+		return $session_hosuser_id;
 	}else{
 		return 0;
 	}
