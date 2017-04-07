@@ -49,9 +49,9 @@
 	<section class="content personalBox">
 		<!-- 内容导航 -->
 		<ul class="nav nav-tabs doctorTimeNav">
-			<li><a data-target="#home" data-toggle="tab">个人信息</a></li>
-			<li><a data-target="#Safety" data-toggle="tab">安全中心</a></li>
-			<li><a data-target="#patientInfo" data-toggle="tab">病人信息</a></li>
+			<li><a href="{:U('Xing/personalCenter')}" data-target="#home" data-toggle="tab" class="individual">个人信息</a></li>
+			<li><a href="{:U('Xing/safety')}">安全中心</a></li>
+			<li><a href="{:U('Xing/patientInfo')}">病人信息</a></li>
 		</ul>
 		<div class="tab-content">
 			<!-- 个人信息 -->
@@ -99,82 +99,6 @@
 					<button>确认编辑</button>
 				</form>
 			</div>
-			<!-- 安全中心 -->
-			<div class="safety tab-pane" id="Safety">
-				<form action="">
-					<div class="formgroup">
-						<span class="name">原始密码:</span>
-						<div class="formInputBox"><input type="password" id="userPassword" name="hosuser_password" maxlength="16" autocomplete="off"></div>
-						<div class="hintBox">
-							<span class="errhint">请输入6-16位字符，超过16位的按前16位计算</span>
-							<span class="errhint">密码不能为空</span>
-						</div>
-					</div>
-					<div class="formgroup">
-						<span class="name">新密码:</span>
-						<div class="formInputBox"><input type="password" id="userPassword" name="hosuser_password" maxlength="16" autocomplete="off"></div>
-						<div class="hintBox">
-							<span class="errhint">请输入6-16位字符，超过16位的按前16位计算</span>
-							<span class="errhint">密码不能为空</span>
-						</div>
-					</div>
-					<div class="formgroup verifyPsd">
-						<span class="name">密码确认:</span>
-						<div class="formInputBox"><input type="password" id="verifyPsd" maxlength="16" autocomplete="off"></div>
-						<div class="hintBox">
-							<span>
-								<div class="annotation"><font class="red">*</font>请重复输入上面的密码</div>
-							</span>
-							<span class="errhint">两次输入的密码不一致</span>
-						</div>
-					</div>
-					<button>保存</button>
-				</form>
-			</div>
-			<!-- 病人信息 -->
-			<div class="patientInfo tab-pane" id="patientInfo">
-				<!-- 查询头部 -->
-				<!-- <div class="row">
-					<span>添加</span>
-				</div> -->
-				<!-- 基本信息表格 -->
-				<div class="row patientTable">
-					<div class="col-xs-12">
-						<div class="box">
-							<div class="box-body table-responsive no-padding">
-								<table class="table table-hover">
-									<tbody>
-										<tr>
-											<th><input type="checkbox" class="mini" id="selectAll"></th>
-											<th>医生编号</th>
-											<th>姓名</th>
-											<th>科室</th>
-											<th>工作时间</th>
-											<th>操作</th>
-										</tr>
-										<tr class="datalist">
-											<td><input type="checkbox" class="mini"></td>
-											<td>1225</td>
-											<td>武鑫</td>
-											<td>神经内科</td>
-											<td>周三上午</td>
-											<td><a href="">编辑</a><a href="">删除</a></td>
-										</tr>
-										<tr class="datalist">
-											<td><input type="checkbox" class="mini"></td>
-											<td>0011</td>
-											<td>徐晗</td>
-											<td>神经科</td>
-											<td>周三上午</td>
-											<td><a href="">编辑</a><a href="">删除</a></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</section>
 	<!-- 底部 -->
@@ -188,10 +112,7 @@
 <script>
 	tableContentHeight($(".personalBox"));
 	$(function(){
-		$(".nav-tabs>li>a:first").tab("show");
-		// $(window).resize(function(){ 
-		// 	tableContentHeight($(".tableContent"));
-		// });
+		$(".nav-tabs>li>a.individual").tab("show");
 	});
 	function tableContentHeight(data) { //底部footer调整
 		if(data.height() > $(window).height()){

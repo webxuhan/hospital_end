@@ -183,4 +183,15 @@ class XingController extends HomebaseController {
         $list = $this->doctor_model->where('disease_id='.$disease_id)->field('doctor_id,doctor_name')->select();
         echo json_encode($list);
    }
+    /**
+    *查看疾病
+    *
+    *@author wuxin
+    */
+    public function patientInfo(){
+        $this->display(":patientInfo");
+    }
+    public function safety(){
+        $this->display(":safety");
+    }
 }
