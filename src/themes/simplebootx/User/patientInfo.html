@@ -339,7 +339,7 @@
 					$.ajax({
 				    	url:"{:U('Patients/delete')}",
 						method:"get",
-						data:{patient_id,patientid},
+						data:{patient_id:patientid},
 						success:function(data){
 							if(data.status == 1){
 								noty({
@@ -358,7 +358,7 @@
 						}
 				    });
 					layer.close(index);
-				},
+				}
 			})
 		})
 	});
