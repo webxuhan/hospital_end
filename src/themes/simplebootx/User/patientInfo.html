@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>山西省医院挂号平台</title>
+	<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" >
+	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+</head>
+<body>
+	<!-- 头部 -->
+	<div class="dbnav">
+		<div class="dbnav_context">
+			<p class="dbnav_context_left">
+				<img src="__PUBLIC__/images/dbnav.png" alt=""><span>15111511431电话预约</span>
+			</p>
+			<p class="dbnav_context_right" id="isLogin">欢迎来到山西省预约挂号平台 请
+				<a href="{:U('Login/index')}" class="db_login">登录</a>
+				<a href="{:U('Register/index')}" class="db_register">注册</a>
+			</p>
+		</div>
+	</div>
+	<div class="top">
+		<div class="top_left"><a href=""><img src="__PUBLIC__/images/logo.png" alt=""></a></div>
+		<div class="top_search">
+			<form action="" method="get" name="search">
+				<div class="option"><span>疾病</span></div>
+				<div class="sbox"><input type="text" placeholder="请输入搜索内容" autocomplete="off"></div>
+				<div class="sbtn">
+					<input type="submit" value="">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="nav_index">
+		<div class="nav_box">
+			<ul class="nav_ul">
+				<li><a href="{:U('Xing/index')}">首页</a></li>
+				<li><a href="{:U('Xing/diseaseRegistered')}">按疾病挂号</a></li>
+				<li><a href="{:U('Xing/doctorRegistered')}">按医生挂号</a></li>
+				<li><a href="{:U('Xing/visitTheTable')}">医生出诊表</a></li>
+				<li><a href="#">最新公告</a></li>
+				<li class="personalCenter nav_color"><a href="{:U('Xing/personalCenter')}">个人中心</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- 头部结束 -->
+	<!-- 主内容区 -->
+	<section class="content personalBox">
+		<!-- 内容导航 -->
+		<ul class="nav nav-tabs doctorTimeNav">
+			<li><a href="{:U('Xing/personalCenter')}">个人信息</a></li>
+			<li><a href="{:U('Xing/safety')}">安全中心</a></li>
+			<li><a data-target="#patientInfo" data-toggle="tab" class="patientInfo">病人信息</a></li>
+		</ul>
+		<div class="tab-content">
+			<!-- 病人信息 -->
+			<div class="patientInfo tab-pane" id="patientInfo">
+				<!-- 查询头部 -->
+				<div class="row">
+					<div class="col-xs-12 patientInfoHead">
+						<button type="button" id="deleteBtn" data-loading-text='loading' class="btn btn-primary" autocomplete="off">删除</button>
+					<button type="button" id="addBtn" data-loading-text='loading' class="btn btn-primary" autocomplete="off">添加</button>
+					</div>
+				</div>
+				<!-- 基本信息表格 -->
+				<div class="row patientTable">
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-body table-responsive no-padding">
+								<table class="table table-hover">
+									<tbody>
+										<tr>
+											<th><input type="checkbox" class="mini" id="selectAll"></th>
+											<th>姓名</th>
+											<th>手机号码</th>
+											<th>电子邮箱</th>
+											<th>联系地址</th>
+											<th>操作</th>
+										</tr>
+										<tr class="datalist">
+											<td><input type="checkbox" class="mini"></td>
+											<td>超超</td>
+											<td>12312341234</td>
+											<td>123@qq.com</td>
+											<td>湖南长沙</td>
+											<td>
+												
+											</td>
+										</tr>
+										<tr class="datalist">
+											<td><input type="checkbox" class="mini"></td>
+											<td>超超</td>
+											<td>12312341234</td>
+											<td>123@qq.com</td>
+											<td>湖南长沙</td>
+											<td><a href="">编辑</a><a href="">删除</a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- 模态框 -->
+	<div class="popupDiv" style="display:none">
+			<form action="">
+					<div class="formgroup usename">
+						<span class="name">真实姓名:</span>
+						<div class="formInputBox"><input type="text" id="usename" name="hosuser_name" autocomplete="off"></div>
+						<div class="hintBox">
+							<span class="errhint">用户名不能为空</span>
+						</div>
+					</div>
+					<div class="formgroup">
+						<span class="name">性别:</span>
+						<div class="formInputBox gendersBox">
+							<input id="man" type="radio" checked="checked" name="gender" />男<input id="woman" type="radio"  name="gender"/>女
+						</div>
+						<div class="hintBox">
+							<span class="errhint">用户名不能为空</span>
+						</div>
+					</div>
+					<div class="formgroup idNumber">
+						<span class="name">身份证号:</span>
+						<div class="formInputBox"><input type="text" id="idNumber" name="idcard"></div>
+						<div class="hintBox">
+							<span class="errhint">请输入有效证件号码注册</span>
+							<span class="errhint">身份证不合法</span>
+						</div>
+					</div>
+					<div class="formgroup phoneNumber">
+						<span class="name">手机号码:</span>
+						<div class="formInputBox"><input type="text" id="phoneNumber" name="mobile"></div>
+						<div class="hintBox">
+							<span class="errhint">请输入有效的手机号码</span>
+						</div>
+					</div>
+					<div class="formgroup email">
+						<span class="name">电子邮箱:</span>
+						<div class="formInputBox"><input type="text" id="email" name="email"></div>
+						<div class="hintBox">
+							<span class="errhint">请输入有效的Email</span>
+						</div>
+					</div>
+					<!-- <div class="formgroup">
+						<span class="name">联系地址:</span>
+						<div class="formInputBox"><input type="text" id="contactAddress" name="address"></div>
+						<div class="hintBox">
+							<span>
+								<div class="annotation">此为您常用的联系地址</div>
+							</span>
+							<span class="errhint"></span>
+						</div>
+					</div> -->
+					<!-- <button>确认编辑</button> -->
+				</form>
+	</div>
+	<!-- 底部 -->
+	<div class="index_footer">
+		<div class="templatemo_footer">Copyright © 2048 <a href="#">山西省医院</a> | Template from wuxin</div>
+	</div>
+</body>
+<script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.page.js"></script>
+<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+	tableContentHeight($(".personalBox"));
+	$(function(){
+		$(".nav-tabs>li>a.patientInfo").tab("show");
+		//表格全选功能
+		$("#selectAll").on("click",function(){
+			if(this.checked){
+				 $(".datalist :checkbox").prop("checked", true);  
+			} else {
+				$(".datalist :checkbox").prop("checked", false);  
+			}
+		})
+		//添加病人信息
+		$("#addBtn").on("click",function(){
+			$(".popupDiv").css("display","inline-block");
+			layer.open({
+			  type: 1, 	//类型为页面
+			  title:"添加病人信息", //设置标题
+			  area: ['680px', '450px'], //设置宽高
+			  content: $(".popupDiv"), //弹出层内容
+			  move: false,
+			  btn: ['确认', '取消'],
+			  yes: function(index, layero){ //点击确认后触发
+			    //do something
+			    layer.close(index); //如果设定了yes回调，需进行手工关闭
+			    console.log("yes");
+			  },
+			  end: function(){
+			  	$(".popupDiv").css("display","none");
+			  }
+			});
+		})
+	});
+	function tableContentHeight(data) { //底部footer调整
+		if(data.height() > $(window).height()){
+
+		} else {
+			$(".personalBox").css("height",$(window).height()-266);
+		}
+	}
+</script>
+</html>

@@ -1017,3 +1017,7 @@ div.individual div.formInputBox>input,div.safety div.formInputBox>input{height: 
     width: 100%;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
+
+.popupDiv .formInputBox>input{height: 32px}
+.popupDiv div.gendersBox>input{width: 50px;height: 18px}
+.popupDiv .formgroup>.hintBox{width: 180px}
