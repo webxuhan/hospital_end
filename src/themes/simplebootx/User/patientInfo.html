@@ -94,7 +94,7 @@
 											<td>{$vo.patient_email}</td>
 											<td>{$vo.patient_idcard}</td>
 											<td>
-												<button class="btn btn-primary btn-xs" id="editTrBtn" patientid="{$vo.patient_id}">
+												<button class="btn btn-primary btn-xs editpatientBtn" id="editTrBtn" patientid="{$vo.patient_id}">
 													<span class="fa fa-fw fa-edit" aria-hidden="true"></span>编辑
 												</button>
 												<button class="btn btn-default btn-xs" id="deleteTrBtn">
@@ -264,7 +264,7 @@
 			});
 		});
 		//编辑病人信息
-		$("#editTrBtn").on("click",function(){
+		$(".editpatientBtn").on("click",function(){
 			var patientid = $(this).attr("patientid");
 			console.log(patientid);
 			$(".editPopupDiv").css("display","inline-block");
