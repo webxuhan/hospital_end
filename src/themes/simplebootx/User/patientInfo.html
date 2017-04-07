@@ -200,6 +200,10 @@
 					<input type="hidden" id="patient_id" name="patient_id">
 				</form>
 	</div>
+	<!-- 删除病人信息 -->
+	<!-- <div class="deletePopupDiv popupDiv" style="display:none">
+		
+	</div> -->
 	<!-- 底部 -->
 	<div class="index_footer">
 		<div class="templatemo_footer">Copyright © 2048 <a href="#">山西省医院</a> | Template from wuxin</div>
@@ -267,12 +271,12 @@
 		$(".editpatientBtn").on("click",function(){
 			var patientid = $(this).attr("patientid");
 			console.log(patientid);
-			$(".editPopupDiv").css("display","inline-block");
 			$.ajax({
 		    	url:"{:U('Patients/edit')}",
 				method:"post",
 				data:{patient_id:patientid},
 				success:function(data){
+					$(".editPopupDiv").css("display","inline-block");	
 					var obj = eval('('+data+')');
 					console.log(obj.patient_id);
 					$("#editpatient input[name='patient_name']").val(obj.patient_name);
@@ -321,6 +325,16 @@
 				}
 		    });
 			
+		});
+		// 删除病人信息
+		$("#deleteTrBtn").on("click",function(){
+			layer.open({
+				title: '提示',
+				icon:5,
+				content: '确定要删除此条信息吗？',
+				btn: ['确认', '取消'],
+				move:false
+			})
 		})
 	});
 	function tableContentHeight(data) { //底部footer调整
