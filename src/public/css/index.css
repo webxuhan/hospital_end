@@ -1021,3 +1021,15 @@ div.individual div.formInputBox>input,div.safety div.formInputBox>input{height: 
 .popupDiv .formInputBox>input{height: 32px}
 .popupDiv div.gendersBox>input{width: 50px;height: 18px}
 .popupDiv .formgroup>.hintBox{width: 180px}
+.patientTable .btn-primary {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff;
+}
+.patientTable .btn{
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid transparent;
+}
+.patientTable .btn-xs{border: 1px solid #ccc}
