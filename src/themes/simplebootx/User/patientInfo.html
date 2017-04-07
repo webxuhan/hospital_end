@@ -339,8 +339,9 @@
 					$.ajax({
 				    	url:"{:U('Patients/delete')}",
 						method:"get",
-						data:{patient_id,patientid},
+						data:{patient_id:patientid},
 						success:function(data){
+							console.log("jinru");
 							if(data.status == 1){
 								noty({
 									text: data.info,
@@ -348,6 +349,7 @@
 						            layout:"center"
 								});
 							$('body').load("{:U('Xing/patientInfo')}");
+							console.log("删除执行成功");
 							}else{
 								noty({
 									text: data.info,
@@ -359,6 +361,9 @@
 				    });
 					layer.close(index);
 				},
+				end:function(){
+					$('body').load("{:U('Xing/patientInfo')}");
+				}
 			})
 		})
 	});
