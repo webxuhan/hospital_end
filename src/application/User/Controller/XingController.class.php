@@ -9,6 +9,7 @@ class XingController extends HomebaseController {
     protected $disease_model;
     protected $doctor_model;
     protected $hosuser_model;
+    protected $patient_model;
 
     /**
      * 验证是否开启记录
@@ -20,6 +21,8 @@ class XingController extends HomebaseController {
         $this->disease_model = M('Disease');
         $this->doctor_model = M('Doctor');
         $this->hosuser_model = M('Hosuser');
+        $this->patient_model = D("Common/Patients");
+        $this->hosuser_id = get_current_userid();
     }
     
     //搜索结果页面
@@ -198,6 +201,10 @@ class XingController extends HomebaseController {
     *@author wuxin
     */
     public function patientInfo(){
+        $patients = $this->patient_model
+                         ->where('user_id='.$this->hosuser_id) 
+                         ->select();
+        $this->assign("patients", $patients);
         $this->display(":patientInfo");
     }
     public function safety(){
