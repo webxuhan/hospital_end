@@ -327,13 +327,38 @@
 			
 		});
 		// 删除病人信息
-		$("#deleteTrBtn").on("click",function(){
+		$(".delpatientBtn").on("click",function(){
+			var patientid = $(this).attr("patientid");
 			layer.open({
 				title: '提示',
 				icon:5,
 				content: '确定要删除此条信息吗？',
 				btn: ['确认', '取消'],
-				move:false
+				move:false,
+				yes: function(index, layero){ //点击确认后触发
+					$.ajax({
+				    	url:"{:U('Patients/delete')}",
+						method:"get",
+						data:{patient_id,patientid},
+						success:function(data){
+							if(data.status == 1){
+								noty({
+									text: data.info,
+						            type:"success",
+						            layout:"center"
+								});
+							$('body').load("{:U('Xing/patientInfo')}");
+							}else{
+								noty({
+									text: data.info,
+						            type:"error",
+						            layout:"center"
+								});
+							}
+						}
+				    });
+					layer.close(index);
+				},
 			})
 		})
 	});

@@ -47,6 +47,7 @@ class PatientsController extends HomebaseController {
 	public function delete(){
 		if(isset($_GET['patient_id'])){
             $id = I("get.patient_id",0,'intval');
+            echo $id;
             $find = M("Order")->where('patient_id='.$id)->find();
             if($find){
             	$this->error("该病人下存在挂号订单，无法删除");
