@@ -276,7 +276,7 @@
 				method:"post",
 				data:{patient_id:patientid},
 				success:function(data){
-					$(".editPopupDiv").css("display","inline-block");
+					$(".editPopupDiv").css("display","inline-block");	
 					var obj = eval('('+data+')');
 					console.log(obj.patient_id);
 					$("#editpatient input[name='patient_name']").val(obj.patient_name);
