@@ -60,8 +60,7 @@
 					 <td colspan="2">
 		            <span class="btn btn-primary finddoctor">选择医生</span>
 		            </td>       
-	            </tr>
-	            
+	            </tr> 
             </table>
             <table border="1px" style="margin-top:20px;display:none;" class="doctortime">
             	<tr align='center'>
@@ -197,13 +196,8 @@
 									$("input[name='doctime']").css("display","none");
 									week.each(function(){
 										var w = this;
-										// console.log("w:",w);
 										b.forEach(function(item,index){
-											// console.log("item:",item);
-											// console.log("w:",w.value);
 											if(w.value == item){
-												// console.log("w:",w);
-
 												$(w).css("display","inline-block");
 											}
 										})

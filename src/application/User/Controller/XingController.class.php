@@ -105,7 +105,19 @@ class XingController extends HomebaseController {
         $this->assign("current_page", $current_page);
         $this->display(":doctorRegistered");
    }
+   /**
+    *挂号预约
+    *
+    *@author wuxin
+    */
     public function doctorRegistration(){
+        $doctor_id = I('doctor_id');
+        $list = $this->doctor_model->where('doctor_id='.$doctor_id)->find();
+        $this->assign("doctor", $list);
+        $cal = calendar();
+        $patient = $this->patient_model->where('user_id='.$this->hosuser_id)->select();
+        $this->assign("cal", $cal);
+        $this->assign("patients", $patient);
         $this->display(":doctorRegistration");
     }
    /**

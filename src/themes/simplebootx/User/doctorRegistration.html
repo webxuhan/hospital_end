@@ -62,77 +62,81 @@
 					<img src="__PUBLIC__/images/doctor_1.jpg" alt="">
 				</div>
 				<div class="doctor_infoContent">
-					<div><span>医生姓名:</span>时世栋</div>
-					<div><span>医生编号:</span>10001112</div>
-					<div><span>联系电话:</span>13111111111</div>
-					<div><span>科室:</span>脑科</div>
-					<div><span>疾病科:</span>脑血管疾病</div>
+					<div><span>医生姓名:</span>{$doctor.doctor_name}</div>
+					<div><span>医生编号:</span>{$doctor.doctor_number}</div>
+					<div><span>联系电话:</span>{$doctor.doctor_mobile}</div>
+					<div><span>科室:</span>{$doctor.bdept_name}</div>
+					<div><span>疾病科:</span>{$doctor.disease_name}</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- 1111111111111111111111 -->
-	<form action="" class="gh_form">
-		<!-- 预约时间表 -->
-		<div class="gh_workTime">
-			<table>
-				<thead>
-					<td>时间</td>
-					<td><p>04-09</p>周日</td>
-					<td><p>04-10</p>周一</td>
-					<td><p>04-09</p>周日</td>
-					<td><p>04-09</p>周日</td>
-					<td><p>04-09</p>周日</td>
-					<td><p>04-09</p>周日</td>
-					<td><p>04-09</p>周日</td>
-				</thead>
-				<tbody>
-					<tr>
-						<td>上午</td>
-						<td></td>
-						<td></td>
-						<td><input type="radio" name="doctime"></td>
-						<td></td>
-						<td></td>
-						<td><input type="radio" name="doctime"></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>下午</td>
-						<td></td>
-						<td></td>
-						<td><input type="radio" name="doctime"></td>
-						<td></td>
-						<td></td>
-						<td><input type="radio" name="doctime"></td>
-						<td><input type="radio" name="doctime"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+	<form action="{:U('Treat/add_post')}" class="gh_form">
+		<input type="hidden" name="doctor_id" value="{$doctor.doctor_id}">
+		<input type="hidden" name="doctor_name" value="{$doctor.doctor_name}">
+		<input type="hidden" name="doctor_mobile" value="{$doctor.doctor_mobile}">
+		<input type="hidden" name="doctor_number" value="{$doctor.doctor_number}">
+		<input type="hidden" name="bdept_name" value="{$doctor.bdept_name}">
+		<input type="hidden" name="disease_name" value="{$doctor.disease_name}">
 		<!-- 选择病人 -->
 		<div class="selectPatient">
 			<span class="selectPatientBtn">选择挂号病人</span>
 			<div class="selectPatientContent">
 				<table class="selectPatientTable">
 					<tbody>
-						<tr>
-							<td class="sone"><input type="checkbox"></td>
-							<td class="stwo">超超</td>
-							<td class="sthree">女</td>
-							<td class="sfour"><span>电话:</span>13111111111</td>
-							<td class="sfive"><span>身份证号码:</span>430726199507151111</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td>超超</td>
-							<td>女</td>
-							<td><span>电话:</span>13111111111</td>
-							<td><span>身份证号码:</span>430726199507151111</td>
-						</tr>
+					<volist name="patients" id="vo">
+					<tr>
+						<td class="sone"><input type="radio" name="patient_id" value="{$vo.patient_id}"></td>
+						<td class="stwo">{$vo.patient_name}</td>
+						<td class="sthree">女</td>
+						<td class="sfour"><span>电话：</span> {$vo.patient_mobile}</td>
+						<td class="sfive"><span>身份证号码：</span>{$vo.patient_idcard}</td>
+					</tr>
+					</volist>
 					</tbody>
 				</table>
 			</div>
+		</div>
+		<!-- 预约时间表 -->
+		<span class="DoctortimeBtn">选择挂号时间</span>
+		<div class="gh_workTime"  style="display:none;">
+			<table>
+				<thead>
+					<td style="width:100px;">时间</td>
+            		<php>
+            			$arr = array('1' => '周一','2' => '周二','3' => '周三','4' => '周四','5' => '周五','6' => '周六','7' => '周日');
+            		</php>
+	            	<foreach name="cal" item="c" key="k">
+					<td style="width:100px;">
+						{$k}<br>{$arr[$c]}
+		            </td>       
+		            </foreach>
+				</thead>
+				<tbody>
+					<php>
+	            	$week = date("w")+1;
+	            	$start = 2*$week - 1;
+	            	$end = 2*$week;
+	           		</php>
+					<tr>
+	            		<td style="width:100px;">上午</td>
+	            		<for start="$start" end="$start+13" step="2">
+	            		<td>
+	            			<input type="radio" name="doctime" <if condition="$i gt 14">value="{$i-14}" <else /> value="{$i}"</if>>	
+	            		</td>
+	            		</for>	
+	            	</tr>
+	            	<tr>
+	            		<td style="width:100px;">下午</td>
+	            		<for start="$end" end="$end+13" step="2">
+	            		<td>
+	            			<input type="radio" name="doctime" <if condition="$i gt 14">value="{$i-14}" <else /> value="{$i}"</if>>	
+	            		</td>
+	            		</for>	
+	            </tr>
+				</tbody>
+			</table>
 		</div>
 		<div class="btnBox">
 			<span class="btn"><input type="submit" value="提交" id="gh_btn"></span>
@@ -148,15 +152,68 @@
 <!-- <script src="__PUBLIC__/js/common.js"></script> -->
 <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/jquery.page.js"></script>
+<script src="__PUBLIC__/js/noty/noty.js"></script>
 <script>
 	$(function(){
-		$(".selectPatientBtn").on("click",function(){
-			var result = $(".selectPatientContent").css("display");
-			if(result == "none"){
-				 $(".selectPatientContent").css("display","block");
-			}else{
-				 $(".selectPatientContent").css("display","none");
-			}
+		// $(".selectPatientBtn").on("click",function(){
+		// 	var result = $(".selectPatientContent").css("display");
+		// 	if(result == "none"){
+		// 		 $(".selectPatientContent").css("display","block");
+		// 	}else{
+		// 		 $(".selectPatientContent").css("display","none");
+		// 	}
+		// });
+		/*选择医生挂号时间*/
+		$(".DoctortimeBtn").on('click', function(){
+			var doctorid = "{$doctor['doctor_id']}";
+			$.ajax({
+				url:"{:U('Treat/doctorcal')}",
+				method:"post",
+				data:{doctor_id:doctorid},
+				success:function(data){
+					var b = data.split(",");
+					$(".doctortime").css("display","inline-block");
+					var week = $("input[name='doctime']");
+					$("input[name='doctime']").css("display","none");
+					week.each(function(){
+						var w = this;
+						b.forEach(function(item,index){
+							if(w.value == item){
+								$(w).css("display","inline-block");
+							}
+						})
+					});	
+					$(".gh_workTime").css("display","block");
+				}
+			});
+		});
+
+		//提交
+		$("#gh_btn").on('click', function(ev){
+			ev.preventDefault();
+			var doctorid = "{$doctor['doctor_id']}";
+			$.ajax({
+				url:"{:U('Treat/add_post')}",
+				method:"post",
+				data:$(".gh_form").serialize(),
+				success:function(data){
+					if(data.status == 1){
+						noty({
+							text: data.info,
+				            type:"success",
+				            layout:"center"
+						});
+					$('body').load("{:U('Xing/doctorRegistration')}"+"&doctor_id="+doctorid);
+					}else{
+						noty({
+							text: data.info,
+				            type:"error",
+				            layout:"center"
+						});
+					}
+					$('body').load("{:U('Xing/doctorRegistration')}"+"&doctor_id="+doctorid);
+				}
+			});
 		});
 	})
 </script>

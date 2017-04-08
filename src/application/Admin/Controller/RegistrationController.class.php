@@ -191,8 +191,8 @@ class RegistrationController extends AdminbaseController {
 		$appoint_time = $appoint+$todayTime;
 		$order_num = date("ymd",$appoint_time);
 		/*序号*/
-		$appoint_num = $this->order_model->where(array('appoint_time' => $appoint_time))->count();
-		$position_appointnum = $this->appoint_number();//预约量
+		$appoint_num = $this->order_model->where(array('appoint_time' => $appoint_time,'doctor_id' => $_POST['doctor_id']))->count();
+		$position_appointnum = $this->appoint_number($_POST['doctor_id']);//预约量
 		if($appoint_num > $position_appointnum){
 			$this->error('挂号量已满');
 		}elseif($appoint_num < 9){
@@ -316,12 +316,12 @@ class RegistrationController extends AdminbaseController {
 			return $week;
 	}
 	//预约量
-	public function appoint_number(){
+	public function appoint_number($d){
 		$number = $this->doctor_model
 				->table("__DOCTOR__ D")
 				->join("__POSITION__ P ON P.position_id = D.position_id")
-				->field("position_appointnum")	
-				->find();
+				->where('D.doctor_id='.$d)
+				->getField("P.position_appointnum");	
 		return $number;
 	}
 
