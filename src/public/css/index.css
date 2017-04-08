@@ -834,7 +834,9 @@ span.disableBtn input{cursor: not-allowed}
 
 /*个人中心*/
 li.personalCenter{float: right;}
-.personalBox{width: 1000px;margin:0 auto;margin-top: 10px;overflow: hidden;}
+.personalBox{width: 1000px;margin:0 auto;margin-top: 10px;overflow: hidden;position: relative;}
+.personalBox>span{position: absolute;right: 4px;top: 12px;}
+.personalBox>span>img{width: 20px;height: 20px;margin-right: 2px}
 /*个人中心-个人信息*/
 div.individual div.formInputBox>input,div.safety div.formInputBox>input{height: 32px}
 .individual button,.safety button{width: 70px; height: 36px;border: none;border-radius: 5px;margin-left: 220px;margin-top: 20px}

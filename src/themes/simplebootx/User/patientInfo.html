@@ -61,6 +61,8 @@
 			<li><a href="{:U('Xing/safety')}">安全中心</a></li>
 			<li><a data-target="#patientInfo" data-toggle="tab" class="patientInfo">病人信息</a></li>
 		</ul>
+		<span><img src="__PUBLIC__/images/lubiao.png" alt=""><a href="">挂号记录</a></span>
+
 		<div class="tab-content">
 			<!-- 病人信息 -->
 			<div class="patientInfo tab-pane" id="patientInfo">
@@ -215,7 +217,7 @@
 <script src="__PUBLIC__/layer/layer.js"></script>
 <script src="__PUBLIC__/js/noty/noty.js"></script>
 <script>
-	// tableContentHeight($(".personalBox"));
+	tableContentHeight($(".personalBox"));
 	$(function(){
 		$(".nav-tabs>li>a.patientInfo").tab("show");
 		//表格全选功能
