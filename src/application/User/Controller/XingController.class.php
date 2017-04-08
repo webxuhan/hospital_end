@@ -105,6 +105,9 @@ class XingController extends HomebaseController {
         $this->assign("current_page", $current_page);
         $this->display(":doctorRegistered");
    }
+    public function doctorRegistration(){
+        $this->display(":doctorRegistration");
+    }
    /**
     *医生出诊表
     *
