@@ -23,7 +23,7 @@ class PatientsController extends HomebaseController {
 			$find = $this->patient_model->where($_POST)->find();
 			if(!$find){
 				$count = $this->patient_model->where('user_id='.get_current_userid())->count();
-				if($count > 10){
+				if($count >= 10){
 					$this->error("病人数量达到上限");
 				}else{
 					if ($this->patient_model->create() !== false) {
