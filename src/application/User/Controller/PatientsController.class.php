@@ -47,10 +47,10 @@ class PatientsController extends HomebaseController {
 	public function delete(){
 		if(isset($_GET['patient_id'])){
             $id = I("get.patient_id",0,'intval');
-            $find = M("Order")->where('patient_id='.$id)->find();
-            if($find){
-            	$this->error("该病人下存在挂号订单，无法删除");
-            }
+            // $find = M("Order")->where('patient_id='.$id)->find();
+            // if($find){
+            // 	$this->error("该病人下存在挂号订单，无法删除");
+            // }
             if ($this->patient_model->where('patient_id='.$id)->delete()){
                 $this->success("删除成功");
             } else {
@@ -59,10 +59,10 @@ class PatientsController extends HomebaseController {
         }
         if(isset($_POST['ids'])){
 			$ids = I('post.ids/a');
-			$find = M("Order")->where(array('patient_id'=>array('in',$ids)))->find();
-            if($find){
-            	$this->error("有病人下存在挂号订单，无法删除");
-            }
+			// $find = M("Order")->where(array('patient_id'=>array('in',$ids)))->find();
+   //          if($find){
+   //          	$this->error("有病人下存在挂号订单，无法删除");
+   //          }
 			if ($this->patient_model->where(array('patient_id'=>array('in',$ids)))->delete()){
 				$this->success("删除成功");
 			} else {

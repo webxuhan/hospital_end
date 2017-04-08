@@ -2425,3 +2425,45 @@ function expire(){
 		return false;
 	}
 }
+/**
+     * 预约日期
+     * @author wuxin
+     */
+	function calendar(){
+		/*获得当前日期，展示医生一周的工作时间*/
+		$time=time();
+		$month=date("m");
+		$day=date("d");
+		$xinqi=date("l");
+		$year=date("Y");
+		$days=date("t",$time);
+		$arr=array();
+		$month1=$month+1;
+		for($j=1;$j<8;$j++){
+			$m=$day+$j;
+			if($m>$days){
+				$month=$month1;
+				$m-=$days;
+			}
+			if($month>12){
+				$month=1;
+			}
+			if($m<10){
+				$m = "0".$m;
+			}
+			$cal = $month."-".$m;
+			$arr[$cal]=getTimeWeek($time+24*3600,$j-1);
+		}
+		return $arr;
+		/*展示结束*/
+	}
+	function getTimeWeek($time,$i){
+		// $weekarray = array("日","一", "二", "三", "四", "五", "六");
+		$oneD = 24 * 60 * 60;
+		// return "周" . $weekarray[date("w", $time + $oneD * $i)];
+		$week = date("w", $time + $oneD * $i);
+		if($week == 0){
+			$week = 7;
+		}
+		return $week;
+	}

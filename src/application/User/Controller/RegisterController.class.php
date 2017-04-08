@@ -6,6 +6,7 @@ use Common\Controller\HomebaseController;
 class RegisterController extends HomebaseController {
 
 	 protected $hosuser_model;
+	 protected $doctime_model;
 
     /**
      * 验证是否开启记录
@@ -14,7 +15,7 @@ class RegisterController extends HomebaseController {
     public function _initialize() {
         parent::_initialize();
         $this->hosuser_model = M('Hosuser');
-        
+        $this->doctime_model = M('Doctime'); 
     }
 	
     // 前台用户注册
@@ -58,6 +59,4 @@ class RegisterController extends HomebaseController {
     	}
 
 	}
-	
-	
 }
