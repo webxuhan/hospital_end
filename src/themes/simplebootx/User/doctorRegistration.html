@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>山西省医院挂号平台</title>
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+	<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" >
+	<link rel="stylesheet" href="__PUBLIC__/css/combo.select/combo.select.css">
+</head>
+<body>
+	<!-- 头部 -->
+	<div class="dbnav">
+		<div class="dbnav_context">
+			<p class="dbnav_context_left">
+				<img src="__PUBLIC__/images/dbnav.png" alt=""><span>15111511431电话预约</span>
+			</p>
+			<if condition="sp_is_user_login()">
+			<p class="dbnav_context_right" id="isLogin">
+				{$_SESSION['hosuser']['hosuser_name']} 欢迎来到山西省预约挂号平台
+				<a href="{:U('Index/logout')}" class="db_login">注销</a>
+			</p>
+			<else />
+			<p class="dbnav_context_right" id="isLogin">欢迎来到山西省预约挂号平台 请
+				<a href="{:U('Login/index')}" class="db_login">登录</a>
+				<a href="{:U('Register/index')}" class="db_register">注册</a>
+			</p>
+			</if>
+		</div>
+	</div>
+	<div class="top">
+		<div class="top_left"><a href=""><img src="__PUBLIC__/images/logo.png" alt=""></a></div>
+		<div class="top_search">
+			<form action="" method="get" name="search">
+				<div class="option"><span>疾病</span></div>
+				<div class="sbox"><input type="text" placeholder="请输入搜索内容" autocomplete="off"></div>
+				<div class="sbtn">
+					<input type="submit" value="">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="nav_index">
+		<div class="nav_box">
+			<ul class="nav_ul">
+				<li><a href="{:U('Xing/index')}">首页</a></li>
+				<li><a href="{:U('Xing/diseaseRegistered')}">按疾病挂号</a></li>
+				<li class="nav_color"><a href="{:U('Xing/doctorRegistered')}">按医生挂号</a></li>
+				<li><a href="{:U('Xing/visitTheTable')}">医生出诊表</a></li>
+				<li><a href="#">最新公告</a></li>
+				<li class="personalCenter"><a href="{:U('Login/index')}">个人中心</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- 头部结束 -->
+	<div class="ksgh_top">
+		<div class="ksgh_top_title">
+			<p class="ksgh_top_p">医生简介</p>
+		</div>
+		<div class="ksgh_top_content">
+			<div class="doctor_info">
+				<div class="doctorImgBox">
+					<img src="__PUBLIC__/images/doctor_1.jpg" alt="">
+				</div>
+				<div class="doctor_infoContent">
+					<div><span>医生姓名:</span>时世栋</div>
+					<div><span>医生编号:</span>10001112</div>
+					<div><span>联系电话:</span>13111111111</div>
+					<div><span>科室:</span>脑科</div>
+					<div><span>疾病科:</span>脑血管疾病</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 1111111111111111111111 -->
+	<form action="" class="gh_form">
+		<!-- 预约时间表 -->
+		<div class="gh_workTime">
+			<table>
+				<thead>
+					<td>时间</td>
+					<td><p>04-09</p>周日</td>
+					<td><p>04-10</p>周一</td>
+					<td><p>04-09</p>周日</td>
+					<td><p>04-09</p>周日</td>
+					<td><p>04-09</p>周日</td>
+					<td><p>04-09</p>周日</td>
+					<td><p>04-09</p>周日</td>
+				</thead>
+				<tbody>
+					<tr>
+						<td>上午</td>
+						<td></td>
+						<td></td>
+						<td><input type="radio" name="doctime"></td>
+						<td></td>
+						<td></td>
+						<td><input type="radio" name="doctime"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>下午</td>
+						<td></td>
+						<td></td>
+						<td><input type="radio" name="doctime"></td>
+						<td></td>
+						<td></td>
+						<td><input type="radio" name="doctime"></td>
+						<td><input type="radio" name="doctime"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- 选择病人 -->
+		<div class="selectPatient">
+			<span class="selectPatientBtn">选择挂号病人</span>
+			<div class="selectPatientContent">
+				<table class="selectPatientTable">
+					<tbody>
+						<tr>
+							<td class="sone"><input type="checkbox"></td>
+							<td class="stwo">超超</td>
+							<td class="sthree">女</td>
+							<td class="sfour"><span>电话:</span>13111111111</td>
+							<td class="sfive"><span>身份证号码:</span>430726199507151111</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>超超</td>
+							<td>女</td>
+							<td><span>电话:</span>13111111111</td>
+							<td><span>身份证号码:</span>430726199507151111</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="btnBox">
+			<span class="btn"><input type="submit" value="提交" id="gh_btn"></span>
+			<!-- <span class="btn disableBtn"><button disabled="disabled">注册</button></span> -->
+			<span class="resetBtn"><a href="" onclick="javascript:history.go(-1);return false;">返回</a></span>
+		</div>
+	</form>
+	<!-- 底部 -->
+	<div class="index_footer">
+		<div class="templatemo_footer">Copyright © 2048 <a href="#">山西省医院</a> | Template from wuxin</div>
+	</div>
+</body>
+<!-- <script src="__PUBLIC__/js/common.js"></script> -->
+<script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.page.js"></script>
+<script>
+	$(function(){
+		$(".selectPatientBtn").on("click",function(){
+			var result = $(".selectPatientContent").css("display");
+			if(result == "none"){
+				 $(".selectPatientContent").css("display","block");
+			}else{
+				 $(".selectPatientContent").css("display","none");
+			}
+		});
+	})
+</script>
+</html>

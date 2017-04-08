@@ -55,7 +55,6 @@
 	<!-- <div class="inputBox">
 		<input type="text" placeholder="请您输入要挂号的医生姓名"><span>搜索</span>
 	</div> -->
-	
 	<form class="well form-search" method="post" action="{:U('Xing/doctorRegistered')}">
 		<div class="inputBox">
 			<input type="text" name="doctor_name" placeholder="请您输入要挂号的医生姓名" value="{:I('request.doctor_name/s','')}">
@@ -63,7 +62,7 @@
 		<div class="inputBox">
 			<input type="text" name="doctor_number" placeholder="请您输入要挂号的医生编号" value="{:I('request.doctor_number/s','')}">
 		</div>
-		<div class="inputBox">
+		<div class="btnBox">
 			<input type="submit" class="btn btn-primary" value="搜索" />
 			<a class="btn btn-danger" href="{:U('Xing/doctorRegistered')}">清空</a>
 		</div>
@@ -96,7 +95,7 @@
 				</div>
 				<div class="infoRgiht">
 					<div><span>参考费用:</span><span>{$vo.position_price}</span>元</div>
-					<a class="subscribeStatus">预约</a>
+					<a class="subscribeStatus" href="{:U('Xing/doctorRegistration')}">预约</a>
 				</div>
 			</div>
 		</div>

@@ -818,8 +818,11 @@ span.disableBtn input{cursor: not-allowed}
 .paging_disease_gh .tcdPageCode{float: right;position: relative;left: 22px}
 
 /*按医生挂号*/
-.inputBox{border: 1px solid #60bff2;width: 268px;height: 36px;margin: 0 auto;margin-top: 19px}
+.well{overflow: hidden;width: 1000px;margin: 0 auto;}
+.inputBox{border: 1px solid #60bff2;width: 216px;height: 36px;margin-top: 19px;float: left;margin-right: 16px}
 .inputBox>input{width: 208px;height: 36px;padding-left: 6px}
+.well>div.btnBox{float: left;margin-left: 11px}
+.well>div.btnBox>input{height: 30px;width: 54px;margin-top: 20px;margin-left: 22px;border-radius: 5px;background-color: #428bca;border-color: #357ebd;color: #fff;cursor: pointer;}
 .inputBox>span{display: inline-block;width: 54px;height: 36px;line-height: 35px;background: #60bff2;color: #fff;text-align: center;cursor: pointer;}
 
 /*医生出诊表*/
@@ -1033,3 +1036,33 @@ div.individual div.formInputBox>input,div.safety div.formInputBox>input{height: 
     border: 1px solid transparent;
 }
 .patientTable .btn-xs{border: 1px solid #ccc}
+
+/*预约挂号*/
+.doctor_info{width: 1000px;margin: 0 auto;overflow: hidden;}
+.doctor_info>div{float: left;}
+.doctor_info>div>img{width: 126px;height: 165px;border: 1px solid #ccc;padding: 2px;}
+.doctorImgBox{margin:10px 40px 10px 10px;}
+.doctor_infoContent>div{height: 36px;line-height: 36px;font-size: 16px}
+.doctor_infoContent>div>span{display: inline-block;margin-right: 19px;width: 120px;text-align: right;}
+div.gh_workTime,div.selectPatient{width: 1000px;margin: 0 auto;margin-top: 19px;overflow: hidden;}
+div.gh_workTime>table{max-width: 100%;border-collapse:collapse;border: 1px;border-spacing: 0;background-color: transparent;}
+div.gh_workTime>table>thead td{width: 125px;}
+/*div.gh_workTime>table>tbody td{line-height: 32px;}*/
+div.gh_workTime>table td{text-align: center;border: 1px solid #2C2C2C;}
+/*div.gh_workTime>table td{text-align: center;border: 1px solid #50bde8;}*/
+div.gh_workTime>table td>input{margin: 4px 0 0;cursor: pointer;}
+div.selectPatient>span{display: inline-block;width: 100px;line-height: 24px;background: #50bde8;color: #fff;cursor: pointer;text-align: center;}
+.selectPatientTable{border-collapse: collapse;max-width: 80%;margin-top: 19px}
+.selectPatientTable>tbody>tr{width: 800px}
+.selectPatientTable>tbody td{line-height: 24px;text-align: center;}
+.selectPatientTable .sone{width: 60px}
+.selectPatientTable .stwo{width: 120px}
+.selectPatientTable .sthree{width: 120px}
+.selectPatientTable .sfour{width: 180px}
+.selectPatientTable .sfive{width: 280px}
+.selectPatientTable>tbody>tr:nth-of-type(odd) td{background: #f8f9fb}
+.selectPatientTable>tbody>tr:nth-of-type(even) td{background: #fff}
+/*.selectPatientTable>tbody>tr:nth-child(even){background: #fff}
+.selectPatientTable>tbody>tr:nth-child(odd){background: #ccc}*/
+.selectPatientContent{display: none}
+.gh_form .btnBox{width: 1000px ;margin: 0 auto;margin-top: 19px;overflow: hidden;}
