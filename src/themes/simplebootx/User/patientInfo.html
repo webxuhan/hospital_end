@@ -61,7 +61,7 @@
 			<li><a href="{:U('Xing/safety')}">安全中心</a></li>
 			<li><a data-target="#patientInfo" data-toggle="tab" class="patientInfo">病人信息</a></li>
 		</ul>
-		<span><img src="__PUBLIC__/images/lubiao.png" alt=""><a href="">挂号记录</a></span>
+		<span><img src="__PUBLIC__/images/lubiao.png" alt=""><a href="{:U('Xing/gh_logCenter')}">挂号记录</a></span>
 
 		<div class="tab-content">
 			<!-- 病人信息 -->
@@ -78,11 +78,12 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-body table-responsive no-padding">
-								<table class="table table-hover">
+								<table class="table table-hover table_11">
 									<tbody>
 										<tr>
 											<th><input type="checkbox" class="mini" id="selectAll"></th>
 											<th>姓名</th>
+											<th>性别</th>
 											<th>手机号码</th>
 											<th>电子邮箱</th>
 											<th>身份证号</th>
@@ -92,6 +93,7 @@
 										<tr class="datalist">
 											<td><input type="checkbox" class="mini" name="ids[]" value="{$vo.patient_id}"></td>
 											<td>{$vo.patient_name}</td>
+											<td class="genderHtml">{$vo.patient_sex}</td>
 											<td>{$vo.patient_mobile}</td>
 											<td>{$vo.patient_email}</td>
 											<td>{$vo.patient_idcard}</td>
@@ -217,8 +219,17 @@
 <script src="__PUBLIC__/layer/layer.js"></script>
 <script src="__PUBLIC__/js/noty/noty.js"></script>
 <script>
-	tableContentHeight($(".personalBox"));
+	// tableContentHeight($(".personalBox"));
 	$(function(){
+		$(".genderHtml").each(function(){
+			if ($(this).html() == 0) {
+				$(this).html("男");
+			} else {
+				$(this).html("女");
+			}
+		})
+		console.log("111",{$vo.patient_name});
+		console.log();
 		$(".nav-tabs>li>a.patientInfo").tab("show");
 		//表格全选功能
 		$("#selectAll").on("click",function(){
@@ -299,6 +310,7 @@
 					    $.ajax({
 					    	url:"{:U('Patients/edit_post')}",
 							method:"post",
+							// async: false,
 							data:$('#editpatient').serialize(),
 							success:function(data){
 								if(data.status == 1){
@@ -318,7 +330,6 @@
 							}
 					    });
 					    layer.close(index); //如果设定了yes回调，需进行手工关闭
-					    console.log("yes");
 					  },
 					  end: function(){
 					  	$(".editPopupDiv").css("display","none");
@@ -362,32 +373,58 @@
 					layer.close(index);
 				}
 			})
-		})
-	});
-	/*批量删除*/
-	$("#deleteBtn").on('click', function(){
-		var a = $("input[name='ids[]']:checked");
-		$.ajax({
-	    	url:"{:U('Patients/delete')}",
-			method:"post",
-			data:$("input[name='ids[]']:checked").serialize(),
-			success:function(data){
-				if(data.status == 1){
-					noty({
-						text: data.info,
-			            type:"success",
-			            layout:"center"
-					});
-				$('body').load("{:U('Xing/patientInfo')}");
-				}else{
-					noty({
-						text: data.info,
-			            type:"error",
-			            layout:"center"
-					});
+		});
+		/*批量删除*/
+		$("#deleteBtn").on('click', function(){
+			var s = false;
+			$(".datalist :checkbox").each(function(){
+				if($(this).prop("checked") == true){
+					s = true;
+					return false;
 				}
+				
+			});
+			if (s == false) {
+				noty({
+					text:"请先选择要删除的病人！",
+					type:"error",
+					layout:"center"
+				});
+			} else {
+				layer.open({
+					title: '提示',
+					icon:5,
+					content: '确定要删除此批病人信息吗？',
+					btn: ['确认', '取消'],
+					move:false,
+					yes: function(index, layero){ //点击确认后触发
+						var a = $("input[name='ids[]']:checked");
+						$.ajax({
+					    	url:"{:U('Patients/delete')}",
+							method:"post",
+							data:$("input[name='ids[]']:checked").serialize(),
+							success:function(data){
+								if(data.status == 1){
+									noty({
+										text: data.info,
+							            type:"success",
+							            layout:"center"
+									});
+								$('body').load("{:U('Xing/patientInfo')}");
+								}else{
+									noty({
+										text: data.info,
+							            type:"error",
+							            layout:"center"
+									});
+								}
+							}
+					    });
+						layer.close(index);
+					}
+				});
 			}
-	    });
+		});
 	});
 	function tableContentHeight(data) { //底部footer调整
 		if(data.height() > $(window).height()){

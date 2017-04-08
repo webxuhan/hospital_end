@@ -225,4 +225,24 @@ class XingController extends HomebaseController {
     public function safety(){
         $this->display(":safety");
     }
+    /**
+    *挂号记录
+    *
+    *@author wuxin
+    */
+    public function gh_logCenter(){
+        $this->display(":gh_logCenter");
+    }
+    public function gh_log2(){
+        $this->display(":gh_log2");
+    }
+    public function gh_log3(){
+        $this->display(":gh_log3");
+    }
+    public function gh_log4(){
+        $this->display(":gh_log4");
+    }
+    public function gh_log5(){
+        $this->display(":gh_log5");
+    }
 }

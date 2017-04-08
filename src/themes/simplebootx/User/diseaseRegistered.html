@@ -59,7 +59,7 @@
 		<div class="ksgh_top_content">
 			<ul class="ksgh_top_ul">
 				<volist name="hot_dept" id="vo">
-				<li><a href="#">{$vo.bdept_name}</a></li>
+				<li class="ksgh_ul_li"><a>{$vo.bdept_name}</a></li>
 				</volist>
 			</ul>
 			<!-- <a href="#" class="ksgh_top_block">展开全部</a>
@@ -93,4 +93,20 @@
 		<div class="templatemo_footer">Copyright © 2048 <a href="#">山西省医院</a> | Template from wuxin</div>
 	</div>
 </body>
+<script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+<script>
+	$(function(){
+		$(".ksgh_ul_li>a").on("click",function(){
+			var data = $(this).html();
+			scrollIntoSpan(data);
+		})
+	})
+	function scrollIntoSpan(data){
+		$(".ksgh_c_p>span").each(function(){
+			if ($(this).html() == data) {
+				this.scrollIntoView();
+			}
+		})
+	}
+</script>
 </html>

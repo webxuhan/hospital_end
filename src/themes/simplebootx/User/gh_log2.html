@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>山西省医院挂号平台</title>
+	<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" >
+	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+</head>
+<body>
+	<!-- 头部 -->
+	<div class="dbnav">
+		<div class="dbnav_context">
+			<p class="dbnav_context_left">
+				<img src="__PUBLIC__/images/dbnav.png" alt=""><span>15111511431电话预约</span>
+			</p>
+			<if condition="sp_is_user_login()">
+			<p class="dbnav_context_right" id="isLogin">
+				{$_SESSION['hosuser']['hosuser_name']} 欢迎来到山西省预约挂号平台
+				<a href="{:U('Index/logout')}" class="db_login">注销</a>
+			</p>
+			<else />
+			<p class="dbnav_context_right" id="isLogin">欢迎来到山西省预约挂号平台 请
+				<a href="{:U('Login/index')}" class="db_login">登录</a>
+				<a href="{:U('Register/index')}" class="db_register">注册</a>
+			</p>
+			</if>
+		</div>
+	</div>
+	<div class="top">
+		<div class="top_left"><a href=""><img src="__PUBLIC__/images/logo.png" alt=""></a></div>
+		<div class="top_search">
+			<form action="" method="get" name="search">
+				<div class="option"><span>疾病</span></div>
+				<div class="sbox"><input type="text" placeholder="请输入搜索内容" autocomplete="off"></div>
+				<div class="sbtn">
+					<input type="submit" value="">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="nav_index">
+		<div class="nav_box">
+			<ul class="nav_ul">
+				<li><a href="{:U('Xing/index')}">首页</a></li>
+				<li><a href="{:U('Xing/diseaseRegistered')}">按疾病挂号</a></li>
+				<li><a href="{:U('Xing/doctorRegistered')}">按医生挂号</a></li>
+				<li><a href="{:U('Xing/visitTheTable')}">医生出诊表</a></li>
+				<li><a href="#">最新公告</a></li>
+				<li class="personalCenter nav_color"><a href="{:U('Xing/personalCenter')}">个人中心</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- 头部结束 -->
+	<!-- 主内容区 -->
+	<section class="content personalBox">
+		<!-- 内容导航 -->
+		<ul class="nav nav-tabs doctorTimeNav">
+			<li><a href="{:U('Xing/gh_logCenter')}">挂号预约</a></li>
+			<li><a data-target="#gh_1" href="{:U('Xing/gh_log2')}"  class="gh_2">未就诊</a></li>
+			<li><a href="{:U('Xing/gh_log3')}">已就诊</a></li>
+			<li><a href="{:U('Xing/gh_log4')}">逾期未就诊</a></li>
+			<li><a href="{:U('Xing/gh_log5')}">预约取消</a></li>
+		</ul>
+		<span><img src="__PUBLIC__/images/lubiao.png" alt=""><a href="{:U('Xing/personalCenter')}">个人信息</a></span>
+		<!-- 主内容 -->
+		<div class="tab-content">
+			<!-- 挂号预约 -->
+			<!-- 查询头部 -->
+			<div class="row searchTableHead">
+				<form>
+					<div class="col-xs-12">
+						<div class="box-body workTime-search">
+							<table class="search-table">
+								<tbody>
+									<tr>
+										<td>挂号单号: <input type="text"></td>
+										<td>病人名称: <input type="text">科室: <input type="text">疾病: <input type="text"></td>
+									</tr>
+									<tr>
+										<td>医生名称: <input type="text"></td>
+										<td>预约时间: <input type="text"><button type="button" id="searchBtn" data-loading-text="loading" class="btn btn-primary" autocomplete="off">查询</button></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- 基本信息表格 -->
+			<div class="row gh_logCentenr gh_log">
+				<div class="col-xs-12">
+					<!-- <div class="abolishTr"><button>取消预约</button></div> -->
+					<div class="box">
+						<div class="box-body table-responsive no-padding">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<!-- <th><input type="checkbox" class="mini" id="selectAll"></th> -->
+										<th>挂号单号</th>
+										<th>病人名称</th>
+										<th>科室</th>
+										<th>医生名称</th>
+										<th>疾病科</th>
+										<th>预约时间</th>
+										<th>状态</th>
+										<th>预约金额</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- <volist name="patients" id="vo"> -->
+									<tr class="datalist">
+										<!-- <td><input type="checkbox" class="mini" name="ids[]" value="{$vo.patient_id}"></td> -->
+										<td>2314315</td>
+										<td>超超</td>
+										<td>神经内科</td>
+										<td>武鑫</td>
+										<td>多动症</td>
+										<td>2017-04-11周二上午</td>
+										<td>预约成功</td>
+										<td>25.00</td>
+										<td>
+											<button class="btn btn-primary btn-xs editpatientBtn" id="editTrBtn" patientid="{$vo.patient_id}">
+												<span class="fa fa-fw fa-edit" aria-hidden="true"></span>待支付
+											</button>
+											<button class="btn btn-default btn-xs delpatientBtn" id="deleteTrBtn" patientid="{$vo.patient_id}">
+												<span class="fa fa-fw fa-trash-o" aria-hidden="true"></span>取消支付
+											</button>
+										</td>
+									</tr>
+									<tr class="datalist">
+										<td>2314315</td>
+										<td>超超</td>
+										<td>神经内科</td>
+										<td>武鑫</td>
+										<td>多动症</td>
+										<td>2017-04-11周二上午</td>
+										<td>预约成功</td>
+										<td>25.00</td>
+										<td>
+											<button class="btn btn-primary btn-xs editpatientBtn" id="editTrBtn" patientid="{$vo.patient_id}">
+												<span class="fa fa-fw fa-edit" aria-hidden="true"></span>待支付
+											</button>
+											<button class="btn btn-default btn-xs delpatientBtn" id="deleteTrBtn" patientid="{$vo.patient_id}">
+												<span class="fa fa-fw fa-trash-o" aria-hidden="true"></span>取消支付
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 分页 -->
+			<div class="paging_disease_gh gh_fenye">
+				<div id="address-paging" class="tcdPageCode"></div>
+			</div>
+		</div>
+	</section>
+	<!-- 模态框 -->
+	<!-- 底部 -->
+	<div class="index_footer">
+		<div class="templatemo_footer">Copyright © 2048 <a href="#">山西省医院</a> | Template from wuxin</div>
+	</div>
+</body>
+<script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.page.js"></script>
+<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script src="__PUBLIC__/js/noty/noty.js"></script>
+<script>
+	tableContentHeight($(".personalBox"));
+	$(function(){
+		$(".nav-tabs>li>a.gh_2").tab("show");
+		//表格全选功能
+		$("#selectAll").on("click",function(){
+			if(this.checked){
+				 $(".datalist :checkbox").prop("checked", true);  
+			} else {
+				$(".datalist :checkbox").prop("checked", false);  
+			}
+		});
+		// 分页
+		$("#address-paging").createPage({
+	        pageCount:5,
+	        current:1,
+	        backFn:function(page){
+	        	// $('body').load("{:U('Xing/doctorRegistered')}",{page:page});
+	        }
+	    });
+	});
+	function tableContentHeight(data) { //底部footer调整
+		if(data.height() > $(window).height()){
+
+		} else {
+			$(".personalBox").css("height",$(window).height()-266);
+		}
+	}
+</script>
+</html>

@@ -68,6 +68,8 @@ span.disableBtn input{cursor: not-allowed}
     padding-left: 12px;
     background: url(../images/serch.jpg) no-repeat;
     position: relative;
+    box-sizing:content-box;
+    font: medium; 
 }
 .option {
     float: left;
@@ -1013,7 +1015,7 @@ div.individual div.formInputBox>input,div.safety div.formInputBox>input{height: 
 .tableContent{overflow: hidden;}
 /*病人信息*/
 .patientInfo .patientInfoHead{margin-top: 14px}
-.patientTable .box{
+.patientTable .box,.gh_logCentenr .box{
     position: relative;
     border-radius: 3px;
     background: #ffffff;
@@ -1022,7 +1024,7 @@ div.individual div.formInputBox>input,div.safety div.formInputBox>input{height: 
     width: 100%;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
-
+.table_11 tr>th,.table_11 tr>td{text-align: center;}
 .popupDiv .formInputBox>input{height: 32px}
 .popupDiv div.gendersBox>input{width: 50px;height: 18px}
 .popupDiv .formgroup>.hintBox{width: 180px}
@@ -1068,3 +1070,25 @@ div.selectPatient>span{display: inline-block;width: 100px;line-height: 24px;back
 .selectPatientTable>tbody>tr:nth-child(odd){background: #ccc}*/
 /*.selectPatientContent{display: none}*/
 .gh_form .btnBox{width: 1000px ;margin: 0 auto;margin-top: 19px;overflow: hidden;}
+
+/*挂号记录*/
+table.search-table>tbody>tr>td {
+    border: none;
+    padding: 1px;
+}
+.search-table input[type='text'] {
+    font-size: 14px;
+    line-height: 20px;
+    color: #95a5a6;
+    border-radius: 3px;
+    padding: 6px;
+    text-indent: 1px;
+    border: 2px solid #dce4ec;
+    border-radius: 3px;
+    box-shadow: none;
+}
+.searchTableHead{margin-top: 19px}
+.gh_logCentenr table th,.gh_logCentenr table td{text-align: center;}
+.abolishTr>button{line-height: 20px;padding: 2px 12px;background: #FEC009;color: #fff;margin-top: 10px;box-shadow:none;}
+.gh_fenye{position: relative;bottom: 22px}
+.gh_log{margin-top: 19px}
