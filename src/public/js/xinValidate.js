@@ -34,8 +34,10 @@ $(function(){
 	$("#phoneNumber").on("blur",function(){
 		trimValue(phoneNumber);
 		if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($(this).val())) && ($(this).val() != "")){
+			console.log(1)
 			$(".phoneNumber .errhint").css("display","inline-block");
 		}else{
+			console.log(2)
 			trueEffect(phoneNumber);
 		}
 	});

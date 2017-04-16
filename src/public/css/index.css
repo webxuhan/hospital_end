@@ -492,7 +492,7 @@ span.disableBtn input{cursor: not-allowed}
 /*.medicine_guide_header{width: 742px}*/
 .medicine_guide_content{width: 742px;margin-top: 10px;overflow: hidden;}
 .medicine_guide_content div{float: left;}
-.imagebox img{width: 265px; height: 180px}
+.imagebox img{width: 265px; height: 154px}
 /*.medicine_guide h2{height: 34px}*/
 .medicine_guide_header{height: 34px;background: #f4f6fa}
 .medicine_guide_header span{display: inline-block;line-height: 34px;font-size: 16px;width: 112px;text-align: center;}
@@ -821,10 +821,19 @@ span.disableBtn input{cursor: not-allowed}
 
 /*按医生挂号*/
 .well{overflow: hidden;width: 1000px;margin: 0 auto;}
-.inputBox{border: 1px solid #60bff2;width: 216px;height: 36px;margin-top: 19px;float: left;margin-right: 16px}
-.inputBox>input{width: 208px;height: 36px;padding-left: 6px}
+.inputBox{border: 2px solid #dce4ec;width: 216px;height: 36px;margin-top: 19px;float: left;margin-right: 16px}
+   /* font-size: 14px;
+    line-height: 20px;
+    color: #95a5a6;
+    border-radius: 3px;
+    padding: 6px;
+    text-indent: 1px;
+    border: 2px solid #dce4ec;
+    border-radius: 3px;
+    box-shadow: none;*/
+.inputBox>input{width: 208px;height: 36px;padding-left: 6px;text-indent: 1px;box-shadow: none;}
 .well>div.btnBox{float: left;margin-left: 11px}
-.well>div.btnBox>input{height: 30px;width: 54px;margin-top: 20px;margin-left: 22px;border-radius: 5px;background-color: #428bca;border-color: #357ebd;color: #fff;cursor: pointer;}
+.well>div.btnBox>input{height: 30px;width: 54px;margin-top: 24px;border-radius: 5px;background-color: #428bca;border-color: #357ebd;color: #fff;cursor: pointer;}
 .inputBox>span{display: inline-block;width: 54px;height: 36px;line-height: 35px;background: #60bff2;color: #fff;text-align: center;cursor: pointer;}
 
 /*医生出诊表*/
@@ -1015,6 +1024,7 @@ div.individual div.formInputBox>input,div.safety div.formInputBox>input{height: 
 .tableContent{overflow: hidden;}
 /*病人信息*/
 .patientInfo .patientInfoHead{margin-top: 14px}
+div.patientInfoHead>button{height: 30px}
 .patientTable .box,.gh_logCentenr .box{
     position: relative;
     border-radius: 3px;
