@@ -58,10 +58,10 @@
 		<!-- 内容导航 -->
 		<ul class="nav nav-tabs doctorTimeNav">
 			<li><a data-target="#gh_1" href="{:U('Xing/personalCenter')}" class="gh_1">挂号预约</a></li>
-			<li><a href="{:U('Xing/gh_log2')}">未就诊</a></li>
-			<li><a href="{:U('Xing/gh_log3')}">已就诊</a></li>
-			<li><a href="{:U('Xing/gh_log4')}">逾期未就诊</a></li>
-			<li><a href="{:U('Xing/gh_log5')}">预约取消</a></li>
+			<li><a href="{:U('Treat/gh_log2')}">未就诊</a></li>
+			<li><a href="{:U('Treat/gh_log3')}">已就诊</a></li>
+			<li><a href="{:U('Treat/gh_log4')}">逾期未就诊</a></li>
+			<li><a href="{:U('Treat/gh_log5')}">预约取消</a></li>
 		</ul>
 		<span><img src="__PUBLIC__/images/lubiao.png" alt=""><a href="{:U('Xing/personalCenter')}">个人信息</a></span>
 		<!-- 主内容 -->
@@ -69,18 +69,17 @@
 			<!-- 挂号预约 -->
 			<!-- 查询头部 -->
 			<div class="row searchTableHead">
-				<form>
+				<form action="{:U('Xing/gh_logCenter')}" method="post">
 					<div class="col-xs-12">
 						<div class="box-body workTime-search">
 							<table class="search-table">
 								<tbody>
 									<tr>
-										<td>挂号单号: <input type="text"></td>
-										<td>病人名称: <input type="text">科室: <input type="text">疾病: <input type="text"></td>
-									</tr>
-									<tr>
-										<td>医生名称: <input type="text"></td>
-										<td>预约时间: <input type="text"><button type="button" id="searchBtn" data-loading-text="loading" class="btn btn-primary" autocomplete="off">查询</button></td>
+										<td>挂号单号: <input type="text" name="order_number" value="{:I('request.order_number/s','')}" placeholder="请输入挂号单号"></td>
+										<td>病人名称: <input type="text" name="patient_name" value="{:I('request.patient_name/s','')}" placeholder="请输入病人名称"></td>
+										<td>医生名称: <input type="text" name="doctor_name" value="{:I('request.doctor_name/s','')}" placeholder="请输入医生名称"></td>
+										<td><!-- 预约时间: <input type="text" name="appoint_time" class="js-date" value="{:I('request.appoint_time/s','')}" autocomplete="off" placeholder="请输入预约时间"> -->
+										<button type="submit" id="searchBtn" data-loading-text="loading" class="btn btn-primary" autocomplete="off">查询</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -89,15 +88,14 @@
 				</form>
 			</div>
 			<!-- 基本信息表格 -->
-			<div class="row gh_logCentenr">
+			<div class="row gh_logCentenr gh_log">
 				<div class="col-xs-12">
-					<div class="abolishTr"><button>取消预约</button></div>
+					<!-- <div class="abolishTr"><button>取消预约</button></div> -->
 					<div class="box">
 						<div class="box-body table-responsive no-padding">
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th><input type="checkbox" class="mini" id="selectAll"></th>
 										<th>挂号单号</th>
 										<th>病人名称</th>
 										<th>科室</th>
@@ -110,45 +108,33 @@
 									</tr>
 								</thead>
 								<tbody>
+									<foreach name="order" item="vo">
 									<!-- <volist name="patients" id="vo"> -->
 									<tr class="datalist">
-										<td><input type="checkbox" class="mini" name="ids[]" value="{$vo.patient_id}"></td>
-										<td>2314315</td>
-										<td>超超</td>
-										<td>神经内科</td>
-										<td>武鑫</td>
-										<td>多动症</td>
-										<td>2017-04-11周二上午</td>
-										<td>预约成功</td>
-										<td>25.00</td>
+										<php>$doctime_id = $vo['doctime'];$dtime = $doctime[$doctime_id]</php>
+										<td>{$vo.order_number}</td>
+										<td>{$vo.patient_name}</td>
+										<td>{$vo.bdept_name}</td>
+										<td>{$vo.doctor_name}</td>
+										<td>{$vo.disease_name}</td>
+										<td>{$vo.appoint_time|date="Y-m-d",###}{$dtime}</td>
+										<php>
+											$status = array('预约成功','支付完成','已就诊','预约取消');
+											$num = $vo['status'];
+											$appoint_status = $status[$num];
+										</php>
+										<td>{$appoint_status}</td>
+										<td>{$vo.position_price}</td>
 										<td>
-											<button class="btn btn-primary btn-xs editpatientBtn" id="editTrBtn" patientid="{$vo.patient_id}">
+											<button class="btn btn-primary btn-xs payforBtn" id="editTrBtn" orderid="{$vo.order_id}" doctorid="{$vo.doctor_id}">
 												<span class="fa fa-fw fa-edit" aria-hidden="true"></span>待支付
 											</button>
-											<button class="btn btn-default btn-xs delpatientBtn" id="deleteTrBtn" patientid="{$vo.patient_id}">
-												<span class="fa fa-fw fa-trash-o" aria-hidden="true"></span>取消支付
+											<button class="btn btn-default btn-xs deltreatBtn" id="deleteTrBtn" orderid="{$vo.order_id}">
+												<span class="fa fa-fw fa-trash-o" aria-hidden="true"></span>取消预约
 											</button>
 										</td>
 									</tr>
-									<tr class="datalist">
-										<td><input type="checkbox" class="mini" name="ids[]" value="{$vo.patient_id}"></td>
-										<td>2314315</td>
-										<td>超超</td>
-										<td>神经内科</td>
-										<td>武鑫</td>
-										<td>多动症</td>
-										<td>2017-04-11周二上午</td>
-										<td>预约成功</td>
-										<td>25.00</td>
-										<td>
-											<button class="btn btn-primary btn-xs editpatientBtn" id="editTrBtn" patientid="{$vo.patient_id}">
-												<span class="fa fa-fw fa-edit" aria-hidden="true"></span>待支付
-											</button>
-											<button class="btn btn-default btn-xs delpatientBtn" id="deleteTrBtn" patientid="{$vo.patient_id}">
-												<span class="fa fa-fw fa-trash-o" aria-hidden="true"></span>取消支付
-											</button>
-										</td>
-									</tr>
+									</foreach>
 								</tbody>
 							</table>
 						</div>
@@ -172,8 +158,9 @@
 <script src="__PUBLIC__/js/bootstrap.min.js"></script>
 <script src="__PUBLIC__/layer/layer.js"></script>
 <script src="__PUBLIC__/js/noty/noty.js"></script>
+<script src="__PUBLIC__/js/common.js"></script>
 <script>
-	tableContentHeight($(".personalBox"));
+	// tableContentHeight($(".personalBox"));
 	$(function(){
 		$(".nav-tabs>li>a.gh_1").tab("show");
 		//表格全选功能
@@ -186,10 +173,10 @@
 		});
 		// 分页
 		$("#address-paging").createPage({
-	        pageCount:5,
-	        current:1,
+	        pageCount:{$total_page},
+	        current:{$current_page},
 	        backFn:function(page){
-	        	// $('body').load("{:U('Xing/doctorRegistered')}",{page:page});
+	        	$('body').load("{:U('Xing/gh_logCenter')}",{page:page});
 	        }
 	    });
 	});
@@ -200,5 +187,76 @@
 			$(".personalBox").css("height",$(window).height()-266);
 		}
 	}
+	// 支付
+	$(".payforBtn").on("click",function(){
+		var orderid = $(this).attr("orderid");
+		var doctorid = $(this).attr("doctorid");
+		layer.open({
+			title: '提示',
+			icon:6,
+			content: '确定要支付吗？',
+			btn: ['确认', '取消'],
+			move:false,
+			yes: function(index, layero){ //点击确认后触发
+				$.ajax({
+			    	url:"{:U('Treat/payfor')}",
+					method:"get",
+					data:{order_id:orderid,doctor_id:doctorid},
+					success:function(data){
+						if(data.status == 1){
+							noty({
+								text: data.info,
+					            type:"success",
+					            layout:"center"
+							});
+						$('body').load("{:U('Xing/gh_logCenter')}");
+						}else{
+							noty({
+								text: data.info,
+					            type:"error",
+					            layout:"center"
+							});
+						}
+					}
+			    });
+				layer.close(index);
+			}
+		})
+	});
+	// 取消预约
+	$(".deltreatBtn").on("click",function(){
+		var orderid = $(this).attr("orderid");
+		layer.open({
+			title: '提示',
+			icon:5,
+			content: '确定要取消预约吗？',
+			btn: ['确认', '取消'],
+			move:false,
+			yes: function(index, layero){ //点击确认后触发
+				$.ajax({
+			    	url:"{:U('Treat/delete')}",
+					method:"get",
+					data:{order_id:orderid},
+					success:function(data){
+						if(data.status == 1){
+							noty({
+								text: data.info,
+					            type:"success",
+					            layout:"center"
+							});
+						$('body').load("{:U('Xing/gh_logCenter')}");
+						}else{
+							noty({
+								text: data.info,
+					            type:"error",
+					            layout:"center"
+							});
+						}
+					}
+			    });
+				layer.close(index);
+			}
+		})
+	});
 </script>
 </html>

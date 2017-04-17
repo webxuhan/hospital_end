@@ -49,7 +49,13 @@ class RegistrationController extends AdminbaseController {
 			$where['O.appoint_time'] = strtotime($_POST['appoint_time']);
 		}
 		$where['O.status'] = 0;
-		$count=$this->order_model->count();
+		//总页数
+		$count=$this->order_model
+				->table("__ORDER__ O")
+				->join("__DOCTOR__ D ON O.doctor_id = D.doctor_id")
+				->join("__POSITION__ P ON P.position_id = D.position_id")
+				->where($where)
+				->count();
 		$page = $this->page($count, 10);
 
 		$order = $this->order_model

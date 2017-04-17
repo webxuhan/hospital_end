@@ -58,82 +58,57 @@
 		<!-- 内容导航 -->
 		<ul class="nav nav-tabs doctorTimeNav">
 			<li><a href="{:U('Xing/gh_logCenter')}">挂号预约</a></li>
-			<li><a href="{:U('Treat/gh_log2')}">未就诊</a></li>
+			<li><a data-target="#gh_1" href="{:U('Treat/gh_log2')}"  class="gh_2">未就诊</a></li>
 			<li><a href="{:U('Treat/gh_log3')}">已就诊</a></li>
 			<li><a href="{:U('Treat/gh_log4')}">逾期未就诊</a></li>
-			<li><a data-target="#gh_5" href="{:U('Treat/gh_log5')}" class="gh_5">预约取消</a></li>
+			<li><a href="{:U('Treat/gh_log5')}">预约取消</a></li>
 		</ul>
 		<span><img src="__PUBLIC__/images/lubiao.png" alt=""><a href="{:U('Xing/personalCenter')}">个人信息</a></span>
 		<!-- 主内容 -->
 		<div class="tab-content">
-			<!-- 挂号预约 -->
-			<!-- 查询头部 -->
-			<div class="row searchTableHead">
-				<form action="{:U('Treat/gh_log5')}" method="post">
-					<div class="col-xs-12">
-						<div class="box-body workTime-search">
-							<table class="search-table">
-								<tbody>
-									<tr>
-										<td>挂号单号: <input type="text" name="order_number" value="{:I('request.order_number/s','')}" placeholder="请输入挂号单号"></td>
-										<td>病人名称: <input type="text" name="patient_name" value="{:I('request.patient_name/s','')}" placeholder="请输入病人名称"></td>
-										<td>医生名称: <input type="text" name="doctor_name" value="{:I('request.doctor_name/s','')}" placeholder="请输入医生名称"></td>
-										<td><!-- 预约时间: <input type="text" name="appoint_time" class="js-date" value="{:I('request.appoint_time/s','')}" autocomplete="off" placeholder="请输入预约时间"> -->
-										<button type="submit" id="searchBtn" data-loading-text="loading" class="btn btn-primary" autocomplete="off">查询</button></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</form>
-			</div>
-			<!-- 基本信息表格 -->
-			<div class="row gh_logCentenr gh_log">
-				<div class="col-xs-12">
-					<!-- <div class="abolishTr"><button>取消预约</button></div> -->
-					<div class="box">
-						<div class="box-body table-responsive no-padding">
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<!-- <th><input type="checkbox" class="mini" id="selectAll"></th> -->
-										<th>挂号单号</th>
-										<th>病人名称</th>
-										<th>科室</th>
-										<th>医生名称</th>
-										<th>疾病科</th>
-										<th>预约时间</th>
-										<th>状态</th>
-										<th>预约金额</th>
-										<th>操作</th>
-									</tr>
-								</thead>
-								<tbody>
-									<foreach name="order" item="vo">
-									<tr class="datalist">
-										<php>$doctime_id = $vo['doctime'];$dtime = $doctime[$doctime_id]</php>
-										<td>{$vo.order_number}</td>
-										<td>{$vo.patient_name}</td>
-										<td>{$vo.bdept_name}</td>
-										<td>{$vo.doctor_name}</td>
-										<td>{$vo.disease_name}</td>
-										<td>{$vo.appoint_time|date="Y-m-d",###}{$dtime}</td>
-										<td>预约已取消</td>
-										<td>{$vo.position_price}</td>
-										<td>
-											预约已取消
-										</td>
-									</tr>
-									</foreach>
-								</tbody>
-							</table>
-						</div>
-					</div>
+			<div id="printwatch" align="center">
+				<div class="wrap js-check-wrap" style="border:1px solid black;width:320px;margin-top:50px;padding:30px 50px;">
+					<p align="left">山西省人民医院欢迎您！</p><br/>
+					<table border="0">
+						<tr>
+							<td width="100px">挂号单号：</td>
+							<td width="180px">{$appoint.order_number}</td>
+						</tr>
+						<tr>
+							<td>病人名称：</td>
+							<td>{$appoint.patient_name}</td>
+						</tr>
+						<tr>
+							<td>身份证号：</td>
+							<td>{$appoint.patient_idcard}</td>
+						</tr>
+						<tr>
+							<td>支付金额：</td>
+							<td>{$appoint.position_price}</td>
+						</tr>
+						<tr>
+							<td>就诊科室：</td>
+							<td>{$appoint.bdept_name}</td>
+						</tr>
+						<tr>
+							<td>所属疾病科：</td>
+							<td>{$appoint.disease_name}</td>
+						</tr>
+						<tr>
+							<td>医生名称：</td>
+							<td>{$appoint.doctor_name}</td>
+						</tr>
+						<tr>
+							<td>就诊时间：</td>
+							<php>$doctime_id = $appoint['doctime'];$dtime = $doctime[$doctime_id];</php>
+							<td>{$appoint.appoint_time|date="Y-m-d",###}{$dtime}</td>
+						</tr>
+					</table><br/>
+					<p align="left">请按照就诊时间及时就诊，逾期作废！</p>
 				</div>
-			</div>
-			<!-- 分页 -->
-			<div class="paging_disease_gh gh_fenye">
-				<div id="address-paging" class="tcdPageCode"></div>
+			</div><br/>
+			<div align="center">
+				<a onclick="p()" target="_self" style='cursor: pointer;' class="btn btn-primary js-ajax-submit">打印</a>
 			</div>
 		</div>
 	</section>
@@ -148,10 +123,11 @@
 <script src="__PUBLIC__/js/bootstrap.min.js"></script>
 <script src="__PUBLIC__/layer/layer.js"></script>
 <script src="__PUBLIC__/js/noty/noty.js"></script>
+<script src="__PUBLIC__/js/common.js"></script>
 <script>
 	// tableContentHeight($(".personalBox"));
 	$(function(){
-		$(".nav-tabs>li>a.gh_5").tab("show");
+		$(".nav-tabs>li>a.gh_3").tab("show");
 		//表格全选功能
 		$("#selectAll").on("click",function(){
 			if(this.checked){
@@ -160,15 +136,12 @@
 				$(".datalist :checkbox").prop("checked", false);  
 			}
 		});
-		// 分页
-		$("#address-paging").createPage({
-	        pageCount:{$total_page},
-	        current:{$current_page},
-	        backFn:function(page){
-	        	$('body').load("{:U('Ttreat/gh_log5')}",{page:page});
-	        }
-	    });
 	});
+	function p(){
+		document.body.innerHTML=document.getElementById('printwatch').innerHTML;
+		window.print();
+		window.location = location;
+	}
 	function tableContentHeight(data) { //底部footer调整
 		if(data.height() > $(window).height()){
 
@@ -176,5 +149,6 @@
 			$(".personalBox").css("height",$(window).height()-266);
 		}
 	}
+	
 </script>
 </html>

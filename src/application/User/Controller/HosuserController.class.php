@@ -46,7 +46,7 @@ class HosuserController extends AdminbaseController {
 
 		$hosuser_model=M('Hosuser');
 		$count=$hosuser_model->count();
-		$page = $this->page($count, 20);
+		$page = $this->page($count, 10);
 		$lists = $hosuser_model
 		->where($where)
 		->order("hosuser_id DESC")

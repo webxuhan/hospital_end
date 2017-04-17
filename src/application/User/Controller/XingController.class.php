@@ -10,6 +10,7 @@ class XingController extends HomebaseController {
     protected $doctor_model;
     protected $hosuser_model;
     protected $patient_model;
+    protected $order_model;
 
     /**
      * 验证是否开启记录
@@ -22,6 +23,7 @@ class XingController extends HomebaseController {
         $this->doctor_model = M('Doctor');
         $this->hosuser_model = M('Hosuser');
         $this->patient_model = D("Common/Patients");
+        $this->order_model = D("Common/Order");
         $this->hosuser_id = get_current_userid();
     }
     
@@ -111,6 +113,9 @@ class XingController extends HomebaseController {
     *@author wuxin
     */
     public function doctorRegistration(){
+        if(!sp_is_user_login()){ //已经登录时直接跳到首页
+            $this->display(":login");
+        }
         $doctor_id = I('doctor_id');
         $list = $this->doctor_model->where('doctor_id='.$doctor_id)->find();
         $this->assign("doctor", $list);
@@ -231,18 +236,67 @@ class XingController extends HomebaseController {
     *@author wuxin
     */
     public function gh_logCenter(){
+        expire();//判断是否逾期未就诊
+        $treat_page = 2;
+        $page = I('page');
+        if(!empty($page)){
+            $current_page = $page;
+        }else{
+            $current_page = 1;
+        }
+        /*搜索条件*/
+        $param = I('param.');
+        $order_number = trim($param['order_number']);
+        $patient_name = trim($param['patient_name']);
+        $doctor_name = trim($param['doctor_name']);
+        if($order_number != ""){
+            $where['O.order_number'] = get_search_str($order_number);
+        }
+        if($patient_name != ""){
+            $where['O.patient_name'] = get_search_str($patient_name);
+        }
+        if($doctor_name != ""){
+            $where['O.doctor_name'] = get_search_str($doctor_name);
+        }
+        if(!empty($_POST['appoint_time'])){
+            $where['O.appoint_time'] = strtotime($_POST['appoint_time']);
+        }
+        $where['O.status'] = 0;
+        $where['O.hosuser_id'] = $this->hosuser_id;
+
+        $order = $this->order_model
+                ->table("__ORDER__ O")
+                ->join("__DOCTOR__ D ON O.doctor_id = D.doctor_id")
+                ->join("__POSITION__ P ON P.position_id = D.position_id")
+                ->where($where)
+                ->limit($treat_page*($current_page - 1) , $treat_page)
+                ->order(array("O.order_id" => "ASC"))
+                ->field("O.*,P.*")
+                ->select();
+        $count=$this->order_model
+                ->table("__ORDER__ O")
+                ->join("__DOCTOR__ D ON O.doctor_id = D.doctor_id")
+                ->join("__POSITION__ P ON P.position_id = D.position_id")
+                ->where($where)
+                ->count();
+        $total_page = ceil($count/$treat_page);
+        $doctime =M("Time")->getField('time_id,time_name');
+        $this->assign("doctime", $doctime);
+        $this->assign("order", $order);
+        $this->assign("total_page", $total_page);
+        $this->assign("current_page", $current_page);
         $this->display(":gh_logCenter");
     }
-    public function gh_log2(){
-        $this->display(":gh_log2");
-    }
-    public function gh_log3(){
-        $this->display(":gh_log3");
-    }
-    public function gh_log4(){
-        $this->display(":gh_log4");
-    }
-    public function gh_log5(){
-        $this->display(":gh_log5");
-    }
+    // public function gh_log2(){
+    //     $this->display(":gh_log2");
+    // }
+    // public function gh_log3(){
+    //     $this->display(":gh_log3");
+    // }
+    // public function gh_log4(){
+    //     $this->display(":gh_log4");
+    // }
+    // public function gh_log5(){
+    //     $this->display(":gh_log5");
+    // }
 }

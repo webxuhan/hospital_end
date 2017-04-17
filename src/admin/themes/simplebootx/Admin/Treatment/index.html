@@ -81,8 +81,9 @@
 						<if condition="$vo['appoint_time'] eq $todaytime">
 						<a class="js-ajax-treatment" href='{:U("Treatment/treatment",array('order_id'=>$vo['order_id'],'doctor_id'=>$vo['doctor_id']))}'>是否已就诊</a> 
 						<else />
-						等待就诊
+						等待就诊&nbsp;&nbsp;&nbsp; 
 						</if>
+						|&nbsp;&nbsp;<a href='{:U("Treatment/treatprint",array('order_id'=>$vo['order_id'],'doctor_id'=>$vo['doctor_id']))}'>打印预览</a>
 					</td>
 					</tr>
 					</foreach>
