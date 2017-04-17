@@ -214,12 +214,13 @@
 	</div>
 </body>
 <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+<script src="__PUBLIC__/js/xinValidate.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/jquery.page.js"></script>
 <script src="__PUBLIC__/js/bootstrap.min.js"></script>
 <script src="__PUBLIC__/layer/layer.js"></script>
 <script src="__PUBLIC__/js/noty/noty.js"></script>
 <script>
-	// tableContentHeight($(".personalBox"));
+	tableContentHeight($(".personalBox"));
 	$(function(){
 		$(".genderHtml").each(function(){
 			if ($(this).html() == 0) {
@@ -228,7 +229,7 @@
 				$(this).html("女");
 			}
 		})
-		console.log("111",{$vo.patient_name});
+		// console.log("111",{$vo.patient_name});
 		console.log();
 		$(".nav-tabs>li>a.patientInfo").tab("show");
 		//表格全选功能

@@ -1,6 +1,7 @@
 /*jquery注册验证*/
 $(function(){
 	//获取焦点后提示语隐藏
+	console.log("验证加载成功")
 	$("input").on("focus",function(){
 		$(this).parent().parent().find(".errhint").css("display","none");
 		$(this).parent().parent().find(".annotation").css("display","inline-block");
@@ -8,9 +9,12 @@ $(function(){
 	/*单框验证*/
 	$("#usename").on("blur",function(){
 		trimValue(usename);
+		console.log("失去焦点");
 		if($(this).val() == ""){
+			console.log(1)
 			$(".usename .errhint").css("display","inline-block");
 		}else{
+			console.log(2)
 			trueEffect(usename);
 		}
 	});
@@ -28,6 +32,7 @@ $(function(){
 		}
 	});
 	$("#idNumber").on("blur",function(){
+		console.log(0);
 		trimValue(idNumber);
 		idCard(idNumber);
 	});
@@ -37,7 +42,7 @@ $(function(){
 			console.log(1)
 			$(".phoneNumber .errhint").css("display","inline-block");
 		}else{
-			console.log(2)
+			// console.log(2)
 			trueEffect(phoneNumber);
 		}
 	});
@@ -92,10 +97,13 @@ $(function(){
 	function idCard(num){  //身份证验证
 		data = num.value.toUpperCase(); 
 		if(data == ""){
+			console.log(1);
 			return false;
 		}else if(!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(data))){
+			console.log(2)
 			$(".idNumber .errhint").css("display","inline-block");
 		}else{
+			console.log(3)
 			trueEffect(num);
 		}
 	}
