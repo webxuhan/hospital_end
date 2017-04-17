@@ -29,7 +29,7 @@ class TreatmentController extends AdminbaseController {
     	/*搜索条件*/
 		$where = $this->getwhere();
 		$where['O.status'] = 1;
-		$count=$this->order_model->count();
+		$count = $this->pagenum($where);
 		$page = $this->page($count, 10);
 
 		$order = $this->order_model
@@ -86,7 +86,7 @@ class TreatmentController extends AdminbaseController {
     	/*搜索条件*/
 		$where = $this->getwhere();
 		$where['O.status'] = 2;
-		$count=$this->order_model->count();
+		$count = $this->pagenum($where);
 		$page = $this->page($count, 10);
 
 		$order = $this->order_model
@@ -114,7 +114,7 @@ class TreatmentController extends AdminbaseController {
     	/*搜索条件*/
 		$where = $this->getwhere();
 		$where['O.status'] = 4;
-		$count=$this->order_model->count();
+		$count = $this->pagenum($where);
 		$page = $this->page($count, 10);
 
 		$order = $this->order_model
@@ -174,7 +174,7 @@ class TreatmentController extends AdminbaseController {
     	/*搜索条件*/
 		$where = $this->getwhere();
 		$where['O.status'] = 3;
-		$count=$this->order_model->count();
+		$count = $this->pagenum($where);
 		$page = $this->page($count, 10);
 
 		$order = $this->order_model
@@ -191,5 +191,39 @@ class TreatmentController extends AdminbaseController {
 		$this->assign("order", $order);
 		$this->assign("page", $page->show('Admin'));
 		$this->display();
+    }
+    /**
+     * 打印预览
+     *
+     * @author wuxin
+     */
+    public function treatprint(){
+    	if(isset($_GET['order_id'])){
+            $id = I("get.order_id",0,'intval');
+            $list = $this->order_model
+            			 ->table("__ORDER__ O")
+						 ->join("__DOCTOR__ D ON O.doctor_id = D.doctor_id")
+						 ->join("__POSITION__ P ON P.position_id = D.position_id")
+           				 ->where('order_id='.$id)
+           				 ->find();
+           	$doctime =M("Time")->getField('time_id,time_name');
+           	$this->assign("doctime", $doctime);
+            $this->assign("appoint",$list);
+        }
+    	$this->display();
+    }
+    /**
+     *总页数
+     *
+     * @author wuxin
+     */
+    public function pagenum($where){
+    	$pagenum = $this->order_model
+				->table("__ORDER__ O")
+				->join("__DOCTOR__ D ON O.doctor_id = D.doctor_id")
+				->join("__POSITION__ P ON P.position_id = D.position_id")
+				->where($where)
+				->count();
+		return $pagenum;
     }
 }

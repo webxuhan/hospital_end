@@ -59,7 +59,11 @@
 		<div class="ksgh_top_content">
 			<div class="doctor_info">
 				<div class="doctorImgBox">
-					<img src="__PUBLIC__/images/doctor_1.jpg" alt="">
+					<if condition="empty($doctor['doctor_avatar'])">
+						<img src="__PUBLIC__/images/doctor_1.jpg" alt="">
+					<else/>
+                    	<img src="{:sp_get_image_url($doctor['doctor_avatar'])}" alt="">
+                    </if>
 				</div>
 				<div class="doctor_infoContent">
 					<div><span>医生姓名:</span>{$doctor.doctor_name}</div>
@@ -203,15 +207,15 @@
 				            type:"success",
 				            layout:"center"
 						});
-					$('body').load("{:U('Xing/doctorRegistration')}"+"&doctor_id="+doctorid);
+					$('body').load("{:U('Xing/gh_logCenter')}");
 					}else{
 						noty({
 							text: data.info,
 				            type:"error",
 				            layout:"center"
 						});
-					}
 					$('body').load("{:U('Xing/doctorRegistration')}"+"&doctor_id="+doctorid);
+					}	
 				}
 			});
 		});

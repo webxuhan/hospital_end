@@ -1,0 +1,65 @@
+<admintpl file="header" />
+<link rel="stylesheet" href="__PUBLIC__/css/combo.select/combo.select.css">
+</head>
+
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Treatment/index')}">未就诊</a></li>
+			<li class="active"><a href="{:U('Treatment/treatprint')}">打印预览</a></li>
+		</ul>
+		<div id="printwatch">
+			<div class="wrap js-check-wrap" style="border:1px solid black;width:300px;margin-top:50px;padding-left:50px;">
+				<p align="left">山西省人民医院欢迎您！</p>
+				<table border="0">
+					<tr>
+						<td width="100px">挂号单号：</td>
+						<td width="180px">{$appoint.order_number}</td>
+					</tr>
+					<tr>
+						<td>病人名称：</td>
+						<td>{$appoint.patient_name}</td>
+					</tr>
+					<tr>
+						<td>身份证号：</td>
+						<td>{$appoint.patient_idcard}</td>
+					</tr>
+					<tr>
+						<td>支付金额：</td>
+						<td>{$appoint.position_price}</td>
+					</tr>
+					<tr>
+						<td>就诊科室：</td>
+						<td>{$appoint.bdept_name}</td>
+					</tr>
+					<tr>
+						<td>所属疾病科：</td>
+						<td>{$appoint.disease_name}</td>
+					</tr>
+					<tr>
+						<td>医生名称：</td>
+						<td>{$appoint.doctor_name}</td>
+					</tr>
+					<tr>
+						<td>就诊时间：</td>
+						<php>$doctime_id = $appoint['doctime'];$dtime = $doctime[$doctime_id];</php>
+						<td>{$appoint.appoint_time|date="Y-m-d",###}{$dtime}</td>
+					</tr>
+				</table><br/>
+				<p align="left">请按照就诊时间及时就诊，逾期作废！</p>
+			</div>
+		</div>
+		<div align="center">
+			<a onclick="p()" target="_self" style='cursor: pointer;' class="btn btn-primary js-ajax-submit">打印</a>
+		</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+	function p(){
+		document.body.innerHTML=document.getElementById('printwatch').innerHTML;
+		window.print();
+		window.location = location;
+	}
+	</script>
+</body>
+</html>
