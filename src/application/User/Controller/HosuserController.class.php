@@ -62,7 +62,7 @@ class HosuserController extends AdminbaseController {
     *@author wuxin
     */
 	public function personedit(){
-		if($this->hosuser_model->create() !== false){
+		if($this->hosuser_model->create($_POST) !== false){
 			if($this->hosuser_model->save() !== false){
 				$this->success("编辑成功");
 			}else{

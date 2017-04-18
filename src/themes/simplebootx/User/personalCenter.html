@@ -64,7 +64,7 @@
 		<div class="tab-content">
 			<!-- 个人信息 -->
 			<div class="individual tab-pane" id="home">
-				<form action="">
+				<form action="" id="useredit">
 					<div class="formgroup usename">
 						<span class="name">真实姓名:</span>
 						<div class="formInputBox"><input type="text" id="usename" name="hosuser_name" autocomplete="off" value="{$hosuser.hosuser_name}"></div>
@@ -121,7 +121,7 @@
 <script src="__PUBLIC__/js/bootstrap.min.js"></script>
 <script src="__PUBLIC__/js/noty/noty.js"></script>
 <script>
-	tableContentHeight($(".personalBox"));
+	// tableContentHeight($(".personalBox"));
 	$(function(){
 		$(".nav-tabs>li>a.individual").tab("show");
 	});
@@ -135,9 +135,9 @@
 	/*编辑*/
 	$(".personedit").on('click', function(){
 		$.ajax({
-			url:"{:U('Hosuser/personedit')}",
+			url:"{:U('Xing/personedit')}",
 			method:"post",
-			data:$('form').serialize(),
+			data:$('#useredit').serialize(),
 			success:function(data){
 				if(data.status == 1){
 					noty({
