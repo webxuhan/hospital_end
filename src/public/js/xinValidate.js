@@ -8,42 +8,68 @@ $(function(){
 	});
 	/*单框验证*/
 	$("#usename").on("blur",function(){
-		trimValue(usename);
+		console.log("名称失去焦点");
+		trimValue(this);
 		console.log("失去焦点");
 		if($(this).val() == ""){
 			console.log(1)
 			$(".usename .errhint").css("display","inline-block");
 		}else{
 			console.log(2)
-			trueEffect(usename);
+			trueEffect(this);
+		}
+	});
+	$(".editPopupDiv #usename").on("blur",function(){
+		console.log("名称失去焦点");
+		trimValue(this);
+		console.log("失去焦点");
+		if($(this).val() == ""){
+			console.log(1)
+			$(".usename .errhint").css("display","inline-block");
+		}else{
+			console.log(2)
+			trueEffect(this);
 		}
 	});
 	$("#userPassword").on("blur",function(){
-		trueEffect(userPassword);
+		trueEffect(this);
 	});
 	$("#verifyPsd").on("blur",function(){
-		trimValue(verifyPsd);
+		trimValue(this);
 		if($("#userPassword").val() != $(this).val()){
 			$(".verifyPsd .errhint").css("display","inline-block");
 		}else{
 			if($(this).val() != ""){
-				trueEffect(verifyPsd);
+				trueEffect(this);
 			}
 		}
 	});
 	$("#idNumber").on("blur",function(){
-		console.log(0);
-		trimValue(idNumber);
-		idCard(idNumber);
+		console.log("1111");
+		trimValue(this);
+		idCard(this);
+	});
+	$(".editPopupDiv #idNumber").on("blur",function(){
+		console.log("1111");
+		trimValue(this);
+		idCard(this);
 	});
 	$("#phoneNumber").on("blur",function(){
-		trimValue(phoneNumber);
+		trimValue(this);
 		if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($(this).val())) && ($(this).val() != "")){
 			console.log(1)
 			$(".phoneNumber .errhint").css("display","inline-block");
 		}else{
-			// console.log(2)
-			trueEffect(phoneNumber);
+			trueEffect(this);
+		}
+	});
+	$(".editPopupDiv #phoneNumber").on("blur",function(){
+		trimValue(this);
+		if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($(this).val())) && ($(this).val() != "")){
+			console.log(1)
+			$(".phoneNumber .errhint").css("display","inline-block");
+		}else{
+			trueEffect(this);
 		}
 	});
 	$("#email").on("blur",function(){
@@ -51,15 +77,15 @@ $(function(){
 		if(!(/^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g.test(value)) && (value !="")){
 			$(".email .errhint").css("display","inline-block");
 		}else{
-			trueEffect(email);
+			trueEffect(this);
 		}
 	});
 	$("#verifyCode").on("blur",function(){
-		trimValue(verifyCode);
+		trimValue(this);
 		if($(this).val() == ""){
 			$(".verifyCode .errhint").css("display","inline-block");
 		}else{
-			trueEffect(verifyCode);
+			trueEffect(this);
 		}
 	});
 	//提交注册验证
@@ -70,11 +96,10 @@ $(function(){
 		for(var i = 0;i < arr.length;i++){
 			if(checkInput(arr[i])){
 				break;
-			}else{
-				checkSubmit();
-				console.log("提交成功！");
 			}
 		}
+		checkSubmit();
+		console.log("提交成功！");
 		// checkInput(usename);
 		// checkInput(userPassword);
 		// checkInput(verifyPsd);
@@ -95,7 +120,10 @@ $(function(){
 		return $(data).val(value);
 	}
 	function idCard(num){  //身份证验证
+		console.log(num);
+		console.log(num.value);
 		data = num.value.toUpperCase(); 
+		console.log("data:",data);
 		if(data == ""){
 			console.log(1);
 			return false;
@@ -109,6 +137,8 @@ $(function(){
 	}
 	function checkInput(data){
 		var value = data.val();
+		console.log(data);
+		console.log("输入框:",value);
 		// if(mid == 1){ return}
 		if(value ==""){
 			data.parent().parent().find(".annotation").css("display","none");

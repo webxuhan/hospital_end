@@ -132,15 +132,14 @@
 						<div class="formInputBox gendersBox">
 							<input id="man" type="radio" checked="checked" name="patient_sex" value="0"/>男<input id="woman" type="radio"  name="patient_sex" value="1"/>女
 						</div>
-						<div class="hintBox">
-							<span class="errhint">用户名不能为空</span>
-						</div>
 					</div>
 					<div class="formgroup idNumber">
 						<span class="name">身份证号:</span>
 						<div class="formInputBox"><input type="text" id="idNumber" name="patient_idcard"></div>
 						<div class="hintBox">
-							<span class="errhint">请输入有效证件号码注册</span>
+							<span>
+								<div class="annotation"><font class="red">*</font>请输入有效证件号码注册</div>
+							</span>
 							<span class="errhint">身份证不合法</span>
 						</div>
 					</div>
@@ -175,15 +174,14 @@
 						<div class="formInputBox gendersBox">
 							<input id="man" type="radio" checked="checked" name="patient_sex" value="0"/>男<input id="woman" type="radio"  name="patient_sex" value="1"/>女
 						</div>
-						<div class="hintBox">
-							<span class="errhint">用户名不能为空</span>
-						</div>
 					</div>
 					<div class="formgroup idNumber">
 						<span class="name">身份证号:</span>
 						<div class="formInputBox"><input type="text" id="idNumber" name="patient_idcard"></div>
 						<div class="hintBox">
-							<span class="errhint">请输入有效证件号码注册</span>
+							<span>
+								<div class="annotation"><font class="red">*</font>请输入有效证件号码注册</div>
+							</span>
 							<span class="errhint">身份证不合法</span>
 						</div>
 					</div>
@@ -222,6 +220,13 @@
 <script>
 	tableContentHeight($(".personalBox"));
 	$(function(){
+		var verification = "";
+		console.log("222:",$(".personalBox").height());
+		// $(".personalBox").resize(function(){
+		// 	console.log("高度变化");
+		// 	tableContentHeight($(".personalBox"));
+		// });
+		//页面渲染男女
 		$(".genderHtml").each(function(){
 			if ($(this).html() == 0) {
 				$(this).html("男");
@@ -229,8 +234,6 @@
 				$(this).html("女");
 			}
 		})
-		// console.log("111",'{$vo.patient_name}');
-		console.log();
 		$(".nav-tabs>li>a.patientInfo").tab("show");
 		//表格全选功能
 		$("#selectAll").on("click",function(){
@@ -242,6 +245,7 @@
 		})
 		//添加病人信息
 		$("#addBtn").on("click",function(){
+			console.log(11111111111111111);
 			$(".addPopupDiv").css("display","inline-block");
 			layer.open({
 			  type: 1, 	//类型为页面
@@ -251,33 +255,61 @@
 			  move: false,
 			  btn: ['确认', '取消'],
 			  yes: function(index, layero){ //点击确认后触发
+			  	console.log("verification之前:",verification);
 			    //do something
-			    $.ajax({
-			    	url:"{:U('Patients/add_post')}",
-					method:"post",
-					data:$('#addpatient').serialize(),
-					success:function(data){
-						if(data.status == 1){
-							noty({
-								text: data.info,
-					            type:"success",
-					            layout:"center"
-							});
-						$('body').load("{:U('Xing/patientInfo')}");
-						}else{
-							noty({
-								text: data.info,
-					            type:"error",
-					            layout:"center"
-							});
-						}
+			    /*表单验证*/
+				var arr1 = [$(".addPopupDiv #usename"),$(".addPopupDiv #idNumber"),$(".addPopupDiv #phoneNumber")];
+				for(var i = 0;i < arr1.length;i++){
+					if(checkInput(arr1[i])){
+						break;
 					}
-			    });
-			    layer.close(index); //如果设定了yes回调，需进行手工关闭
-			    console.log("yes");
+				}
+				$(".addPopupDiv .errhint").each(function(){
+					console.log(this);
+					console.log($(this).css("display"));
+		            if($(this).css("display") == "block" ){
+		            	console.log("发现");
+		                verification = 1;
+		                return false;
+		            }else{
+		                verification = 0;
+		            }
+		        });
+		        console.log("verification:",verification);
+				if ( verification == 0) {
+					console.log("提交成功！");
+					$.ajax({
+				    	url:"{:U('Patients/add_post')}",
+						method:"post",
+						data:$('#addpatient').serialize(),
+						success:function(data){
+							if(data.status == 1){
+								noty({
+									text: data.info,
+						            type:"success",
+						            layout:"center"
+								});
+							$('body').load("{:U('Xing/patientInfo')}");
+							}else{
+								noty({
+									text: data.info,
+						            type:"error",
+						            layout:"center"
+								});
+							}
+							layer.close(index); //如果设定了yes回调，需进行手工关闭
+						}
+				    });
+				} else {
+					console.log("提交失败！");
+					verification = 0;
+				}
+			    // console.log("yes");
 			  },
 			  end: function(){
 			  	$(".addPopupDiv").css("display","none");
+			  	$(".errhint").css("display","none");
+			  	tableContentHeight($(".personalBox"));
 			  }
 			});
 		});
@@ -308,32 +340,58 @@
 					  btn: ['确认', '取消'],
 					  yes: function(index, layero){ //点击确认后触发
 					    //do something
-					    $.ajax({
-					    	url:"{:U('Patients/edit_post')}",
-							method:"post",
-							// async: false,
-							data:$('#editpatient').serialize(),
-							success:function(data){
-								if(data.status == 1){
-									noty({
-										text: data.info,
-							            type:"success",
-							            layout:"center"
-									});
-								$('body').load("{:U('Xing/patientInfo')}");
-								}else{
-									noty({
-										text: data.info,
-							            type:"error",
-							            layout:"center"
-									});
-								}
+					     /*表单验证*/
+						var arr = [$(".editPopupDiv #usename"),$(".editPopupDiv #idNumber"),$(".editPopupDiv #phoneNumber")];
+						for(var i = 0;i < arr.length;i++){
+							if(checkInput(arr[i])){
+								break;
 							}
-					    });
-					    layer.close(index); //如果设定了yes回调，需进行手工关闭
+						}
+						$(".editPopupDiv .errhint").each(function(){
+							console.log(this);
+							console.log($(this).css("display"));
+				            if($(this).css("display") == "block" ){
+				            	console.log("发现");
+				                verification = 1;
+				                return false;
+				            }else{
+				                verification = 0;
+				            }
+				        });
+				        console.log("verification:",verification);
+						if ( verification == 0) {
+							console.log("提交成功！");
+							$.ajax({
+						    	url:"{:U('Patients/edit_post')}",
+								method:"post",
+								// async: false,
+								data:$('#editpatient').serialize(),
+								success:function(data){
+									if(data.status == 1){
+										noty({
+											text: data.info,
+								            type:"success",
+								            layout:"center"
+										});
+									$('body').load("{:U('Xing/patientInfo')}");
+									}else{
+										noty({
+											text: data.info,
+								            type:"error",
+								            layout:"center"
+										});
+									}
+								}
+					    	});
+					   		 layer.close(index); //如果设定了yes回调，需进行手工关闭
+						} else {
+							console.log("提交失败！");
+							verification = 0;
+						}
 					  },
 					  end: function(){
 					  	$(".editPopupDiv").css("display","none");
+					  	$(".errhint").css("display","none");
 					  }
 					});
 				}
@@ -369,6 +427,7 @@
 						            layout:"center"
 								});
 							}
+							tableContentHeight($(".personalBox"));
 						}
 				    });
 					layer.close(index);
@@ -419,6 +478,7 @@
 							            layout:"center"
 									});
 								}
+								tableContentHeight($(".personalBox"));
 							}
 					    });
 						layer.close(index);
@@ -428,11 +488,42 @@
 		});
 	});
 	function tableContentHeight(data) { //底部footer调整
-		if(data.height() > $(window).height()){
+		// console.log(data);
+		console.log("height0:",data.height());
+		console.log("window:",$(window).height());
+		// console.log("document:",$(document).height());
+		var Sheight = data.height() + 76 + 158;
+		console.log("Sheight:",Sheight);
+		if( Sheight > $(window).height()){
 
 		} else {
-			$(".personalBox").css("height",$(window).height()-266);
+			$(".personalBox").css("height",$(window).height()-234);
 		}
 	}
+	function checkInput(data){ //提交输入框检查
+		var value = data.val();
+		console.log(data);
+		console.log("输入框验证:",value);
+		// if(mid == 1){ return}
+		if(value ==""){
+			data.parent().parent().find(".annotation").css("display","none");
+			data.parent().parent().find(".errhint").css("display","inline-block");
+			return true;
+		}			
+	}
+	// function checkSubmit(){ //验证是否成功
+ //        var verification = "";
+ //        $(".errhint").each(function(){
+ //            if($(this).css("display") == "inline-block" ){
+ //                verification = 1;
+ //                return false;
+ //            }else{
+ //                verification = 0;
+ //            }
+ //        });
+ //        if(verification == 1){
+ //        	return verification;
+ //        }
+	// }
 </script>
 </html>

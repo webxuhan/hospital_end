@@ -133,7 +133,34 @@
 		}
 	}
 	/*编辑*/
+	var noty_btn = true; //btn开关
+	var verification = "";
 	$(".personedit").on('click', function(){
+		if(noty_btn == false){
+		  return false;
+		}
+		noty_btn = false;
+		setTimeout(function(){
+		  noty_btn = true;
+		},2000);
+		//表单验证
+        $(".errhint").each(function(){
+            if($(this).is(':visible')){
+                verification = 1;
+                return false;
+            }else{
+                verification = 0;
+            }
+        });
+        if (verification == 1) {
+        	noty({
+        		text:"请完善信息！",
+        		type:"error",
+        		layout:"center"
+        	});
+        	verification = "";
+        	return false;
+        }
 		$.ajax({
 			url:"{:U('Xing/personedit')}",
 			method:"post",

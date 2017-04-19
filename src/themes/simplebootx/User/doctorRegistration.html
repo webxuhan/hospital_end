@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -103,44 +103,46 @@
 			</div>
 		</div>
 		<!-- 预约时间表 -->
-		<span class="DoctortimeBtn">选择挂号时间</span>
-		<div class="gh_workTime"  style="display:none;">
-			<table>
-				<thead>
-					<td style="width:100px;">时间</td>
-            		<php>
-            			$arr = array('1' => '周一','2' => '周二','3' => '周三','4' => '周四','5' => '周五','6' => '周六','7' => '周日');
-            		</php>
-	            	<foreach name="cal" item="c" key="k">
-					<td style="width:100px;">
-						{$k}<br>{$arr[$c]}
-		            </td>       
-		            </foreach>
-				</thead>
-				<tbody>
-					<php>
-	            	$week = date("w")+1;
-	            	$start = 2*$week - 1;
-	            	$end = 2*$week;
-	           		</php>
-					<tr>
-	            		<td style="width:100px;">上午</td>
-	            		<for start="$start" end="$start+13" step="2">
-	            		<td>
-	            			<input type="radio" name="doctime" <if condition="$i gt 14">value="{$i-14}" <else /> value="{$i}"</if>>	
-	            		</td>
-	            		</for>	
-	            	</tr>
-	            	<tr>
-	            		<td style="width:100px;">下午</td>
-	            		<for start="$end" end="$end+13" step="2">
-	            		<td>
-	            			<input type="radio" name="doctime" <if condition="$i gt 14">value="{$i-14}" <else /> value="{$i}"</if>>	
-	            		</td>
-	            		</for>	
-	            </tr>
-				</tbody>
-			</table>
+		<div class="selectDoctorTime">
+			<span class="DoctortimeBtn">选择挂号时间</span>
+			<div class="gh_workTime"  style="display:none;">
+				<table>
+					<thead>
+						<td style="width:100px;">时间</td>
+	            		<php>
+	            			$arr = array('1' => '周一','2' => '周二','3' => '周三','4' => '周四','5' => '周五','6' => '周六','7' => '周日');
+	            		</php>
+		            	<foreach name="cal" item="c" key="k">
+						<td style="width:100px;">
+							{$k}<br>{$arr[$c]}
+			            </td>       
+			            </foreach>
+					</thead>
+					<tbody>
+						<php>
+		            	$week = date("w")+1;
+		            	$start = 2*$week - 1;
+		            	$end = 2*$week;
+		           		</php>
+						<tr>
+		            		<td style="width:100px;">上午</td>
+		            		<for start="$start" end="$start+13" step="2">
+		            		<td>
+		            			<input type="radio" name="doctime" <if condition="$i gt 14">value="{$i-14}" <else /> value="{$i}"</if>>	
+		            		</td>
+		            		</for>	
+		            	</tr>
+		            	<tr>
+		            		<td style="width:100px;">下午</td>
+		            		<for start="$end" end="$end+13" step="2">
+		            		<td>
+		            			<input type="radio" name="doctime" <if condition="$i gt 14">value="{$i-14}" <else /> value="{$i}"</if>>	
+		            		</td>
+		            		</for>	
+		            </tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<div class="btnBox">
 			<span class="btn"><input type="submit" value="提交" id="gh_btn"></span>

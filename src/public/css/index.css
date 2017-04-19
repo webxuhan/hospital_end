@@ -845,7 +845,7 @@ span.disableBtn input{cursor: not-allowed}
 
 /*个人中心*/
 li.personalCenter{float: right;}
-.personalBox{width: 1000px;margin:0 auto;margin-top: 10px;overflow: hidden;position: relative;}
+.personalBox{width: 1000px;margin:0 auto;margin-top: 10px;min-height: 396px;overflow: hidden;position: relative;}
 .personalBox>span{position: absolute;right: 4px;top: 12px;}
 .personalBox>span>img{width: 20px;height: 20px;margin-right: 2px}
 /*个人中心-个人信息*/
@@ -1058,22 +1058,22 @@ div.patientInfoHead>button{height: 30px}
 .doctorImgBox{margin:10px 40px 10px 10px;}
 .doctor_infoContent>div{height: 36px;line-height: 36px;font-size: 16px}
 .doctor_infoContent>div>span{display: inline-block;margin-right: 19px;width: 120px;text-align: right;}
-div.gh_workTime,div.selectPatient{width: 1000px;margin: 0 auto;margin-top: 19px;overflow: hidden;}
+div.gh_workTime,div.selectPatient,.selectDoctorTime{width: 1000px;margin: 0 auto;margin-top: 19px;overflow: hidden;}
 div.gh_workTime>table{max-width: 100%;border-collapse:collapse;border: 1px;border-spacing: 0;background-color: transparent;}
 div.gh_workTime>table>thead td{width: 125px;}
 /*div.gh_workTime>table>tbody td{line-height: 32px;}*/
 div.gh_workTime>table td{text-align: center;border: 1px solid #2C2C2C;}
 /*div.gh_workTime>table td{text-align: center;border: 1px solid #50bde8;}*/
 div.gh_workTime>table td>input{margin: 4px 0 0;cursor: pointer;}
-div.selectPatient>span{display: inline-block;width: 100px;line-height: 24px;background: #50bde8;color: #fff;cursor: pointer;text-align: center;}
-.selectPatientTable{border-collapse: collapse;max-width: 80%;margin-top: 19px}
-.selectPatientTable>tbody>tr{width: 800px}
+div.selectPatient>span,span.DoctortimeBtn{display: inline-block;width: 100px;line-height: 24px;background: #50bde8;color: #fff;cursor: pointer;text-align: center;}
+.selectPatientTable{border-collapse: collapse;margin-top: 19px}
+.selectPatientTable>tbody>tr{width: 825px}
 .selectPatientTable>tbody td{line-height: 24px;text-align: left;}
 .selectPatientTable .sone{width: 60px}
-.selectPatientTable .stwo{width: 120px}
+.selectPatientTable .stwo{width: 140px}
 .selectPatientTable .sthree{width: 120px}
-.selectPatientTable .sfour{width: 180px}
-.selectPatientTable .sfive{width: 280px}
+.selectPatientTable .sfour{width: 200px}
+.selectPatientTable .sfive{width: 295px}
 .selectPatientTable>tbody>tr:nth-of-type(odd) td{background: #f8f9fb}
 .selectPatientTable>tbody>tr:nth-of-type(even) td{background: #fff}
 /*.selectPatientTable>tbody>tr:nth-child(even){background: #fff}
