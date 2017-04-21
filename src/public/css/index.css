@@ -149,6 +149,7 @@ span.disableBtn input{cursor: not-allowed}
     text-align: center;
     cursor: pointer;
 }
+.sbArea div:hover{background: #d5d0d0}
 /*头部结束*/
 .index_nav_border {
     width: 100%;
