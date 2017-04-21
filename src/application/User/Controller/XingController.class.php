@@ -237,7 +237,7 @@ class XingController extends HomebaseController {
     */
     public function gh_logCenter(){
         expire();//判断是否逾期未就诊
-        $treat_page = 2;
+        $treat_page = 10;
         $page = I('page');
         if(!empty($page)){
             $current_page = $page;

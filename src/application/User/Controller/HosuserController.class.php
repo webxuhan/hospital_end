@@ -56,59 +56,5 @@ class HosuserController extends AdminbaseController {
 		$this->assign('lists', $lists);
 		$this->display();
 	}
-	/**
-    *编辑个人信息
-    *
-    *@author wuxin
-    */
-	public function personedit(){
-		if($this->hosuser_model->create($_POST) !== false){
-			if($this->hosuser_model->save() !== false){
-				$this->success("编辑成功");
-			}else{
-				$this->error("编辑失败");
-			}
-		} else {
-			$this->error($this->hosuser_model->getError());
-		}
-	}
-	/**
-    *编辑个人信息
-    *
-    *@author wuxin
-    */
-	public function passwordedit(){
-		$old_password=I('param.old_password');
-		if(empty($old_password)){
-			$this->error(L('原始密码不能为空'));
-		}
-		
-		$password=I('param.hosuser_password');
-		if(empty($password)){
-			$this->error(L('新密码不能为空'));
-		}
 	
-		$admin=$this->hosuser_model->where(array('hosuser_id'=>$this->hosuser_id))->find();
-		if(sp_compare_password($old_password, $admin['hosuser_password'])){
-			if($password==I('param.repassword')){
-				if(sp_compare_password($password, $admin['hosuser_password'])){
-					$this->error(L('新密码与原始密码输入相同'));
-				}else{
-					$data['hosuser_password']=sp_password($password);
-					$data['hosuser_id']=$this->hosuser_id;
-					$r=$this->hosuser_model->save($data);
-					if ($r!==false) {
-						$this->success(L('修改成功'));
-					} else {
-						$this->error(L('修改失败'));
-					}
-				}
-			}else{
-				$this->error(L('确认密码错误'));
-			}
-	
-		}else{
-			$this->error(L('原始密码错误'));
-		}
-	}
 }

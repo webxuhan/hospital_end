@@ -64,7 +64,12 @@ class PatientController extends AdminbaseController {
 		if (IS_POST) {
 			$_POST['patient_name'] = trim($_POST['patient_name']);
 			$_POST['admin_id'] = sp_get_current_admin_id();
-			$find = $this->patient_model->where($_POST)->find();
+			$where['patient_idcard'] = $_POST['patient_idcard'];
+			$where['_logic'] = 'or';
+			$where['patient_mobile'] = $_POST['patient_mobile'];
+			$map['admin_id'] = sp_get_current_admin_id();
+			$map['_complex'] = $where;
+			$find = $this->patient_model->where($map)->find();
 			if(!$find){
 				if ($this->patient_model->create() !== false) {
 					if ($this->patient_model->add() !== false) {
@@ -75,6 +80,8 @@ class PatientController extends AdminbaseController {
 				} else {
 	    			$this->error($this->patient_model->getError());
 	    		}
+			}else{
+				$this->error("该病人信息已存在！");
 			}
 		}
 	}

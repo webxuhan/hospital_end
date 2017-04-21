@@ -20,7 +20,12 @@ class PatientsController extends HomebaseController {
 		if (IS_POST) {
 			$_POST['patient_name'] = trim($_POST['patient_name']);
 			$_POST['user_id'] = get_current_userid();
-			$find = $this->patient_model->where($_POST)->find();
+			$where['patient_idcard'] = $_POST['patient_idcard'];
+			$where['_logic'] = 'or';
+			$where['patient_mobile'] = $_POST['patient_mobile'];
+			$map['user_id'] = get_current_userid();
+			$map['_complex'] = $where;
+			$find = $this->patient_model->where($map)->find();
 			if(!$find){
 				$count = $this->patient_model->where('user_id='.get_current_userid())->count();
 				if($count >= 10){
@@ -36,6 +41,8 @@ class PatientsController extends HomebaseController {
 		    			$this->error($this->patient_model->getError());
 		    		}
 				}	
+			}else{
+				$this->error("该病人信息已存在！");
 			}
 		}
 	}
