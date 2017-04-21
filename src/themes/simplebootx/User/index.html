@@ -37,8 +37,8 @@
 					<input type="submit" value="">
 				</div>
 				<div class="sbArea">
-					<a href=""><div>疾病</div></a>
-					<a href=""><div>医生</div></a>
+					<a><div>疾病</div></a>
+					<a><div>医生</div></a>
 					<!-- <a href=""><div>医院</div></a> -->
 				</div>
 			</form>
@@ -216,95 +216,86 @@
 <script src="__PUBLIC__/js/noty/noty.js"></script>
 <script>
 	$(function(){ 
-	 // $('.bxslider').bxSlider({ 
-	 //  mode:'horizontal', //默认的是水平 
-	 //  displaySlideQty:1,//显示li的个数 
-	 //  moveSlideQty: 1,//移动li的个数  
-	 //  captions: true,//自动控制 
-	 //  auto: true, 
-	 //  autoHover:true,
-	 //  controls: true; //隐藏左右按钮 
-	 // }); 
-	 var s =$('.bxslider').bxSlider({ 
-	  mode:'horizontal', //默认的是水平 
-	  displaySlideQty:1,//显示li的个数 
-	  moveSlideQty: 1,//移动li的个数  
-	  captions: true,//自动控制 
-	  auto: true, 
-	  speed:200,
-	  controls: true//隐藏左右按钮 
-	  
-	 }); 
-	 // s.startAuto();
-	 /*搜索挂号 疾病*/
-	 $(".deptselect").on('change',function(){
-	 	var dept_id = $(this).val();
-	 	$.ajax({
-	 		url:'{:U("Xing/selectdisease")}',
-	 		method:"post",
-	 		data:{bdept_id:dept_id},
-	 		success:function(data){
-	 			var list = eval('(' + data + ')');
-	 			$(".diseaseselect option").not(":first").remove();
-	 			$(".doctorselect option").not(":first").remove();
-	 			list.forEach(function(item,index){
-	 				var str = '<option value="'+item.disease_id+'">'+item.disease_name+'</option>';
-	 				$(".diseaseselect").append(str);
-	 			});
-	 		}
-	 	});
-	 });
-	 /*搜索挂号 医生*/
-	 $(".diseaseselect").on('change',function(){
-	 	var disease_id = $(this).val();
-	 	$.ajax({
-	 		url:'{:U("Xing/selectdoctor")}',
-	 		method:"post",
-	 		data:{disease_id:disease_id},
-	 		success:function(data){
-	 			var list = eval('(' + data + ')');
-	 			$(".doctorselect option").not(":first").remove();
-	 			list.forEach(function(item,index){
-	 				var str = '<option value="'+item.doctor_id+'">'+item.doctor_name+'</option>';
-	 				$(".doctorselect").append(str);
-	 			});
-	 		}
-	 	});
-	 });
-	 /*快速预约*/
-	 $(".ksbz_kscx").on('click', function(){
-	 	var bdept_id = $(".deptselect").val();
-	 	var disease_id = $(".diseaseselect").val();
-	 	var doctor_id = $(".doctorselect").val();
-	 	if(bdept_id == ""){
-	 		noty({
-                text: "请选择科室",
-                type: "error",
-                timeout:1,
-                layout: "center"
-            });
-            return false;
-	 	}else if(disease_id == ""){
-	 		noty({
-                text: "请选择疾病类",
-                type: "error",
-                timeout:1,
-                layout: "center"
-            });
-            return false;
-	 	}else if(doctor_id == ""){
-	 		noty({
-                text: "请选择医生",
-                type: "error",
-                timeout:1,
-                layout: "center"
-            });
-            return false;
-	 	}
-	 	/*提交信息*/
-	 	$("body").load("{:U('Xing/doctorRegistration')}",{doctor_id:doctor_id});
-	 	/*提交信息结束*/
-	 });
+		 var s =$('.bxslider').bxSlider({ 
+		  mode:'horizontal', //默认的是水平 
+		  displaySlideQty:1,//显示li的个数 
+		  moveSlideQty: 1,//移动li的个数  
+		  captions: true,//自动控制 
+		  auto: true, 
+		  speed:200,
+		  controls: true//隐藏左右按钮 
+		  
+		 }); 
+		 // s.startAuto();
+		 /*搜索挂号 疾病*/
+		 $(".deptselect").on('change',function(){
+		 	var dept_id = $(this).val();
+		 	$.ajax({
+		 		url:'{:U("Xing/selectdisease")}',
+		 		method:"post",
+		 		data:{bdept_id:dept_id},
+		 		success:function(data){
+		 			var list = eval('(' + data + ')');
+		 			$(".diseaseselect option").not(":first").remove();
+		 			$(".doctorselect option").not(":first").remove();
+		 			list.forEach(function(item,index){
+		 				var str = '<option value="'+item.disease_id+'">'+item.disease_name+'</option>';
+		 				$(".diseaseselect").append(str);
+		 			});
+		 		}
+		 	});
+		 });
+		 /*搜索挂号 医生*/
+		 $(".diseaseselect").on('change',function(){
+		 	var disease_id = $(this).val();
+		 	$.ajax({
+		 		url:'{:U("Xing/selectdoctor")}',
+		 		method:"post",
+		 		data:{disease_id:disease_id},
+		 		success:function(data){
+		 			var list = eval('(' + data + ')');
+		 			$(".doctorselect option").not(":first").remove();
+		 			list.forEach(function(item,index){
+		 				var str = '<option value="'+item.doctor_id+'">'+item.doctor_name+'</option>';
+		 				$(".doctorselect").append(str);
+		 			});
+		 		}
+		 	});
+		 });
+		 /*快速预约*/
+		 $(".ksbz_kscx").on('click', function(){
+		 	var bdept_id = $(".deptselect").val();
+		 	var disease_id = $(".diseaseselect").val();
+		 	var doctor_id = $(".doctorselect").val();
+		 	if(bdept_id == ""){
+		 		noty({
+	                text: "请选择科室",
+	                type: "error",
+	                timeout:1,
+	                layout: "center"
+	            });
+	            return false;
+		 	}else if(disease_id == ""){
+		 		noty({
+	                text: "请选择疾病类",
+	                type: "error",
+	                timeout:1,
+	                layout: "center"
+	            });
+	            return false;
+		 	}else if(doctor_id == ""){
+		 		noty({
+	                text: "请选择医生",
+	                type: "error",
+	                timeout:1,
+	                layout: "center"
+	            });
+	            return false;
+		 	}
+		 	/*提交信息*/
+		 	$("body").load("{:U('Xing/doctorRegistration')}",{doctor_id:doctor_id});
+		 	/*提交信息结束*/
+		 });
 	});
 </script>
 </html>
